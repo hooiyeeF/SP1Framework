@@ -434,7 +434,7 @@ void renderFramerate()
 // this is an example of how you would use the input events
 void renderInputEvents()
 {
-    // keyboard events
+    // keyboard events 
     COORD startPos = {50, 2};
     std::ostringstream ss;
     std::string key;
@@ -585,20 +585,29 @@ void FirstRoom()
 
 void SecondRoom()
 {
+    //Spawn player
+
+    //g_sChar.m_cLocation.X = 16;
+   // g_sChar.m_cLocation.Y = 4;
     int wallX = 15;
     int wallY = 3;
 
     //walls in 4 sides
     for (int i = 0; i < 49; i++)
     {
-        g_Console.writeToBuffer(wallX + i, 3, "+", 0xE5);
-        g_Console.writeToBuffer(wallX + i, 14, "+", 0xE5);
+        g_Console.writeToBuffer(wallX + i, 3, "+", 0xB20);
+        g_Console.writeToBuffer(wallX + i, 14, "+", 0xB20);
     }
     for (int j = 0; j < 12; j++)
     {
-        g_Console.writeToBuffer(15, wallY + j, "+", 0xE5);
-        g_Console.writeToBuffer(63, wallY + j, "+", 0xE5);
+        g_Console.writeToBuffer(15, wallY + j, "+", 0xB20);
+        g_Console.writeToBuffer(63, wallY + j, "+", 0xB20);
     }
+    /* Starting pt */
+    g_Console.writeToBuffer(16, 4, "S", 0x5E);
+    /* Ending pt */
+    g_Console.writeToBuffer(62, 13, "E", 0x5E);
+
 }
 
 
