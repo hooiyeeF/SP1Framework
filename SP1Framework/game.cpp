@@ -515,13 +515,13 @@ void FirstRoom()
     //walls in 4 sides
     for (int i = 0; i < 41; i++)
     {
-        g_Console.writeToBuffer(wallX + i, 1, "+", 0xE5);
-        g_Console.writeToBuffer(wallX + i, 16, "+", 0xE5);
+        g_Console.writeToBuffer(wallX + i, 1, "+", 0xB20);
+        g_Console.writeToBuffer(wallX + i, 16, "+", 0xB20);
     }
     for (int j = 0; j < 16; j++)
     {
-        g_Console.writeToBuffer(19, wallY + j, "+", 0xE5);
-        g_Console.writeToBuffer(59, wallY + j, "+", 0xE5);
+        g_Console.writeToBuffer(19, wallY + j, "+", 0xB20);
+        g_Console.writeToBuffer(59, wallY + j, "+", 0xB20);
     }
     /* Starting pt */ 
     g_Console.writeToBuffer(39, 15, "S", 0x5E);
@@ -533,7 +533,7 @@ void FirstRoom()
     {
         for (int j = 2; j < 4; j++)
         {
-            g_Console.writeToBuffer(i, j, "_", 0xB20);
+            g_Console.writeToBuffer(i, j, "+", 0xB20);
         }
     }
 
@@ -541,43 +541,43 @@ void FirstRoom()
     {
         for (int j = 4; j < 6; j++)
         {
-            g_Console.writeToBuffer(i, j, "_", 0xB20);
+            g_Console.writeToBuffer(i, j, "+", 0xB20);
         }
     }
 
     for (int i = 24; i < 32; i++)
     {
-        g_Console.writeToBuffer(i, 8, "_", 0xB20);
+        g_Console.writeToBuffer(i, 8, "+", 0xB20);
     }
 
     for (int i = 54; i < 59; i++)
     {
-        g_Console.writeToBuffer(i, 4, "_", 0xB20);
+        g_Console.writeToBuffer(i, 4, "+", 0xB20);
     }
 
     for (int i = 49; i < 54; i++)
     {
-        g_Console.writeToBuffer(i, 11, "_", 0xB20);
+        g_Console.writeToBuffer(i, 11, "+", 0xB20);
     }
 
     for (int j = 12; j < 16; j++)
     {
-        g_Console.writeToBuffer(40, j, "_", 0xB20);
+        g_Console.writeToBuffer(40, j, "+", 0xB20);
     }
 
     for (int i = 34; i < 40; i++)
     {
-        g_Console.writeToBuffer(i, 12, "_", 0xB20);
+        g_Console.writeToBuffer(i, 12, "+", 0xB20);
     }
 
     for (int j = 2; j < 6; j++)
     {
-        g_Console.writeToBuffer(45, j, "_", 0xB20);
+        g_Console.writeToBuffer(45, j, "+", 0xB20);
     }
 
     for (int j = 9; j < 11; j++)
     {
-        g_Console.writeToBuffer(49, j, "_", 0xB20);
+        g_Console.writeToBuffer(49, j, "+", 0xB20);
     }
 }
 
@@ -603,4 +603,10 @@ void SecondRoom()
 bool gettoiletpaper()
 {
     return true;
+}
+
+
+void map()
+{
+    char map[15][40];
 }
