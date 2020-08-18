@@ -33,7 +33,6 @@ void init( void )
 
     // sets the initial state for the game
     g_eGameState = S_SPLASHSCREEN;
-
     g_sChar.m_cLocation.X = g_Console.getConsoleSize().X / 2 - 1;
     g_sChar.m_cLocation.Y = g_Console.getConsoleSize().Y / 2;
     g_sChar.m_bActive = true;
@@ -399,6 +398,17 @@ void renderCharacter()
         charColor = 0x0A;
     }
     g_Console.writeToBuffer(g_sChar.m_cLocation, (char)1, charColor);
+}
+
+void renderGuard()
+{
+    //Draw the location of the guard
+    WORD charColor = 0x0D;
+        if (g_sChar.m_bActive)
+        {
+            charColor = 0x0C;
+        }
+    g_Console.writeToBuffer(g_sChar.m_cLocation, (char)1,charColor);
 }
 
 void renderFramerate()
