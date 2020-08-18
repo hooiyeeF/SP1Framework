@@ -728,6 +728,62 @@ void SecondRoom()
     /* Ending pt */
     g_Console.writeToBuffer(62, 13, "E", 0x5E);
 
+    /* Obstacles (i = horz | j = vert) */
+
+    //box obs on top left corner
+    for (int i = 16; i < 25; i++)
+    {
+        for (int j = 6; j < 8; j++)
+        {
+            g_Console.writeToBuffer(i, j, "+", 0xB20);
+        }
+    }
+    //box obs on the right
+    for (int i = 50; i < 58; i++)
+    {
+        for (int j = 7; j < 9; j++)
+        {
+            g_Console.writeToBuffer(i, j, "+", 0xB20);
+        }
+    }
+    //L shape horz obs 
+    for (int i = 48; i < 51; i++)
+    {
+        g_Console.writeToBuffer(i, 13, "+", 0xB20);
+    }
+    //reverse L shape horz obs
+    for (int i = 25; i < 36; i++)
+    {
+        g_Console.writeToBuffer(i, 11, "+", 0xB20);
+    }
+
+    // horz obs on top of exit
+    for (int i = 57; i < 63; i++)
+    {
+        g_Console.writeToBuffer(i, 11, "+", 0xB20);
+    }
+    //reverse L shape vert obs
+    for (int i = 33; i < 36; i++)
+    {
+        for (int j = 8; j < 11; j++)
+        {
+            g_Console.writeToBuffer(i, j, "+", 0xB20);
+        }
+    }
+    //vert obs on the top of the middle
+    for (int j = 4; j < 7; j++)
+    {
+        g_Console.writeToBuffer(42, j, "+", 0xB20);
+    }
+    //L shape vert obs
+    for (int i = 45; i < 48; i++)
+    {
+        for (int j = 11; j < 14; j++)
+        {
+            g_Console.writeToBuffer(i, j, "+", 0xB20);
+        }
+    }
+    
 }
 
 
