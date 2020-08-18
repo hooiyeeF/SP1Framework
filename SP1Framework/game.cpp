@@ -322,6 +322,15 @@ void renderGame()
     renderMap();        // renders the map to the buffer first
     renderCharacter();  // renders the character into the buffer
     rendertoiletpaper();     // renders toiletpaper *** add bool statement to check if toilet paper is collected then display ***
+
+    /* Go to Second room */
+    if (g_sChar.m_cLocation.X == 58 && g_sChar.m_cLocation.Y == 2)
+    {
+        clearScreen();
+        SecondRoom();
+        renderMap();        // renders the map to the buffer first
+        renderCharacter();  // renders the character into the buffer
+    }
 }
 
 void renderMap()
