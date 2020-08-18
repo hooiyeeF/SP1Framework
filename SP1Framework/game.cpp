@@ -102,6 +102,8 @@ void keyboardHandler(const KEY_EVENT_RECORD& keyboardEvent)
         break;
     case S_GAME: gameplayKBHandler(keyboardEvent); // handle gameplay keyboard event 
         break;
+    case S_NextRoom: gameplayKBHandler(keyboardEvent); // handle gameplay keyboard event 
+        break;
     }
 }
 
@@ -210,6 +212,8 @@ void update(double dt)
             break;
         case S_GAME: updateGame(); // gameplay logic when we are in the game
             break;
+        case S_NextRoom: updateGame();
+            break;
     }
 }
 
@@ -282,6 +286,8 @@ void render()
         break;
     case S_GAME: renderGame();
         break;
+    case S_NextRoom: renderSecondRoom();
+        break;
     }
     renderFramerate();      // renders debug information, frame rate, elapsed time, etc
     renderInputEvents();    // renders status of input events
@@ -326,11 +332,17 @@ void renderGame()
     /* Go to Second room */
     if (g_sChar.m_cLocation.X == 58 && g_sChar.m_cLocation.Y == 2)
     {
-        clearScreen();
-        SecondRoom();
-        renderMap();        // renders the map to the buffer first
-        renderCharacter();  // renders the character into the buffer
+        g_eGameState = S_NextRoom;
     }
+}
+
+void renderSecondRoom()
+{
+    clearScreen();      
+    SecondRoom();       //render second room
+    renderMap();        // renders the map to the buffer first
+    renderCharacter();  // renders the character into the buffer
+    rendertoiletpaper();
 }
 
 void renderMap()
