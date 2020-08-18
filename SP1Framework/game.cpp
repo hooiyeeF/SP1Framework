@@ -603,3 +603,9 @@ bool gettoiletpaper()
 {
     return true;
 }
+
+
+void map()
+{
+    char map[15][40];
+}
