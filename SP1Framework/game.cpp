@@ -11,7 +11,7 @@ double  g_dElapsedTime;
 double  g_dDeltaTime;
 SKeyEvent g_skKeyEvent[K_COUNT];
 SMouseEvent g_mouseEvent;
-
+char map[15][40];
 
 // Game specific variables here
 SGameChar   g_sChar;
@@ -579,6 +579,126 @@ void FirstRoom()
     {
         g_Console.writeToBuffer(49, j, "+", 0xB20);
     }
+    for (int x = 0; x < 15; ++x)
+    {
+        for (int y = 0; y < 40; ++y)
+        {
+            map[x][y] = ' ';
+        }
+    }
+
+    //array to detect things
+    //player
+    map[13][20] = 'P';
+
+    //endpoint
+    map[1][38] = 'D';
+
+    //wall
+    for (int i = 0; i < 40; i++)
+    {
+        for (int j = 0; j < 1; j++)
+        {
+            map[j][i] = '+';
+        }
+    }
+
+    for (int i = 1; i < 40; i++)
+    {
+        for (int j = 14; j < 15; j++)
+        {
+            map[j][i] = '+';
+        }
+    }
+
+    for (int i = 1; i < 4; i++)
+    {
+        for (int j = 1; j < 3; j++)
+        {
+            map[j][i] = '+';
+        }
+    }
+
+    for (int i = 0; i < 1; i++)
+    {
+        for (int j = 0; j < 15; j++)
+        {
+            map[j][i] = '+';
+        }
+    }
+
+    //obstacles
+
+    for (int i = 39; i < 40; i++)
+    {
+        for (int j = 0; j < 15; j++)
+        {
+            map[j][i] = '+';
+        }
+    }
+
+
+    for (int i = 1; i < 4; i++)
+    {
+        for (int j = 1; j < 3; j++)
+        {
+            map[j][i] = '+';
+        }
+    }
+
+    for (int i = 12; i < 17; i++)
+    {
+        for (int j = 3; j < 5; j++)
+        {
+            map[j][i] = '+';
+        }
+    }
+
+    for (int i = 5; i < 13; i++)
+    {
+        map[8][i] = '+';
+    }
+
+    for (int i = 35; i < 40; i++)
+    {
+        map[4][i] = '+';
+    }
+
+    for (int i = 30; i < 35; i++)
+    {
+        map[10][i] = '+';
+    }
+
+    for (int j = 11; j < 15; j++)
+    {
+        map[j][21] = '+';
+    }
+
+    for (int i = 15; i < 22; i++)
+    {
+        map[10][i] = '+';
+    }
+
+    for (int j = 1; j < 5; j++)
+    {
+        map[j][26] = '+';
+    }
+
+    for (int j = 8; j < 10; j++)
+    {
+        map[j][30] = '+';
+    }
+
+
+    for (int x = 0; x < 15; ++x)
+    {
+        for (int y = 0; y < 40; ++y)
+        {
+            std::cout << map[x][y];
+        }
+        std::cout << "" << std::endl;
+    }
+
 }
 
 void SecondRoom()
@@ -600,13 +720,22 @@ void SecondRoom()
 }
 
 
+void resetroom()
+{
+    char map[15][40];                   //Resets array
+    for (int x = 0; x < 15; ++x)
+    {
+        for (int y = 0; y < 40; ++y)
+        {
+            map[x][y] = ' ';
+        }
+    }
+    g_Console.clearBuffer(0);          //Resets the whole map
+
+}
+
 bool gettoiletpaper()
 {
     return true;
 }
 
-
-void map()
-{
-    char map[15][40];
-}
