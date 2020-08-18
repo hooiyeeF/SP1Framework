@@ -504,8 +504,8 @@ void FirstRoom()
     //walls in 4 sides
     for (int i = 0; i < 41; i++)
     {
-        g_Console.writeToBuffer(wallX + i, 1, " ", 0);
-        g_Console.writeToBuffer(wallX + i, 16, " ", 0xB2);
+        g_Console.writeToBuffer(wallX + i, 1, "+", 0xE5);
+        g_Console.writeToBuffer(wallX + i, 16, "+", 0xE5);
     }
     for (int j = 0; j < 16; j++)
     {
@@ -513,7 +513,7 @@ void FirstRoom()
         g_Console.writeToBuffer(59, wallY + j, "+", 0xE5);
     }
     /* Starting pt */ 
-    g_Console.writeToBuffer(40, 15, "S", 0x5E);
+    g_Console.writeToBuffer(39, 15, "S", 0x5E);
     /* Ending pt */
     g_Console.writeToBuffer(58, 2, "E", 0x5E);
 
@@ -551,10 +551,10 @@ void FirstRoom()
 
     for (int j = 12; j < 16; j++)
     {
-        g_Console.writeToBuffer(41, j, "_", 0xB20);
+        g_Console.writeToBuffer(40, j, "_", 0xB20);
     }
 
-    for (int i = 34; i < 41; i++)
+    for (int i = 34; i < 40; i++)
     {
         g_Console.writeToBuffer(i, 12, "_", 0xB20);
     }
@@ -567,6 +567,24 @@ void FirstRoom()
     for (int j = 9; j < 11; j++)
     {
         g_Console.writeToBuffer(49, j, "_", 0xB20);
+    }
+}
+
+void SecondRoom()
+{
+    int wallX = 15;
+    int wallY = 3;
+
+    //walls in 4 sides
+    for (int i = 0; i < 49; i++)
+    {
+        g_Console.writeToBuffer(wallX + i, 3, "+", 0xE5);
+        g_Console.writeToBuffer(wallX + i, 14, "+", 0xE5);
+    }
+    for (int j = 0; j < 12; j++)
+    {
+        g_Console.writeToBuffer(15, wallY + j, "+", 0xE5);
+        g_Console.writeToBuffer(63, wallY + j, "+", 0xE5);
     }
 }
 
