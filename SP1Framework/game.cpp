@@ -317,7 +317,7 @@ void renderSplashScreen()  // renders the splash screen
 
 void renderGame()
 {
-    PrintMap();
+    FirstRoom();        //render first game room
     renderMap();        // renders the map to the buffer first
     renderCharacter();  // renders the character into the buffer
     rendertoiletpaper();     // renders toiletpaper *** add bool statement to check if toilet paper is collected then display ***
@@ -392,11 +392,11 @@ void rendertoiletpaper()
 void renderCharacter()
 {
     // Draw the location of the character
-    WORD charColor = 0x0C;
-    if (g_sChar.m_bActive)
+    WORD charColor = 0x0F;
+    /*if (g_sChar.m_bActive)
     {
         charColor = 0x0A;
-    }
+    }*/
     g_Console.writeToBuffer(g_sChar.m_cLocation, (char)1, charColor);
 }
 
@@ -506,21 +506,77 @@ void renderInputEvents()
     
 }
 
-void PrintMap()
-{
+void FirstRoom()
+{   
     int wallX = 19;
     int wallY = 1;
 
     //walls in 4 sides
     for (int i = 0; i < 41; i++)
     {
-        g_Console.writeToBuffer(wallX + i, 1, " ", 0xB2);
+        g_Console.writeToBuffer(wallX + i, 1, " ", 0);
         g_Console.writeToBuffer(wallX + i, 16, " ", 0xB2);
     }
     for (int j = 0; j < 16; j++)
     {
-        g_Console.writeToBuffer(19, wallY + j, " ", 0xB2);
-        g_Console.writeToBuffer(59, wallY + j, " ", 0xB2);
+        g_Console.writeToBuffer(19, wallY + j, "+", 0xE5);
+        g_Console.writeToBuffer(59, wallY + j, "+", 0xE5);
+    }
+    /* Starting pt */ 
+    g_Console.writeToBuffer(40, 15, "S", 0x5E);
+    /* Ending pt */
+    g_Console.writeToBuffer(58, 2, "E", 0x5E);
+
+    /* Obstacles */
+    for (int i = 20; i < 23; i++)
+    {
+        for (int j = 2; j < 4; j++)
+        {
+            g_Console.writeToBuffer(i, j, "_", 0xB20);
+        }
+    }
+
+    for (int i = 31; i < 36; i++)
+    {
+        for (int j = 4; j < 6; j++)
+        {
+            g_Console.writeToBuffer(i, j, "_", 0xB20);
+        }
+    }
+
+    for (int i = 24; i < 32; i++)
+    {
+        g_Console.writeToBuffer(i, 8, "_", 0xB20);
+    }
+
+    for (int i = 54; i < 59; i++)
+    {
+        g_Console.writeToBuffer(i, 4, "_", 0xB20);
+    }
+
+    for (int i = 49; i < 54; i++)
+    {
+        g_Console.writeToBuffer(i, 11, "_", 0xB20);
+    }
+
+    for (int j = 12; j < 16; j++)
+    {
+        g_Console.writeToBuffer(41, j, "_", 0xB20);
+    }
+
+    for (int i = 34; i < 41; i++)
+    {
+        g_Console.writeToBuffer(i, 12, "_", 0xB20);
+    }
+
+    for (int j = 2; j < 6; j++)
+    {
+        g_Console.writeToBuffer(45, j, "_", 0xB20);
+    }
+
+    for (int j = 9; j < 11; j++)
+    {
+        g_Console.writeToBuffer(49, j, "_", 0xB20);
     }
 }
 
