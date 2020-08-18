@@ -528,7 +528,9 @@ void FirstRoom()
     /* Ending pt */
     g_Console.writeToBuffer(58, 2, "E", 0x5E);
 
-    /* Obstacles */
+    /* Obstacles (i = horz | j = vert) */  
+   
+    //box obs in top left corner
     for (int i = 20; i < 23; i++)
     {
         for (int j = 2; j < 4; j++)
@@ -536,7 +538,7 @@ void FirstRoom()
             g_Console.writeToBuffer(i, j, "+", 0xB20);
         }
     }
-
+    //box obs in the middle of map
     for (int i = 31; i < 36; i++)
     {
         for (int j = 4; j < 6; j++)
@@ -544,37 +546,37 @@ void FirstRoom()
             g_Console.writeToBuffer(i, j, "+", 0xB20);
         }
     }
-
+    //horz obs in middle left
     for (int i = 24; i < 32; i++)
     {
         g_Console.writeToBuffer(i, 8, "+", 0xB20);
     }
-
+    //horz obs below E
     for (int i = 54; i < 59; i++)
     {
         g_Console.writeToBuffer(i, 4, "+", 0xB20);
     }
-
+    // L shape horz obs
     for (int i = 49; i < 54; i++)
     {
         g_Console.writeToBuffer(i, 11, "+", 0xB20);
     }
-
+    //vert obs beside spawn pt
     for (int j = 12; j < 16; j++)
     {
         g_Console.writeToBuffer(40, j, "+", 0xB20);
     }
-
+    //horz obs near spawn pt
     for (int i = 34; i < 40; i++)
     {
         g_Console.writeToBuffer(i, 12, "+", 0xB20);
     }
-
+    //vert obs near exit pt
     for (int j = 2; j < 6; j++)
     {
         g_Console.writeToBuffer(45, j, "+", 0xB20);
     }
-
+    // L shape vert obs
     for (int j = 9; j < 11; j++)
     {
         g_Console.writeToBuffer(49, j, "+", 0xB20);
