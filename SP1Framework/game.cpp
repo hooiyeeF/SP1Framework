@@ -95,12 +95,14 @@ void getInput( void )
 // Output   : void
 //--------------------------------------------------------------
 void keyboardHandler(const KEY_EVENT_RECORD& keyboardEvent)
-{    
+{  
     switch (g_eGameState)
     {
     case S_SPLASHSCREEN: // don't handle anything for the splash screen
         break;
     case S_GAME: gameplayKBHandler(keyboardEvent); // handle gameplay keyboard event 
+        break;
+    case S_NextRoom: gameplayKBHandler(keyboardEvent); // handle gameplay keyboard event 
         break;
     }
 }
@@ -149,10 +151,10 @@ void gameplayKBHandler(const KEY_EVENT_RECORD& keyboardEvent)
     {
     case VK_UP: key = K_UP; break;
     case VK_DOWN: key = K_DOWN; break;
-    case VK_LEFT: key = K_LEFT; break; 
-    case VK_RIGHT: key = K_RIGHT; break; 
+    case VK_LEFT: key = K_LEFT; break;
+    case VK_RIGHT: key = K_RIGHT; break;
     case VK_SPACE: key = K_SPACE; break;
-    case VK_ESCAPE: key = K_ESCAPE; break; 
+    case VK_ESCAPE: key = K_ESCAPE; break;
     }
     // a key pressed event would be one with bKeyDown == true
     // a key released event would be one with bKeyDown == false
@@ -210,6 +212,8 @@ void update(double dt)
             break;
         case S_GAME: updateGame(); // gameplay logic when we are in the game
             break;
+        case S_NextRoom: updateGame();
+            break;
     }
 }
 
@@ -231,27 +235,27 @@ void moveCharacter()
 {    
     // Updating the location of the character based on the key release
     // providing a beep sound whenver we shift the character
-    if (g_skKeyEvent[K_UP].keyReleased && g_sChar.m_cLocation.Y > 0)
+    if (g_skKeyEvent[K_UP].keyDown && g_sChar.m_cLocation.Y > 0)
     {
         //Beep(1440, 30);
         g_sChar.m_cLocation.Y--;       
     }
-    if (g_skKeyEvent[K_LEFT].keyReleased && g_sChar.m_cLocation.X > 0)
+    if (g_skKeyEvent[K_LEFT].keyDown && g_sChar.m_cLocation.X > 0)
     {
         //Beep(1440, 30);
         g_sChar.m_cLocation.X--;        
     }
-    if (g_skKeyEvent[K_DOWN].keyReleased && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1)
+    if (g_skKeyEvent[K_DOWN].keyDown && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1)
     {
         //Beep(1440, 30);
         g_sChar.m_cLocation.Y++;        
     }
-    if (g_skKeyEvent[K_RIGHT].keyReleased && g_sChar.m_cLocation.X < g_Console.getConsoleSize().X - 1)
+    if (g_skKeyEvent[K_RIGHT].keyDown && g_sChar.m_cLocation.X < g_Console.getConsoleSize().X - 1)
     {
         //Beep(1440, 30);
         g_sChar.m_cLocation.X++;        
     }
-    if (g_skKeyEvent[K_SPACE].keyReleased)
+    if (g_skKeyEvent[K_SPACE].keyDown)
     {
         g_sChar.m_bActive = !g_sChar.m_bActive;        
     }
@@ -281,6 +285,8 @@ void render()
     case S_SPLASHSCREEN: renderSplashScreen();
         break;
     case S_GAME: renderGame();
+        break;
+    case S_NextRoom: renderSecondRoom();
         break;
     }
     renderFramerate();      // renders debug information, frame rate, elapsed time, etc
@@ -322,6 +328,21 @@ void renderGame()
     renderMap();        // renders the map to the buffer first
     renderCharacter();  // renders the character into the buffer
     rendertoiletpaper();     // renders toiletpaper *** add bool statement to check if toilet paper is collected then display ***
+
+    /* Go to Second room */
+    if (g_sChar.m_cLocation.X == 58 && g_sChar.m_cLocation.Y == 2)
+    {
+        g_eGameState = S_NextRoom;
+    }
+}
+
+void renderSecondRoom()
+{
+    clearScreen(); 
+    SecondRoom();       //render second room
+    renderMap();        // renders the map to the buffer first
+    renderCharacter();  // renders the character into the buffer
+    rendertoiletpaper();
 }
 
 void renderMap()
@@ -389,7 +410,7 @@ void rendertoiletpaper()
         }
     }
 }
-
+//not this
 void renderCharacter()
 {
     // Draw the location of the character
@@ -399,7 +420,7 @@ void renderCharacter()
         charColor = 0x0A;
     }*/
     g_Console.writeToBuffer(g_sChar.m_cLocation, (char)1, charColor);
-}
+} 
 
 void renderGuard()
 {
@@ -431,10 +452,10 @@ void renderFramerate()
     g_Console.writeToBuffer(c, ss.str(), 0x59);
 }
 
-// this is an example of how you would use the input events
+//not this
 void renderInputEvents()
 {
-    // keyboard events
+    // keyboard events 
     COORD startPos = {50, 2};
     std::ostringstream ss;
     std::string key;
@@ -455,17 +476,16 @@ void renderInputEvents()
             break;
         default: continue;
         }
-      /*  if (g_skKeyEvent[i].keyDown)
-            ss << key << " pressed";
-        else if (g_skKeyEvent[i].keyReleased)
-            ss << key << " released";
-        else
-            ss << key << " not pressed";*/
+        /*  if (g_skKeyEvent[i].keyDown)
+                ss << key << " pressed";
+            else if (g_skKeyEvent[i].keyReleased)
+                ss << key << " released";
+            else
+                ss << key << " not pressed";*/
 
         COORD c = { startPos.X, startPos.Y + i };
         g_Console.writeToBuffer(c, ss.str(), 0x17);
     }
-
     // mouse events    
     ss.str("");
     ss << "Mouse position (" << g_mouseEvent.mousePosition.X << ", " << g_mouseEvent.mousePosition.Y << ")";
@@ -706,22 +726,111 @@ void FirstRoom()
 
 void SecondRoom()
 {
+    //Spawn player
+
+    //g_sChar.m_cLocation.X = 16;
+   // g_sChar.m_cLocation.Y = 4;
     int wallX = 15;
     int wallY = 3;
 
     //walls in 4 sides
     for (int i = 0; i < 49; i++)
     {
-        g_Console.writeToBuffer(wallX + i, 3, "+", 0xE5);
-        g_Console.writeToBuffer(wallX + i, 14, "+", 0xE5);
+        g_Console.writeToBuffer(wallX + i, 3, "+", 0xB20);
+        g_Console.writeToBuffer(wallX + i, 14, "+", 0xB20);
     }
     for (int j = 0; j < 12; j++)
     {
-        g_Console.writeToBuffer(15, wallY + j, "+", 0xE5);
-        g_Console.writeToBuffer(63, wallY + j, "+", 0xE5);
+        g_Console.writeToBuffer(15, wallY + j, "+", 0xB20);
+        g_Console.writeToBuffer(63, wallY + j, "+", 0xB20);
     }
+    /* Starting pt */
+    g_Console.writeToBuffer(16, 4, "S", 0x5E);
+    /* Ending pt */
+    g_Console.writeToBuffer(62, 13, "E", 0x5E);
+
+    /* Obstacles (i = horz | j = vert) */
+
+    //box obs on top left corner
+    for (int i = 16; i < 25; i++)
+    {
+        for (int j = 6; j < 8; j++)
+        {
+            g_Console.writeToBuffer(i, j, "+", 0xB20);
+        }
+    }
+    //box obs on the right
+    for (int i = 50; i < 58; i++)
+    {
+        for (int j = 7; j < 9; j++)
+        {
+            g_Console.writeToBuffer(i, j, "+", 0xB20);
+        }
+    }
+    //L shape horz obs 
+    for (int i = 48; i < 51; i++)
+    {
+        g_Console.writeToBuffer(i, 13, "+", 0xB20);
+    }
+    //reverse L shape horz obs
+    for (int i = 25; i < 36; i++)
+    {
+        g_Console.writeToBuffer(i, 11, "+", 0xB20);
+    }
+
+    // horz obs on top of exit
+    for (int i = 57; i < 63; i++)
+    {
+        g_Console.writeToBuffer(i, 11, "+", 0xB20);
+    }
+    //reverse L shape vert obs
+    for (int i = 33; i < 36; i++)
+    {
+        for (int j = 8; j < 11; j++)
+        {
+            g_Console.writeToBuffer(i, j, "+", 0xB20);
+        }
+    }
+    //vert obs on the top of the middle
+    for (int j = 4; j < 7; j++)
+    {
+        g_Console.writeToBuffer(42, j, "+", 0xB20);
+    }
+    //L shape vert obs
+    for (int i = 45; i < 48; i++)
+    {
+        for (int j = 11; j < 14; j++)
+        {
+            g_Console.writeToBuffer(i, j, "+", 0xB20);
+        }
+    }
+    
 }
 
+void TPRoom()
+{
+    int wallX = 24;
+    int wallY = 0;
+
+    //walls in 4 sides
+    for (int i = 0; i < 33; i++)
+    {
+        g_Console.writeToBuffer(wallX + i, 0, "+", 0xB20);
+        g_Console.writeToBuffer(wallX + i, 17, "+", 0xB20);
+    }
+    for (int j = 0; j < 18; j++)
+    {
+        g_Console.writeToBuffer(24, wallY + j, "+", 0xB20);
+        g_Console.writeToBuffer(56, wallY + j, "+", 0xB20);
+    }
+    /* Starting pt */
+    g_Console.writeToBuffer(25, 1, "S", 0x5E);
+    /* Ending pt */
+    g_Console.writeToBuffer(40, 16, "E", 0x5E);
+    /* Spawn toilet paper({48,8},{49,8}) */
+    g_Console.writeToBuffer(48, 8, "TP", 0xF0);
+
+}
 
 void resetroom()
 {
