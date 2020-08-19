@@ -119,6 +119,10 @@ void keyboardHandler(const KEY_EVENT_RECORD& keyboardEvent)
         break;
     case S_TPROOM: gameplayKBHandler(keyboardEvent); // handle gameplay keyboard event 
         break;
+    case S_ENDROOM: gameplayKBHandler(keyboardEvent); // handle gameplay keyboard event 
+        break;
+    case S_LOSE: gameplayKBHandler(keyboardEvent); // handle gameplay keyboard event 
+        break;
     }
 }
 
@@ -239,6 +243,10 @@ void update(double dt)
         case S_TPROOM: updateGame3();
             break;
         case S_ENDROOM: updateGame4();
+            break;
+        case S_LOSE:
+            processUserInput();
+            PlayAgain();
             break;
     }
 }
@@ -402,6 +410,11 @@ void GoToGamePlay()
     // go to gameplay if player hits the space key
     if (g_skKeyEvent[K_SPACE].keyReleased)
         g_eGameState = S_GAME;
+}
+void PlayAgain()
+{
+    if (g_skKeyEvent[K_SPACE].keyReleased)
+        g_eGameState = S_SPLASHSCREEN;
 }
 
 //--------------------------------------------------------------
@@ -1153,11 +1166,16 @@ void renderLoseScreen()
 {
     COORD c = g_Console.getConsoleSize();
     c.Y /= 2;
-    c.X = c.X / 2 - 6;
+    c.Y -= 5;
+    c.X = c.X / 2 -4;
     g_Console.writeToBuffer(c, "L O S E !", 0x0A);
-    /*c.Y += 2;
-    c.X = g_Console.getConsoleSize().X / 2 - 3;
-    g_Console.writeToBuffer(c, "T H E", 0x0A);*/
+    c.Y += 8;
+    c.X = g_Console.getConsoleSize().X / 2 - 13;
+    g_Console.writeToBuffer(c, "Press <SPACE> to play again", 0x07);
+
+    c.Y += 2;
+    c.X = g_Console.getConsoleSize().X / 2 - 10;
+    g_Console.writeToBuffer(c, "Press <ESC> to exit", 0x07);
 }
 
 void resetroom()

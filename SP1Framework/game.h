@@ -70,6 +70,7 @@ void moveCharacter();       // moves the character, collision detection, physics
 void moveCharacter2();      // moves the character, collision detection, physics, etc in the 2nd room
 void processUserInput();    // checks if you should change states or do something else with the game, e.g. pause, exit
 void GoToGamePlay();        // check if user hit space key to start game
+void PlayAgain();           // check if user hit key to restart the game
 void clearScreen();         // clears the current screen and draw from scratch 
 void renderSplashScreen();  // renders the splash screen
 void renderGame();          // renders the game stuff
