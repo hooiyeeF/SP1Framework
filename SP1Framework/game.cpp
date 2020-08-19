@@ -410,7 +410,7 @@ void rendertoiletpaper()
         }
     }
 }
-//not this
+
 void renderCharacter()
 {
     // Draw the location of the character
@@ -452,7 +452,6 @@ void renderFramerate()
     g_Console.writeToBuffer(c, ss.str(), 0x59);
 }
 
-//not this
 void renderInputEvents()
 {
     // keyboard events 
@@ -725,10 +724,6 @@ void FirstRoom()
 
 void SecondRoom()
 {
-    //Spawn player
-
-    //g_sChar.m_cLocation.X = 16;
-   // g_sChar.m_cLocation.Y = 4;
     int wallX = 15;
     int wallY = 3;
 
@@ -828,6 +823,50 @@ void TPRoom()
     g_Console.writeToBuffer(40, 16, "E", 0x5E);
     /* Spawn toilet paper({48,8},{49,8}) */
     g_Console.writeToBuffer(48, 8, "TP", 0xF0);
+
+    /* Walls around toiletpaper spawn pt */
+    for (int j = 6; j < 11; j++)
+    {
+        g_Console.writeToBuffer(47, j, "+", 0xB20);
+    }
+    for (int i = 48; i < 52; i++)
+    {
+        g_Console.writeToBuffer(i, 6, "+", 0xB20);
+        g_Console.writeToBuffer(i, 10, "+", 0xB20);
+    }
+    // vert wall beside spawn pt
+    for (int i = 29; i < 32; i++)
+    {
+        for (int j = 1; j < 4; j++)
+        {
+            g_Console.writeToBuffer(i, j, "+", 0xB20);
+        }
+    }
+    // wall around exit pt
+    for (int i = 42; i < 44; i++)
+    {
+        for (int j = 14; j < 17; j++)
+        {
+            g_Console.writeToBuffer(i, j, "+", 0xB20);
+        }
+    }
+    for (int i = 38; i < 43; i++)
+    {
+        g_Console.writeToBuffer(i, 14, "+", 0xB20);
+    }
+    // thick wall in the middle of the map
+    for (int i = 25; i < 34; i++)
+    {
+        for (int j = 8; j < 10; j++)
+        {
+            g_Console.writeToBuffer(i, j, "+", 0xB20);
+        }
+    }
+    // horz wall on top of the map
+    for (int i = 41; i < 46; i++)
+    {
+        g_Console.writeToBuffer(i, 3, "+", 0xB20);
+    }
 
 }
 
