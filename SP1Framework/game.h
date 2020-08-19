@@ -43,6 +43,8 @@ enum EGAMESTATES
     S_NEXTROOM,
     S_TPROOM,
     S_ENDROOM,
+    S_WIN,
+    S_LOSE,
     S_COUNT
 };
 
@@ -74,6 +76,8 @@ void FirstRoomArray();      // first room array
 void SecondRoom();          
 void SecondRoomArray();      // second room array
 void TPRoom();
+void EndRoom();
+void renderLoseScreen();
 void renderMap();           // renders the map to the buffer first
 void rendertoiletpaper();   //renders the toilet paper when collected
 void renderCharacter();     // renders the character into the buffer

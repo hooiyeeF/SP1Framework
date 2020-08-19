@@ -346,6 +346,10 @@ void render()
         break;
     case S_TPROOM: renderTPRoom();
         break;
+    case S_ENDROOM: renderTPRoom();
+        break;
+    case S_LOSE: renderLoseScreen();
+        break;
     }
     renderFramerate();      // renders debug information, frame rate, elapsed time, etc
     renderInputEvents();    // renders status of input events
@@ -438,7 +442,24 @@ void renderTPRoom()
     renderMap();         // renders the map to the buffer first
     renderCharacter();   // renders the character into the buffer
     gara.drawG3(g_Console);
-  //  rendertoiletpaper();
+    rendertoiletpaper();
+
+    /* Go to the last room */
+    if (g_sChar.m_cLocation.X == 40 && g_sChar.m_cLocation.Y == 16)
+    {
+        g_eGameState = S_ENDROOM;
+
+        g_sChar.m_cLocation.X = 40; //character position for second room
+        g_sChar.m_cLocation.Y = 2;
+    }
+}
+
+void renderEndRoom()
+{
+    clearScreen();
+    EndRoom();            //render Toilet paper room
+    renderMap();         // renders the map to the buffer first
+    renderCharacter();   // renders the character into the buffer
 }
 
 void renderMap()
@@ -1051,10 +1072,21 @@ void EndRoom()
         g_Console.writeToBuffer(59, wallY + j, "+", 0xB20);
     }
     /* Starting pt */
- //   g_Console.writeToBuffer(39, 15, "S", 0x5E);
+    g_Console.writeToBuffer(40, 2, "S", 0x5E);
 
     /* Ending pt */
- //   g_Console.writeToBuffer(58, 2, "E", 0x5E);
+    g_Console.writeToBuffer(58, 15, "E", 0x5E);
+}
+
+void renderLoseScreen()
+{
+    COORD c = g_Console.getConsoleSize();
+    c.Y /= 2;
+    c.X = c.X / 2 - 6;
+    g_Console.writeToBuffer(c, "L O S E !", 0x0A);
+    /*c.Y += 2;
+    c.X = g_Console.getConsoleSize().X / 2 - 3;
+    g_Console.writeToBuffer(c, "T H E", 0x0A);*/
 }
 
 void resetroom()
