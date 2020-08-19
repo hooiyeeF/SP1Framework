@@ -9,10 +9,6 @@
 #include <sstream>
 #include "Guard.h"
 
-
-
-
-
 double  g_dElapsedTime;
 double  g_dDeltaTime;
 SKeyEvent g_skKeyEvent[K_COUNT];
@@ -247,7 +243,6 @@ void update(double dt)
     }
 }
 
-
 void splashScreenWait()    // waits for time to pass in splash screen
 {
     if (g_dElapsedTime > 3.0) // wait for 3 seconds to switch to game mode, else do nothing
@@ -414,8 +409,6 @@ void render()
     renderFramerate();      // renders debug information, frame rate, elapsed time, etc
     renderInputEvents();    // renders status of input events
     renderToScreen();       // dump the contents of the buffer to the screen, one frame worth of game
-
-
 }
 
 void clearScreen()
@@ -434,16 +427,24 @@ void renderSplashScreen()  // renders the splash screen
 {
     COORD c = g_Console.getConsoleSize();
     c.Y /= 2;
-    c.X = c.X / 2 - 10;
-    g_Console.writeToBuffer(c, "Bob needed a toilet paper.", 0x07);
+    c.Y -= 10;
+    c.X = c.X / 2 - 6;
+    g_Console.writeToBuffer(c, "E S C A P E", 0x0A);
+    c.Y += 2;
+    c.X = g_Console.getConsoleSize().X / 2 - 3;
+    g_Console.writeToBuffer(c, "T H E", 0x0A);
+    c.Y += 2;
+    c.X = g_Console.getConsoleSize().X / 2 - 7;
+    g_Console.writeToBuffer(c, "F A C T O R Y", 0x0A);
+    c.Y += 10;
+    c.X = g_Console.getConsoleSize().X / 2 - 12;
+    g_Console.writeToBuffer(c, "Bob needs toilet paper.", 0x07);
     c.Y += 1;
-    c.X = g_Console.getConsoleSize().X / 2 - 25;
-    g_Console.writeToBuffer(c, "Help him to get a toilet paper and escape the factory!  ", 0x07);
+    c.X = g_Console.getConsoleSize().X / 2 - 27;
+    g_Console.writeToBuffer(c, "Help him to get toilet paper and escape the factory!", 0x07);
     c.Y += 5;
-    c.X = g_Console.getConsoleSize().X / 2 -10;
+    c.X = g_Console.getConsoleSize().X / 2 - 12;
     g_Console.writeToBuffer(c, "Press <Space> to start", 0x5E);
-    c.Y += 1;
-  
 }
 
 void renderGame()
@@ -462,7 +463,6 @@ void renderGame()
         chara.y = 4;
         g_eGameState = S_NEXTROOM;
     }
-
 }
 
 void renderSecondRoom()
@@ -482,7 +482,6 @@ void renderSecondRoom()
         g_sChar.m_cLocation.X = 25; //character position for second room
         g_sChar.m_cLocation.Y = 1;
     }
-
 }
 
 void renderTPRoom()
@@ -681,9 +680,6 @@ void renderInputEvents()
             break;
         }
     }
-    
-    
-    
 }
 
 void FirstRoom()
@@ -778,6 +774,8 @@ void FirstRoomArray()
     }
     //player
     map[14][20] = 'P';
+    //Guard
+    map[4][31] = 'G';
 
     //wall
     for (int i = 0; i < 41; i++)
@@ -1016,7 +1014,6 @@ void SecondRoomArray()
             map2[j][i] = '+';
         }
     }
-
 }
 
 void TPRoom()
@@ -1085,7 +1082,29 @@ void TPRoom()
     {
         g_Console.writeToBuffer(i, 3, "+", 0xB20);
     }
+}
 
+void EndRoom()
+{
+    int wallX = 19;
+    int wallY = 1;
+
+    //walls in 4 sides
+    for (int i = 0; i < 41; i++)
+    {
+        g_Console.writeToBuffer(wallX + i, 1, "+", 0xB20);
+        g_Console.writeToBuffer(wallX + i, 16, "+", 0xB20);
+    }
+    for (int j = 0; j < 16; j++)
+    {
+        g_Console.writeToBuffer(19, wallY + j, "+", 0xB20);
+        g_Console.writeToBuffer(59, wallY + j, "+", 0xB20);
+    }
+    /* Starting pt */
+ //   g_Console.writeToBuffer(39, 15, "S", 0x5E);
+
+    /* Ending pt */
+ //   g_Console.writeToBuffer(58, 2, "E", 0x5E);
 }
 
 void resetroom()
@@ -1102,13 +1121,7 @@ void resetroom()
 
 }
 
-
-
-
-
-
 bool gettoiletpaper()
 {
     return true;
 }
-
