@@ -3,6 +3,7 @@
 //
 #include "game.h"
 #include "Framework\console.h"
+#include "Player.h"
 #include <iostream>
 #include <iomanip>
 #include <sstream>
@@ -11,8 +12,14 @@ double  g_dElapsedTime;
 double  g_dDeltaTime;
 SKeyEvent g_skKeyEvent[K_COUNT];
 SMouseEvent g_mouseEvent;
-char map[16][41];
-char map2[12][49];
+char map[15][40];
+bool a = false;
+bool spawn = false;
+bool spawn2 = false;
+bool gamestart = false;
+
+Player chara;
+
 // Game specific variables here
 SGameChar   g_sChar;
 EGAMESTATES g_eGameState = S_SPLASHSCREEN; // initial state
@@ -37,6 +44,8 @@ void init( void )
     g_sChar.m_cLocation.X = g_Console.getConsoleSize().X / 2 - 1;
     g_sChar.m_cLocation.Y = g_Console.getConsoleSize().Y / 2;
     g_sChar.m_bActive = true;
+    chara.x = g_Console.getConsoleSize().X / 2 - 1;
+    chara.y = g_Console.getConsoleSize().Y / 2;
 
     // sets the width, height and the font name to use in the console
     g_Console.setConsoleFont(0, 16, L"Consolas");
@@ -44,18 +53,6 @@ void init( void )
     // remember to set your keyboard handler, so that your functions can be notified of input events
     g_Console.setKeyboardHandler(keyboardHandler);
     g_Console.setMouseHandler(mouseHandler);
-
-
-    switch (g_eGameState)
-    {
-    case S_SPLASHSCREEN: splashScreenWait(); // game logic for the splash screen
-        break;
-    case S_GAME: FirstRoomArray(); // gameplay logic when we are in the game
-        break;
-    case S_NextRoom: SecondRoomArray();
-        break;
-    }
-    
 }
 
 //--------------------------------------------------------------
@@ -111,11 +108,13 @@ void keyboardHandler(const KEY_EVENT_RECORD& keyboardEvent)
 {  
     switch (g_eGameState)
     {
-    case S_SPLASHSCREEN: // don't handle anything for the splash screen
+    case S_SPLASHSCREEN: gameplayKBHandler(keyboardEvent);// handle gameplay keyboard event
         break;
     case S_GAME: gameplayKBHandler(keyboardEvent); // handle gameplay keyboard event 
         break;
-    case S_NextRoom: gameplayKBHandler(keyboardEvent); // handle gameplay keyboard event 
+    case S_NEXTROOM: gameplayKBHandler(keyboardEvent); // handle gameplay keyboard event 
+        break;
+    case S_TPROOM: gameplayKBHandler(keyboardEvent); // handle gameplay keyboard event 
         break;
     }
 }
@@ -143,6 +142,10 @@ void mouseHandler(const MOUSE_EVENT_RECORD& mouseEvent)
     case S_SPLASHSCREEN: // don't handle anything for the splash screen
         break;
     case S_GAME: gameplayMouseHandler(mouseEvent); // handle gameplay mouse event
+        break;
+    case S_NEXTROOM: gameplayMouseHandler(mouseEvent); // handle gameplay mouse event
+        break;
+    case S_TPROOM: gameplayMouseHandler(mouseEvent); // handle gameplay mouse event
         break;
     }
 }
@@ -215,17 +218,24 @@ void gameplayMouseHandler(const MOUSE_EVENT_RECORD& mouseEvent)
 //--------------------------------------------------------------
 void update(double dt)
 {
-    // get the delta time
-    g_dElapsedTime += dt;
-    g_dDeltaTime = dt;
+    if (gamestart == true)
+    {
+        // get the delta time
+        g_dElapsedTime += dt;
+        g_dDeltaTime = dt;
+    }
 
     switch (g_eGameState)
     {
-        case S_SPLASHSCREEN : splashScreenWait(); // game logic for the splash screen
+        case S_SPLASHSCREEN : GoToGamePlay(); // game logic for the menu screen
             break;
         case S_GAME: updateGame(); // gameplay logic when we are in the game
             break;
-        case S_NextRoom: updateGame();
+        case S_NEXTROOM: updateGame();
+            break;
+        case S_TPROOM: updateGame();
+            break;
+        case S_ENDROOM: updateGame();
             break;
     }
 }
@@ -244,51 +254,34 @@ void updateGame()       // gameplay logic
                         // sound can be played here too.
 }
 
-
 void moveCharacter()
 {    
     // Updating the location of the character based on the key release
     // providing a beep sound whenver we shift the character
     if (g_skKeyEvent[K_UP].keyDown && g_sChar.m_cLocation.Y > 0)
     {
-        if (map[g_sChar.m_cLocation.Y - 2][g_sChar.m_cLocation. X - 19] == '-')
-        {
-            map[g_sChar.m_cLocation.Y - 2][g_sChar.m_cLocation.X - 19] = 'P';
-            map[g_sChar.m_cLocation.Y - 1][g_sChar.m_cLocation.X - 19] = '-';
-            //Beep(1440, 30);
-            g_sChar.m_cLocation.Y--;
-        }
+        //Beep(1440, 30);
+        g_sChar.m_cLocation.Y--;
+        chara.y--;
     }
     if (g_skKeyEvent[K_LEFT].keyDown && g_sChar.m_cLocation.X > 0)
     {
-        if (map[g_sChar.m_cLocation.Y - 1][g_sChar.m_cLocation.X - 20] == '-')
-        {
-            map[g_sChar.m_cLocation.Y - 1][g_sChar.m_cLocation.X - 20] = 'P';
-            map[g_sChar.m_cLocation.Y - 1][g_sChar.m_cLocation.X - 19] = '-';
-            //Beep(1440, 30);
-            g_sChar.m_cLocation.X--;
-        }     
+        gamestart = true;
+        //Beep(1440, 30);
+        g_sChar.m_cLocation.X--;
+        chara.x--;
     }
     if (g_skKeyEvent[K_DOWN].keyDown && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1)
     {
-        if (map[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X - 19] == '-')
-        {
-            map[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X - 19] = 'P';
-            map[g_sChar.m_cLocation.Y - 1][g_sChar.m_cLocation.X - 19] = '-';
-            //Beep(1440, 30);
-            g_sChar.m_cLocation.Y++;
-        }    
+        //Beep(1440, 30);
+        g_sChar.m_cLocation.Y++;   
+        chara.y++;
     }
     if (g_skKeyEvent[K_RIGHT].keyDown && g_sChar.m_cLocation.X < g_Console.getConsoleSize().X - 1)
     {
-        if (map[g_sChar.m_cLocation.Y - 1][g_sChar.m_cLocation.X - 18] == '-')
-        {
-            map[g_sChar.m_cLocation.Y - 1][g_sChar.m_cLocation.X - 18] = 'P';
-            map[g_sChar.m_cLocation.Y - 1][g_sChar.m_cLocation.X - 19] = '-';
-            //Beep(1440, 30);
-            g_sChar.m_cLocation.X++;
-        }
-           
+        //Beep(1440, 30);
+        g_sChar.m_cLocation.X++;  
+        chara.x++;
     }
     if (g_skKeyEvent[K_SPACE].keyDown)
     {
@@ -302,6 +295,12 @@ void processUserInput()
     // quits the game if player hits the escape key
     if (g_skKeyEvent[K_ESCAPE].keyReleased)
         g_bQuitGame = true;    
+}
+void GoToGamePlay()
+{
+    // go to gameplay if player hits the space key
+    if (g_skKeyEvent[K_SPACE].keyReleased)
+        g_eGameState = S_GAME;
 }
 
 //--------------------------------------------------------------
@@ -321,7 +320,9 @@ void render()
         break;
     case S_GAME: renderGame();
         break;
-    case S_NextRoom: renderSecondRoom();
+    case S_NEXTROOM: renderSecondRoom();
+        break;
+    case S_TPROOM: renderTPRoom();
         break;
     }
     renderFramerate();      // renders debug information, frame rate, elapsed time, etc
@@ -346,28 +347,34 @@ void renderToScreen()
 void renderSplashScreen()  // renders the splash screen
 {
     COORD c = g_Console.getConsoleSize();
-    c.Y /= 3;
-    c.X = c.X / 2 - 9;
-    g_Console.writeToBuffer(c, "A game in 3 seconds", 0x03);
+    c.Y /= 2;
+    c.X = c.X / 2 - 10;
+    g_Console.writeToBuffer(c, "Bob needed a toilet paper.", 0x07);
     c.Y += 1;
-    c.X = g_Console.getConsoleSize().X / 2 - 20;
-    g_Console.writeToBuffer(c, "Press <Space> to change character colour", 0x09);
+    c.X = g_Console.getConsoleSize().X / 2 - 25;
+    g_Console.writeToBuffer(c, "Help him to get a toilet paper and escape the factory!  ", 0x07);
+    c.Y += 5;
+    c.X = g_Console.getConsoleSize().X / 2 -10;
+    g_Console.writeToBuffer(c, "Press <Space> to start", 0x5E);
     c.Y += 1;
-    c.X = g_Console.getConsoleSize().X / 2 - 10;
-    g_Console.writeToBuffer(c, "Press 'Esc' to quit", 0x09);
+  
 }
 
 void renderGame()
 {
     FirstRoom();        //render first game room
     renderMap();        // renders the map to the buffer first
-    renderCharacter();  // renders the character into the buffer
-    rendertoiletpaper();     // renders toiletpaper *** add bool statement to check if toilet paper is collected then display ***
-    renderGuard();
+    //renderCharacter();  // renders the character into the buffer
+    chara.draw(g_Console);
+    //rendertoiletpaper();     // renders toiletpaper *** add bool statement to check if toilet paper is collected then display ***
+    while (a == true)
+    {
+        FirstRoomArray();
+    }
     /* Go to Second room */
     if (g_sChar.m_cLocation.X == 58 && g_sChar.m_cLocation.Y == 2)
     {
-        g_eGameState = S_NextRoom;
+        g_eGameState = S_NEXTROOM;
 
         g_sChar.m_cLocation.X = 16; //character position for second room
         g_sChar.m_cLocation.Y = 4;
@@ -381,9 +388,26 @@ void renderSecondRoom()
     SecondRoom();       //render second room
     renderMap();        // renders the map to the buffer first
     renderCharacter();  // renders the character into the buffer
-    rendertoiletpaper();
+  //  rendertoiletpaper();
 
+    /* Go to toilet paper room */
+    if (g_sChar.m_cLocation.X == 62 && g_sChar.m_cLocation.Y == 13)
+    {
+        g_eGameState = S_TPROOM;
 
+        g_sChar.m_cLocation.X = 25; //character position for second room
+        g_sChar.m_cLocation.Y = 1;
+    }
+
+}
+
+void renderTPRoom()
+{
+    clearScreen();
+    TPRoom();            //render Toilet paper room
+    renderMap();         // renders the map to the buffer first
+    renderCharacter();   // renders the character into the buffer
+  //  rendertoiletpaper();
 }
 
 void renderMap()
@@ -394,7 +418,7 @@ void renderMap()
     //   0xA1, 0xB2, 0xC3, 0xD4, 0xE5, 0xF6
     //};
 
-    g_Console.writeToBuffer(0, 18, "                                                                                ", 0xFF); //line seperating the map in game and ui
+    g_Console.writeToBuffer(0, 18, "                                                                                ", 0xFF);
     g_Console.writeToBuffer(23, 20, "                  ", 0xB2); // 6 space for each sprint **total of 3 sprints/ 18 spaces
     g_Console.writeToBuffer(23, 21, "                  ", 0xB2); // 6 space for each sprint **total of 3 sprints / 18 spaces
     g_Console.writeToBuffer(3, 20, "                  ", 0xFF); //box for toiletpaper
@@ -471,26 +495,30 @@ void renderGuard()
         {
             charColor = 0x0C;
         }
-    g_Console.writeToBuffer(49, 4, (char)1,charColor);
+    g_Console.writeToBuffer(g_sChar.m_cLocation, (char)1,charColor);
 }
 
 void renderFramerate()
 {
-    COORD c;
-    // displays the framerate
-    std::ostringstream ss;
-    ss << std::fixed << std::setprecision(3);
-    ss << 1.0 / g_dDeltaTime << "fps";
-    c.X = g_Console.getConsoleSize().X - 9;
-    c.Y = 0;
-    g_Console.writeToBuffer(c, ss.str());
+    if (g_eGameState != S_SPLASHSCREEN)
+    {
+        COORD c;
+        // displays the framerate
+        std::ostringstream ss;
+        ss << std::fixed << std::setprecision(3);
+        ss << 1.0 / g_dDeltaTime << "fps";
+        c.X = g_Console.getConsoleSize().X - 9;
+        c.Y = 0;
+        g_Console.writeToBuffer(c, ss.str());
 
-    // displays the elapsed time
-    ss.str("");
-    ss << g_dElapsedTime << "secs";
-    c.X = 64;
-    c.Y = 20;
-    g_Console.writeToBuffer(c, ss.str(), 0x59);
+        // displays the elapsed time
+        ss.str("");
+        ss << g_dElapsedTime << "secs";
+        c.X = 64;
+        c.Y = 20;
+        g_Console.writeToBuffer(c, ss.str(), 0x0F);
+    }
+    
 }
 
 void renderInputEvents()
@@ -526,44 +554,50 @@ void renderInputEvents()
         COORD c = { startPos.X, startPos.Y + i };
         g_Console.writeToBuffer(c, ss.str(), 0x17);
     }
-    // mouse events    
-    ss.str("");
-    ss << "Mouse position (" << g_mouseEvent.mousePosition.X << ", " << g_mouseEvent.mousePosition.Y << ")";
-    g_Console.writeToBuffer(g_mouseEvent.mousePosition, ss.str(), 0x59);
-    ss.str("");
-    switch (g_mouseEvent.eventFlags)
+    // mouse events
+    if (g_eGameState != S_SPLASHSCREEN)
     {
-    case 0:
-        if (g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
+        ss.str("");
+        ss << "Mouse position (" << g_mouseEvent.mousePosition.X << ", " << g_mouseEvent.mousePosition.Y << ")";
+        g_Console.writeToBuffer(g_mouseEvent.mousePosition, ss.str(), 0x59);
+        ss.str("");
+
+        switch (g_mouseEvent.eventFlags)
         {
-            ss.str("Left Button Pressed");
-            g_Console.writeToBuffer(g_mouseEvent.mousePosition.X, g_mouseEvent.mousePosition.Y + 1, ss.str(), 0x59);
+        case 0:
+            if (g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
+            {
+                ss.str("Left Button Pressed");
+                g_Console.writeToBuffer(g_mouseEvent.mousePosition.X, g_mouseEvent.mousePosition.Y + 1, ss.str(), 0x59);
+            }
+            else if (g_mouseEvent.buttonState == RIGHTMOST_BUTTON_PRESSED)
+            {
+                ss.str("Right Button Pressed");
+                g_Console.writeToBuffer(g_mouseEvent.mousePosition.X, g_mouseEvent.mousePosition.Y + 2, ss.str(), 0x59);
+            }
+            else
+            {
+                ss.str("Some Button Pressed");
+                g_Console.writeToBuffer(g_mouseEvent.mousePosition.X, g_mouseEvent.mousePosition.Y + 3, ss.str(), 0x59);
+            }
+            break;
+        case DOUBLE_CLICK:
+            ss.str("Double Clicked");
+            g_Console.writeToBuffer(g_mouseEvent.mousePosition.X, g_mouseEvent.mousePosition.Y + 4, ss.str(), 0x59);
+            break;
+        case MOUSE_WHEELED:
+            if (g_mouseEvent.buttonState & 0xFF000000)
+                ss.str("Mouse wheeled down");
+            else
+                ss.str("Mouse wheeled up");
+            g_Console.writeToBuffer(g_mouseEvent.mousePosition.X, g_mouseEvent.mousePosition.Y + 5, ss.str(), 0x59);
+            break;
+        default:
+            break;
         }
-        else if (g_mouseEvent.buttonState == RIGHTMOST_BUTTON_PRESSED)
-        {
-            ss.str("Right Button Pressed");
-            g_Console.writeToBuffer(g_mouseEvent.mousePosition.X, g_mouseEvent.mousePosition.Y + 2, ss.str(), 0x59);
-        }
-        else
-        {
-            ss.str("Some Button Pressed");
-            g_Console.writeToBuffer(g_mouseEvent.mousePosition.X, g_mouseEvent.mousePosition.Y + 3, ss.str(), 0x59);
-        }
-        break;
-    case DOUBLE_CLICK:
-        ss.str("Double Clicked");
-        g_Console.writeToBuffer(g_mouseEvent.mousePosition.X, g_mouseEvent.mousePosition.Y + 4, ss.str(), 0x59);
-        break;        
-    case MOUSE_WHEELED:
-        if (g_mouseEvent.buttonState & 0xFF000000)
-            ss.str("Mouse wheeled down");
-        else
-            ss.str("Mouse wheeled up");
-        g_Console.writeToBuffer(g_mouseEvent.mousePosition.X, g_mouseEvent.mousePosition.Y + 5, ss.str(), 0x59);
-        break;
-    default:        
-        break;
     }
+    
+    
     
 }
 
@@ -649,31 +683,37 @@ void FirstRoom()
 
 void FirstRoomArray()
 {
-    //array to detect things
-    for (int x = 0; x < 16; ++x)
+   //array to detect things
+    for (int x = 0; x < 15; ++x)
     {
-        for (int y = 0; y < 41; ++y)
+        for (int y = 0; y < 40; ++y)
         {
-            map[x][y] = '-';
+            map[x][y] = ' ';
         }
     }
-    //player
-    map[14][20] = 'P';
+   //player
+    map[13][20] = 'P';
+    spawnenemy();
+    //endpoint
+    map[1][38] = 'D';
 
     //wall
-    for (int i = 0; i < 41; i++)
+    for (int i = 0; i < 40; i++)
     {
-        map[0][i] = '+';
-        map[15][i] = '+';
+        for (int j = 0; j < 1; j++)
+        {
+            map[j][i] = '+';
+        }
     }
-    for (int j = 0; j < 16; j++)
-    {
-        map[j][0] = '+';
-        map[j][40] = '+';
-    }
-    /* Obstacles (i = horz | j = vert) */
 
-    //box obs in top left corner
+    for (int i = 1; i < 40; i++)
+    {
+        for (int j = 14; j < 15; j++)
+        {
+            map[j][i] = '+';
+        }
+    }
+
     for (int i = 1; i < 4; i++)
     {
         for (int j = 1; j < 3; j++)
@@ -682,7 +722,33 @@ void FirstRoomArray()
         }
     }
 
-    //box obs in the middle of map
+    for (int i = 0; i < 1; i++)
+    {
+        for (int j = 0; j < 15; j++)
+        {
+            map[j][i] = '+';
+        }
+    }
+
+    //obstacles
+
+    for (int i = 39; i < 40; i++)
+    {
+        for (int j = 0; j < 15; j++)
+        {
+            map[j][i] = '+';
+        }
+    }
+
+
+    for (int i = 1; i < 4; i++)
+    {
+        for (int j = 1; j < 3; j++)
+        {
+            map[j][i] = '+';
+        }
+    }
+
     for (int i = 12; i < 17; i++)
     {
         for (int j = 3; j < 5; j++)
@@ -691,47 +757,44 @@ void FirstRoomArray()
         }
     }
 
-    //horz obs in middle left
     for (int i = 5; i < 13; i++)
     {
-        map[7][i] = '+';
+        map[8][i] = '+';
     }
 
-    //horz obs below E
     for (int i = 35; i < 40; i++)
     {
-        map[3][i] = '+';
+        map[4][i] = '+';
     }
 
-    // L shape horz obs
     for (int i = 30; i < 35; i++)
     {
         map[10][i] = '+';
     }
 
-    //vert obs beside spawn pt
-    for (int j = 13; j < 15; j++)
+    for (int j = 12; j < 15; j++)
     {
         map[j][21] = '+';
     }
 
-    //horz obs near spawn pt
-    for (int i = 15; i < 21; i++)
+    for (int i = 15; i < 22; i++)
     {
-        map[13][i] = '+';
+        map[12][i] = '+';
     }
 
-    //vert obs near exit pt
     for (int j = 1; j < 5; j++)
     {
         map[j][26] = '+';
     }
-    // L shape vert obs
+
     for (int j = 8; j < 10; j++)
     {
         map[j][30] = '+';
     }
+
+    a = true;
 }
+
 
 void SecondRoom()
 {
@@ -809,94 +872,6 @@ void SecondRoom()
             g_Console.writeToBuffer(i, j, "+", 0xB20);
         }
     }
-}
-
-void SecondRoomArray()
-{
-    //array to detect things
-    for (int x = 0; x < 12; ++x)
-    {
-        for (int y = 0; y < 49; ++y)
-        {
-            map2[x][y] = '-';
-        }
-    }
-    //walls in 4 sides
-    for (int i = 0; i < 49; i++)
-    {
-        map2[0][i] = '+';
-        map2[11][i] = '+';
-    }
-    for (int j = 0; j < 12; j++)
-    {
-        map2[j][0] = '+';
-        map2[j][48] = '+';
-    }
-    /* Starting pt */
-    map[1][1] = 'P';
-
-    /* Obstacles (i = horz | j = vert) */
-
-    //box obs on top left corner
-    for (int i = 1; i < 10; i++)
-    {
-        for (int j = 3; j < 5; j++)
-        {
-            map2[j][i] = '+';
-        }
-    }
-
-    //box obs on the right
-    for (int i = 35; i < 43; i++)
-    {
-        for (int j = 4; j < 6; j++)
-        {
-            map2[j][i] = '+';
-        }
-    }
-
-    //L shape horz obs 
-    for (int i = 33; i < 36; i++)
-    {
-        map2[10][i] = '+';
-    }
-
-    //reverse L shape horz obs
-    for (int i = 10; i < 21; i++)
-    {
-        map2[8][i] = '+';
-    }
-
-    // horz obs on top of exit
-    for (int i = 42; i < 48; i++)
-    {
-        map2[8][i] = '+';
-    }
-
-    //reverse L shape vert obs
-    for (int i = 18; i < 21; i++)
-    {
-        for (int j = 5; j < 8; j++)
-        {
-            map2[j][i] = '+';
-        }
-    }
-
-    //vert obs on the top of the middle
-    for (int j = 1; j < 4; j++)
-    {
-        map2[j][27] = '+';
-    }
-
-    //L shape vert obs
-    for (int i = 30; i < 33; i++)
-    {
-        for (int j = 8; j < 11; j++)
-        {
-            map2[j][i] = '+';
-        }
-    }
-
 }
 
 void TPRoom()
@@ -981,6 +956,75 @@ void resetroom()
     g_Console.clearBuffer(0);          //Resets the whole map
 
 }
+
+void spawnenemy()
+{
+    
+    while (spawn == false)
+    {
+        srand(time(NULL));
+        int gy = rand() % 40;
+        int gx = rand() % 15;
+        if (map[gx][gy] == 'P')
+        {
+            spawn = false;
+        }
+        else if (map[gx][gy] == '+')
+        {
+            spawn = false;
+        }
+        else if (map[gx][gy] == 'D')
+        {
+            spawn = false;
+        }
+        else if (map[gx][gy] == 'G')
+        {
+            spawn = false;
+        }
+        else
+        {
+            map[gx][gy] = 'G';
+            g_Console.writeToBuffer(gy + 19, gx + 2, "G", FOREGROUND_RED);
+            spawn = true;
+            int b = rand() % 4;
+
+        }
+    }
+
+    while (spawn2 == false)
+    {
+        srand(time(NULL));
+        int gy2 = rand() % 40;
+        int gx2 = rand() % 15;
+        if (map[gx2][gy2] == 'P')
+        {
+            spawn = false;
+        }
+        else if (map[gx2][gy2] == '+')
+        {
+            spawn = false;
+        }
+        else if (map[gx2][gy2] == 'D')
+        {
+            spawn = false;
+        }
+        else if (map[gx2][gy2] == 'G')
+        {
+            spawn = false;
+        }
+        else
+        {
+            map[gx2][gy2] = 'G';
+            g_Console.writeToBuffer(gy2 + 19,gx2 + 2, "G", FOREGROUND_RED);
+            spawn2 = true;
+            int b = rand() % 4;
+        }
+    }
+}
+
+
+
+
 
 bool gettoiletpaper()
 {
