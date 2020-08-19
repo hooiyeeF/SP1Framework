@@ -1335,7 +1335,7 @@ void TPRoomArray()
         map3[14][i] = '+';
     }
     // thick wall in the middle of the map
-    for (int i = 1; i < 14; i++)
+    for (int i = 1; i < 10; i++)
     {
         for (int j = 8; j < 10; j++)
         {
