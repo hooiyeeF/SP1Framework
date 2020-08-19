@@ -15,6 +15,7 @@ SKeyEvent g_skKeyEvent[K_COUNT];
 SMouseEvent g_mouseEvent;
 char map[16][41];
 char map2[12][49];
+char map3[18][33];
 bool gamestart = false;
 
 
@@ -57,6 +58,7 @@ void init( void )
 
     FirstRoomArray();
     SecondRoomArray();
+    TPRoomArray();
 }
 
 //--------------------------------------------------------------
@@ -274,6 +276,9 @@ void updateGame2()
 
 void updateGame3()
 {
+    processUserInput(); // checks if you should change states or do something else with the game, e.g. pause, exit
+    moveCharacter3();    // moves the character, collision detection, physics, etc
+                        // sound can be played here too.
 }
 void updateGame4()
 {
@@ -419,6 +424,108 @@ void moveCharacter2()
         g_sChar.m_bActive = !g_sChar.m_bActive;
     }
 }
+
+void moveCharacter3()
+{
+    // Updating the location of the character based on the key release
+    // providing a beep sound whenver we shift the character
+    if (g_skKeyEvent[K_UP].keyDown && chara.y > 0)
+    {
+        if (map3[chara.y - 1][chara.x - 24] == '-')
+        {
+            map3[chara.y - 1][chara.x - 24] = 'P';
+            map3[chara.y][chara.x - 24] = '-';
+            //Beep(1440, 30);
+            chara.y--;
+        }
+        if (map3[chara.y - 1][chara.x - 24] == 'G')
+        {
+            Beep(1440, 30);
+            g_eGameState = S_LOSE;
+        }
+        if (map3[chara.y - 1][chara.x - 24] == 'T')
+        {
+            map3[chara.y - 1][chara.x - 24] = 'P';
+            map3[chara.y][chara.x - 24] = '-';
+            Beep(1440, 30);
+            chara.y--;
+            gettoiletpaper();
+        }
+    }
+    if (g_skKeyEvent[K_LEFT].keyDown && chara.x > 0)
+    {
+        if (map3[chara.y][chara.x - 25] == '-')
+        {
+            map3[chara.y][chara.x - 25] = 'P';
+            map3[chara.y][chara.x - 24] = '-';
+            //Beep(1440, 30);
+            chara.x--;
+        }
+        if (map3[chara.y][chara.x - 25] == 'G')
+        {
+            Beep(1440, 30);
+            g_eGameState = S_LOSE;
+        }
+        if (map3[chara.y - 1][chara.x - 24] == 'T')
+        {
+            map3[chara.y][chara.x - 25] = 'P';
+            map3[chara.y][chara.x - 24] = '-';
+            Beep(1440, 30);
+            chara.x--;
+            gettoiletpaper();
+        }
+    }
+    if (g_skKeyEvent[K_DOWN].keyDown && chara.y < g_Console.getConsoleSize().Y - 1)
+    {
+        if (map3[chara.y + 1][chara.x - 24] == '-')
+        {
+            map3[chara.y + 1][chara.x - 24] = 'P';
+            map3[chara.y][chara.x - 24] = '-';
+            //Beep(1440, 30);
+            chara.y++;
+        }
+        if (map3[chara.y + 1][chara.x - 24] == 'G')
+        {
+            Beep(1440, 30);
+            g_eGameState = S_LOSE;
+        }
+        if (map3[chara.y - 1][chara.x - 24] == 'T')
+        {
+            map3[chara.y + 1][chara.x - 24] = 'P';
+            map3[chara.y][chara.x - 24] = '-';
+            Beep(1440, 30);
+            chara.y++;
+            gettoiletpaper();
+        }
+    }
+    if (g_skKeyEvent[K_RIGHT].keyDown && chara.x < g_Console.getConsoleSize().X - 1)
+    {
+        if (map3[chara.y][chara.x - 23] == '-')
+        {
+            map3[chara.y][chara.x - 23] = 'P';
+            map3[chara.y][chara.x - 24] = '-';
+            //Beep(1440, 30);
+            chara.x++;
+        }
+        if (map3[chara.y][chara.x - 23] == 'G')
+        {
+            Beep(1440, 30);
+            g_eGameState = S_LOSE;
+        }
+        if (map3[chara.y - 1][chara.x - 24] == 'T')
+        {
+            map3[chara.y][chara.x - 23] = 'P';
+            map3[chara.y][chara.x - 24] = '-';
+            Beep(1440, 30);
+            chara.x++;
+            gettoiletpaper();
+        }
+    }
+    if (g_skKeyEvent[K_SPACE].keyDown)
+    {
+        g_sChar.m_bActive = !g_sChar.m_bActive;
+    }
+}
 void processUserInput()
 {
     // quits the game if player hits the escape key
@@ -466,6 +573,8 @@ void render()
     renderFramerate();      // renders debug information, frame rate, elapsed time, etc
     renderInputEvents();    // renders status of input events
     renderToScreen();       // dump the contents of the buffer to the screen, one frame worth of game
+    if (gettoiletpaper() == true)
+        rendertoiletpaper();
 }
 
 void clearScreen()
@@ -550,7 +659,6 @@ void renderTPRoom()
     //renderCharacter();   // renders the character into the buffer
     chara.draw(g_Console);
     gara.drawG3(g_Console);
-    rendertoiletpaper();
 
     /* Go to the last room */
     if (chara.x == 40 && chara.y == 16)
@@ -926,7 +1034,6 @@ void FirstRoomArray()
     }
 }
 
-
 void SecondRoom()
 {
     int wallX = 15;
@@ -1115,8 +1222,8 @@ void TPRoom()
     g_Console.writeToBuffer(25, 1, "S", 0x5E);
     /* Ending pt */
     g_Console.writeToBuffer(40, 16, "E", 0x5E);
-    /* Spawn toilet paper({48,8},{49,8}) */
-    g_Console.writeToBuffer(48, 8, "TP", 0xF0);
+    /* Spawn toilet paper */
+    g_Console.writeToBuffer(49, 8, "T", 0xF0);
 
     /* Walls around toiletpaper spawn pt */
     for (int j = 6; j < 11; j++)
@@ -1160,6 +1267,87 @@ void TPRoom()
     for (int i = 41; i < 46; i++)
     {
         g_Console.writeToBuffer(i, 3, "+", 0xB20);
+    }
+}
+
+void TPRoomArray()
+{
+    
+    //array to detect things
+    for (int x = 0; x < 18; ++x)
+    {
+        for (int y = 0; y < 33; ++y)
+        {
+            map3[x][y] = '-';
+        }
+    }
+    //walls in 4 sides
+    for (int i = 0; i < 33; i++)
+    {
+        map3[0][i] = '+';
+        map3[17][i] = '+';
+    }
+    for (int j = 0; j < 18; j++)
+    {
+        map3[j][0] = '+';
+        map3[j][32] = '+';
+    }
+    /* Starting pt */
+    map3[1][1] = 'P';
+
+    /* Spawn toilet paper({48,8},{49,8}) */
+    map3[7][25] = 'T';
+
+    /* Walls around toiletpaper spawn pt */
+    for (int j = 6; j < 11; j++)
+    {
+        map3[j][23] = '+';
+    }
+    for (int i = 24; i < 28; i++)
+    {
+        map3[6][i] = '+';
+        map3[10][i] = '+';
+    }
+    // vert wall beside spawn pt
+    for (int i = 5; i < 8; i++)
+    {
+        for (int j = 1; j < 4; j++)
+        {
+            map3[j][i] = '+';
+        }
+    }
+    // wall around exit pt
+    for (int i = 18; i < 20; i++)
+    {
+        for (int j = 14; j < 17; j++)
+        {
+            map3[j][i] = '+';
+        }
+    }
+    for (int i = 14; i < 19; i++)
+    {
+        map3[14][i] = '+';
+    }
+    // thick wall in the middle of the map
+    for (int i = 1; i < 14; i++)
+    {
+        for (int j = 8; j < 10; j++)
+        {
+            map3[j][i] = '+';
+        }
+    }
+    // horz wall on top of the map
+    for (int i = 17; i < 22; i++)
+    {
+        map3[3][i] = '+';
+    }
+    for (int x = 0; x < 18; ++x)
+    {
+        for (int y = 0; y < 33; ++y)
+        {
+            std::cout << map3[x][y];
+        }
+        std::cout << "" << std::endl;
     }
 }
 

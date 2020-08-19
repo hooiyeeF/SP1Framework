@@ -68,6 +68,7 @@ void updateGame3();         // 3rd room gameplay logic
 void updateGame4();         // 4th room gameplay logic
 void moveCharacter();       // moves the character, collision detection, physics, etc
 void moveCharacter2();      // moves the character, collision detection, physics, etc in the 2nd room
+void moveCharacter3();      // moves the character, collision detection, physics, etc in the 2nd room
 void processUserInput();    // checks if you should change states or do something else with the game, e.g. pause, exit
 void GoToGamePlay();        // check if user hit space key to start game
 void PlayAgain();           // check if user hit key to restart the game
@@ -77,10 +78,11 @@ void renderGame();          // renders the game stuff
 void renderSecondRoom();    // render second game room
 void renderTPRoom();
 void FirstRoom();           // render first game room
-void FirstRoomArray();      // first room array
+void FirstRoomArray();      // First Room Array
 void SecondRoom();          
-void SecondRoomArray();      // second room array
+void SecondRoomArray();     // Second Room Array
 void TPRoom();
+void TPRoomArray();         // TP Room Array
 void EndRoom();
 void renderLoseScreen();
 void renderMap();           // renders the map to the buffer first
