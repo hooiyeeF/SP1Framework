@@ -3,6 +3,7 @@
 //
 #include "game.h"
 #include "Framework\console.h"
+#include "Player.h"
 #include <iostream>
 #include <iomanip>
 #include <sstream>
@@ -16,6 +17,8 @@ bool a = false;
 bool spawn = false;
 bool spawn2 = false;
 bool gamestart = false;
+
+Player chara;
 
 // Game specific variables here
 SGameChar   g_sChar;
@@ -41,6 +44,8 @@ void init( void )
     g_sChar.m_cLocation.X = g_Console.getConsoleSize().X / 2 - 1;
     g_sChar.m_cLocation.Y = g_Console.getConsoleSize().Y / 2;
     g_sChar.m_bActive = true;
+    chara.x = g_Console.getConsoleSize().X / 2 - 1;
+    chara.y = g_Console.getConsoleSize().Y / 2;
 
     // sets the width, height and the font name to use in the console
     g_Console.setConsoleFont(0, 16, L"Consolas");
@@ -256,23 +261,27 @@ void moveCharacter()
     if (g_skKeyEvent[K_UP].keyDown && g_sChar.m_cLocation.Y > 0)
     {
         //Beep(1440, 30);
-        g_sChar.m_cLocation.Y--;       
+        g_sChar.m_cLocation.Y--;
+        chara.y--;
     }
     if (g_skKeyEvent[K_LEFT].keyDown && g_sChar.m_cLocation.X > 0)
     {
         gamestart = true;
         //Beep(1440, 30);
-        g_sChar.m_cLocation.X--;        
+        g_sChar.m_cLocation.X--;
+        chara.x--;
     }
     if (g_skKeyEvent[K_DOWN].keyDown && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1)
     {
         //Beep(1440, 30);
-        g_sChar.m_cLocation.Y++;        
+        g_sChar.m_cLocation.Y++;   
+        chara.y++;
     }
     if (g_skKeyEvent[K_RIGHT].keyDown && g_sChar.m_cLocation.X < g_Console.getConsoleSize().X - 1)
     {
         //Beep(1440, 30);
-        g_sChar.m_cLocation.X++;        
+        g_sChar.m_cLocation.X++;  
+        chara.x++;
     }
     if (g_skKeyEvent[K_SPACE].keyDown)
     {
@@ -353,7 +362,8 @@ void renderGame()
 {
     FirstRoom();        //render first game room
     renderMap();        // renders the map to the buffer first
-    renderCharacter();  // renders the character into the buffer
+    //renderCharacter();  // renders the character into the buffer
+    chara.draw(g_Console);
     rendertoiletpaper();     // renders toiletpaper *** add bool statement to check if toilet paper is collected then display ***
     while (a == true)
     {
