@@ -238,11 +238,11 @@ void update(double dt)
             break;
         case S_GAME: updateGame(); // gameplay logic when we are in the game
             break;
-        case S_NEXTROOM: updateGame();
+        case S_NEXTROOM: updateGame2();
             break;
-        case S_TPROOM: updateGame();
+        case S_TPROOM: updateGame3();
             break;
-        case S_ENDROOM: updateGame();
+        case S_ENDROOM: updateGame4();
             break;
     }
 }
@@ -259,6 +259,20 @@ void updateGame()       // gameplay logic
     processUserInput(); // checks if you should change states or do something else with the game, e.g. pause, exit
     moveCharacter();    // moves the character, collision detection, physics, etc
                         // sound can be played here too.
+}
+
+void updateGame2()
+{
+    processUserInput(); // checks if you should change states or do something else with the game, e.g. pause, exit
+    moveCharacter2();    // moves the character, collision detection, physics, etc
+                        // sound can be played here too.
+}
+
+void updateGame3()
+{
+}
+void updateGame4()
+{
 }
 
 void moveCharacter()
@@ -312,6 +326,56 @@ void moveCharacter()
     }
 }
 
+void moveCharacter2()
+{
+    // Updating the location of the character based on the key release
+    // providing a beep sound whenver we shift the character
+    if (g_skKeyEvent[K_UP].keyDown && chara.y > 0)
+    {
+        if (map[chara.y - 4][chara.x - 15] == '-')
+        {
+            map[chara.y - 4][chara.x - 15] = 'P';
+            map[chara.y - 3][chara.x - 15] = '-';
+            //Beep(1440, 30);
+            chara.y--;
+        }
+    }
+    if (g_skKeyEvent[K_LEFT].keyDown && chara.x > 0)
+    {
+        if (map[chara.y - 3][chara.x - 16] == '-')
+        {
+            gamestart = true;
+            map[chara.y - 3][chara.x - 16] = 'P';
+            map[chara.y - 3][chara.x - 15] = '-';
+            //Beep(1440, 30);
+            chara.x--;
+        }
+    }
+    if (g_skKeyEvent[K_DOWN].keyDown && chara.y < g_Console.getConsoleSize().Y - 1)
+    {
+        if (map[chara.y - 2][chara.x - 15] == '-')
+        {
+            map[chara.y - 2][chara.x - 15] = 'P';
+            map[chara.y - 3][chara.x - 15] = '-';
+            //Beep(1440, 30);
+            chara.y++;
+        }
+    }
+    if (g_skKeyEvent[K_RIGHT].keyDown && chara.x < g_Console.getConsoleSize().X - 1)
+    {
+        if (map[chara.y - 3][chara.x - 15] == '-')
+        {
+            map[chara.y - 3][chara.x - 15] = 'P';
+            map[chara.y - 3][chara.x - 15] = '-';
+            //Beep(1440, 30);
+            chara.x++;
+        }
+    }
+    if (g_skKeyEvent[K_SPACE].keyDown)
+    {
+        g_sChar.m_bActive = !g_sChar.m_bActive;
+    }
+}
 void processUserInput()
 {
     // quits the game if player hits the escape key
@@ -393,10 +457,10 @@ void renderGame()
     /* Go to Second room */
     if (chara.x == 58 && chara.y == 2)
     {
-        g_eGameState = S_NEXTROOM;
 
         chara.x = 16; //character position for second room
         chara.y = 4;
+        g_eGameState = S_NEXTROOM;
     }
 
 }
