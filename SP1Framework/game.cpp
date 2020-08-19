@@ -245,8 +245,7 @@ void update(double dt)
             break;
         case S_ENDROOM: updateGame4();
             break;
-        case S_LOSE:
-            processUserInput();
+        case S_LOSE: processUserInput();
             PlayAgain();
             break;
     }
@@ -435,6 +434,13 @@ void PlayAgain()
 {
     if (g_skKeyEvent[K_SPACE].keyReleased)
         g_eGameState = S_SPLASHSCREEN;
+
+    reset();
+}
+void reset()
+{
+    chara.x = g_Console.getConsoleSize().X / 2 - 1;
+    chara.y = g_Console.getConsoleSize().Y / 2;
 }
 
 //--------------------------------------------------------------
