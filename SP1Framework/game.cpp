@@ -107,7 +107,9 @@ void keyboardHandler(const KEY_EVENT_RECORD& keyboardEvent)
         break;
     case S_GAME: gameplayKBHandler(keyboardEvent); // handle gameplay keyboard event 
         break;
-    case S_NextRoom: gameplayKBHandler(keyboardEvent); // handle gameplay keyboard event 
+    case S_NEXTROOM: gameplayKBHandler(keyboardEvent); // handle gameplay keyboard event 
+        break;
+    case S_TPROOM: gameplayKBHandler(keyboardEvent); // handle gameplay keyboard event 
         break;
     }
 }
@@ -135,6 +137,10 @@ void mouseHandler(const MOUSE_EVENT_RECORD& mouseEvent)
     case S_SPLASHSCREEN: // don't handle anything for the splash screen
         break;
     case S_GAME: gameplayMouseHandler(mouseEvent); // handle gameplay mouse event
+        break;
+    case S_NEXTROOM: gameplayMouseHandler(mouseEvent); // handle gameplay mouse event
+        break;
+    case S_TPROOM: gameplayMouseHandler(mouseEvent); // handle gameplay mouse event
         break;
     }
 }
@@ -220,7 +226,11 @@ void update(double dt)
             break;
         case S_GAME: updateGame(); // gameplay logic when we are in the game
             break;
-        case S_NextRoom: updateGame();
+        case S_NEXTROOM: updateGame();
+            break;
+        case S_TPROOM: updateGame();
+            break;
+        case S_ENDROOM: updateGame();
             break;
     }
 }
@@ -301,7 +311,9 @@ void render()
         break;
     case S_GAME: renderGame();
         break;
-    case S_NextRoom: renderSecondRoom();
+    case S_NEXTROOM: renderSecondRoom();
+        break;
+    case S_TPROOM: renderTPRoom();
         break;
     }
     renderFramerate();      // renders debug information, frame rate, elapsed time, etc
@@ -350,7 +362,7 @@ void renderGame()
     /* Go to Second room */
     if (g_sChar.m_cLocation.X == 58 && g_sChar.m_cLocation.Y == 2)
     {
-        g_eGameState = S_NextRoom;
+        g_eGameState = S_NEXTROOM;
 
         g_sChar.m_cLocation.X = 16; //character position for second room
         g_sChar.m_cLocation.Y = 4;
@@ -366,7 +378,24 @@ void renderSecondRoom()
     renderCharacter();  // renders the character into the buffer
     rendertoiletpaper();
 
+    /* Go to toilet paper room */
+    if (g_sChar.m_cLocation.X == 62 && g_sChar.m_cLocation.Y == 13)
+    {
+        g_eGameState = S_TPROOM;
 
+        g_sChar.m_cLocation.X = 25; //character position for second room
+        g_sChar.m_cLocation.Y = 1;
+    }
+
+}
+
+void renderTPRoom()
+{
+    clearScreen();
+    TPRoom();            //render Toilet paper room
+    renderMap();         // renders the map to the buffer first
+    renderCharacter();   // renders the character into the buffer
+    rendertoiletpaper();
 }
 
 void renderMap()
