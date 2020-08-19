@@ -339,14 +339,16 @@ void renderSplashScreen()  // renders the splash screen
 {
     COORD c = g_Console.getConsoleSize();
     c.Y /= 2;
-    c.X = c.X / 2 - 9;
- //   g_Console.writeToBuffer(c, "A game in 3 seconds", 0x03);
+    c.X = c.X / 2 - 10;
+    g_Console.writeToBuffer(c, "Bob needed a toilet paper.", 0x07);
     c.Y += 1;
+    c.X = g_Console.getConsoleSize().X / 2 - 25;
+    g_Console.writeToBuffer(c, "Help him to get a toilet paper and escape the factory!  ", 0x07);
+    c.Y += 5;
     c.X = g_Console.getConsoleSize().X / 2 -10;
-    g_Console.writeToBuffer(c, "Press <Space> to start", 0x09);
+    g_Console.writeToBuffer(c, "Press <Space> to start", 0x5E);
     c.Y += 1;
-    c.X = g_Console.getConsoleSize().X / 2 - 10;
- //   g_Console.writeToBuffer(c, "Press 'Esc' to quit", 0x09);
+  
 }
 
 void renderGame()
@@ -354,7 +356,7 @@ void renderGame()
     FirstRoom();        //render first game room
     renderMap();        // renders the map to the buffer first
     renderCharacter();  // renders the character into the buffer
-    rendertoiletpaper();     // renders toiletpaper *** add bool statement to check if toilet paper is collected then display ***
+   // rendertoiletpaper();     // renders toiletpaper *** add bool statement to check if toilet paper is collected then display ***
     while (a == true)
     {
         FirstRoomArray();
@@ -376,7 +378,7 @@ void renderSecondRoom()
     SecondRoom();       //render second room
     renderMap();        // renders the map to the buffer first
     renderCharacter();  // renders the character into the buffer
-    rendertoiletpaper();
+  //  rendertoiletpaper();
 
     /* Go to toilet paper room */
     if (g_sChar.m_cLocation.X == 62 && g_sChar.m_cLocation.Y == 13)
@@ -395,7 +397,7 @@ void renderTPRoom()
     TPRoom();            //render Toilet paper room
     renderMap();         // renders the map to the buffer first
     renderCharacter();   // renders the character into the buffer
-    rendertoiletpaper();
+  //  rendertoiletpaper();
 }
 
 void renderMap()
