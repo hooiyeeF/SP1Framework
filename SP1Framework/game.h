@@ -43,6 +43,8 @@ enum EGAMESTATES
     S_NEXTROOM,
     S_TPROOM,
     S_ENDROOM,
+    S_WIN,
+    S_LOSE,
     S_COUNT
 };
 
@@ -61,7 +63,11 @@ void shutdown    ( void );      // do clean up, free memory
 
 void splashScreenWait();    // waits for time to pass in splash screen
 void updateGame();          // gameplay logic
+void updateGame2();         // 2nd room gameplay logic
+void updateGame3();         // 3rd room gameplay logic
+void updateGame4();         // 4th room gameplay logic
 void moveCharacter();       // moves the character, collision detection, physics, etc
+void moveCharacter2();      // moves the character, collision detection, physics, etc in the 2nd room
 void processUserInput();    // checks if you should change states or do something else with the game, e.g. pause, exit
 void GoToGamePlay();        // check if user hit space key to start game
 void clearScreen();         // clears the current screen and draw from scratch 
@@ -74,6 +80,8 @@ void FirstRoomArray();      // first room array
 void SecondRoom();          
 void SecondRoomArray();      // second room array
 void TPRoom();
+void EndRoom();
+void renderLoseScreen();
 void renderMap();           // renders the map to the buffer first
 void rendertoiletpaper();   //renders the toilet paper when collected
 void renderCharacter();     // renders the character into the buffer

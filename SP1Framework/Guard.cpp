@@ -42,3 +42,4 @@ void Guard::drawG3(Console& g_console)
 	g_console.writeToBuffer(d, (char)1, charColor);
 	g_console.writeToBuffer(e, (char)1, charColor);
 };
+

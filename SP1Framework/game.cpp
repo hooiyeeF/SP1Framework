@@ -234,11 +234,11 @@ void update(double dt)
             break;
         case S_GAME: updateGame(); // gameplay logic when we are in the game
             break;
-        case S_NEXTROOM: updateGame();
+        case S_NEXTROOM: updateGame2();
             break;
-        case S_TPROOM: updateGame();
+        case S_TPROOM: updateGame3();
             break;
-        case S_ENDROOM: updateGame();
+        case S_ENDROOM: updateGame4();
             break;
     }
 }
@@ -256,6 +256,20 @@ void updateGame()       // gameplay logic
                         // sound can be played here too.
 }
 
+void updateGame2()
+{
+    processUserInput(); // checks if you should change states or do something else with the game, e.g. pause, exit
+    moveCharacter2();    // moves the character, collision detection, physics, etc
+                        // sound can be played here too.
+}
+
+void updateGame3()
+{
+}
+void updateGame4()
+{
+}
+
 void moveCharacter()
 {
     // Updating the location of the character based on the key release
@@ -269,6 +283,11 @@ void moveCharacter()
             //Beep(1440, 30);
             chara.y--;
         }
+        else if (map[chara.y - 2][chara.x - 19] == 'G')
+        {
+            Beep(1440, 30);
+            g_eGameState = S_LOSE;
+        }
     }
     if (g_skKeyEvent[K_LEFT].keyDown && chara.x > 0)
     {
@@ -280,6 +299,11 @@ void moveCharacter()
             //Beep(1440, 30);
             chara.x--;
         }
+        if (map[chara.y - 1][chara.x - 20] == 'G')
+        {
+            Beep(1440, 30);
+            g_eGameState = S_LOSE;
+        }
     }
     if (g_skKeyEvent[K_DOWN].keyDown && chara.y < g_Console.getConsoleSize().Y - 1)
     {
@@ -289,6 +313,11 @@ void moveCharacter()
             map[chara.y - 1][chara.x - 19] = '-';
             //Beep(1440, 30);
             chara.y++;
+        }
+        if (map[chara.y][chara.x - 19] == 'G')
+        {
+            Beep(1440, 30);
+            g_eGameState = S_LOSE;
         }
     }
     if (g_skKeyEvent[K_RIGHT].keyDown && chara.x < g_Console.getConsoleSize().X - 1)
@@ -300,6 +329,11 @@ void moveCharacter()
             //Beep(1440, 30);
             chara.x++;
         }
+        if (map[chara.y - 1][chara.x - 18] == 'G')
+        {
+            Beep(1440, 30);
+            g_eGameState = S_LOSE;
+        }
     }
     if (g_skKeyEvent[K_SPACE].keyDown)
     {
@@ -307,6 +341,56 @@ void moveCharacter()
     }
 }
 
+void moveCharacter2()
+{
+    // Updating the location of the character based on the key release
+    // providing a beep sound whenver we shift the character
+    if (g_skKeyEvent[K_UP].keyDown && chara.y > 0)
+    {
+        if (map[chara.y - 4][chara.x - 15] == '-')
+        {
+            map[chara.y - 4][chara.x - 15] = 'P';
+            map[chara.y - 3][chara.x - 15] = '-';
+            //Beep(1440, 30);
+            chara.y--;
+        }
+    }
+    if (g_skKeyEvent[K_LEFT].keyDown && chara.x > 0)
+    {
+        if (map[chara.y - 3][chara.x - 16] == '-')
+        {
+            gamestart = true;
+            map[chara.y - 3][chara.x - 16] = 'P';
+            map[chara.y - 3][chara.x - 15] = '-';
+            //Beep(1440, 30);
+            chara.x--;
+        }
+    }
+    if (g_skKeyEvent[K_DOWN].keyDown && chara.y < g_Console.getConsoleSize().Y - 1)
+    {
+        if (map[chara.y - 2][chara.x - 15] == '-')
+        {
+            map[chara.y - 2][chara.x - 15] = 'P';
+            map[chara.y - 3][chara.x - 15] = '-';
+            //Beep(1440, 30);
+            chara.y++;
+        }
+    }
+    if (g_skKeyEvent[K_RIGHT].keyDown && chara.x < g_Console.getConsoleSize().X - 1)
+    {
+        if (map[chara.y - 3][chara.x - 15] == '-')
+        {
+            map[chara.y - 3][chara.x - 15] = 'P';
+            map[chara.y - 3][chara.x - 15] = '-';
+            //Beep(1440, 30);
+            chara.x++;
+        }
+    }
+    if (g_skKeyEvent[K_SPACE].keyDown)
+    {
+        g_sChar.m_bActive = !g_sChar.m_bActive;
+    }
+}
 void processUserInput()
 {
     // quits the game if player hits the escape key
@@ -340,6 +424,10 @@ void render()
     case S_NEXTROOM: renderSecondRoom();
         break;
     case S_TPROOM: renderTPRoom();
+        break;
+    case S_ENDROOM: renderTPRoom();
+        break;
+    case S_LOSE: renderLoseScreen();
         break;
     }
     renderFramerate();      // renders debug information, frame rate, elapsed time, etc
@@ -394,10 +482,10 @@ void renderGame()
     /* Go to Second room */
     if (chara.x == 58 && chara.y == 2)
     {
-        g_eGameState = S_NEXTROOM;
 
         chara.x = 16; //character position for second room
         chara.y = 4;
+        g_eGameState = S_NEXTROOM;
     }
 }
 
@@ -428,7 +516,24 @@ void renderTPRoom()
     renderMap();         // renders the map to the buffer first
     renderCharacter();   // renders the character into the buffer
     gara.drawG3(g_Console);
-  //  rendertoiletpaper();
+    rendertoiletpaper();
+
+    /* Go to the last room */
+    if (g_sChar.m_cLocation.X == 40 && g_sChar.m_cLocation.Y == 16)
+    {
+        g_eGameState = S_ENDROOM;
+
+        g_sChar.m_cLocation.X = 40; //character position for second room
+        g_sChar.m_cLocation.Y = 2;
+    }
+}
+
+void renderEndRoom()
+{
+    clearScreen();
+    EndRoom();            //render Toilet paper room
+    renderMap();         // renders the map to the buffer first
+    renderCharacter();   // renders the character into the buffer
 }
 
 void renderMap()
@@ -711,6 +816,8 @@ void FirstRoomArray()
     }
     //player
     map[14][20] = 'P';
+    //Guard
+    map[4][31] = 'G';
 
     //wall
     for (int i = 0; i < 41; i++)
@@ -1036,10 +1143,21 @@ void EndRoom()
         g_Console.writeToBuffer(59, wallY + j, "+", 0xB20);
     }
     /* Starting pt */
- //   g_Console.writeToBuffer(39, 15, "S", 0x5E);
+    g_Console.writeToBuffer(40, 2, "S", 0x5E);
 
     /* Ending pt */
- //   g_Console.writeToBuffer(58, 2, "E", 0x5E);
+    g_Console.writeToBuffer(58, 15, "E", 0x5E);
+}
+
+void renderLoseScreen()
+{
+    COORD c = g_Console.getConsoleSize();
+    c.Y /= 2;
+    c.X = c.X / 2 - 6;
+    g_Console.writeToBuffer(c, "L O S E !", 0x0A);
+    /*c.Y += 2;
+    c.X = g_Console.getConsoleSize().X / 2 - 3;
+    g_Console.writeToBuffer(c, "T H E", 0x0A);*/
 }
 
 void resetroom()
