@@ -12,7 +12,9 @@ double  g_dDeltaTime;
 SKeyEvent g_skKeyEvent[K_COUNT];
 SMouseEvent g_mouseEvent;
 char map[15][40];
-
+bool a = false;
+bool spawn = false;
+bool spawn2 = false;
 // Game specific variables here
 SGameChar   g_sChar;
 EGAMESTATES g_eGameState = S_SPLASHSCREEN; // initial state
@@ -329,15 +331,19 @@ void renderGame()
     renderMap();        // renders the map to the buffer first
     renderCharacter();  // renders the character into the buffer
     rendertoiletpaper();     // renders toiletpaper *** add bool statement to check if toilet paper is collected then display ***
-
+    while (a == true)
+    {
+        FirstRoomArray();
+    }
     /* Go to Second room */
     if (g_sChar.m_cLocation.X == 58 && g_sChar.m_cLocation.Y == 2)
     {
         g_eGameState = S_NextRoom;
 
-        g_sChar.m_cLocation.X = 16;
+        g_sChar.m_cLocation.X = 16; //character position for second room
         g_sChar.m_cLocation.Y = 4;
     }
+
 }
 
 void renderSecondRoom()
@@ -347,6 +353,8 @@ void renderSecondRoom()
     renderMap();        // renders the map to the buffer first
     renderCharacter();  // renders the character into the buffer
     rendertoiletpaper();
+
+
 }
 
 void renderMap()
@@ -586,14 +594,14 @@ void FirstRoom()
         g_Console.writeToBuffer(i, 11, "+", 0xB20);
     }
     //vert obs beside spawn pt
-    for (int j = 12; j < 16; j++)
+    for (int j = 14; j < 16; j++)
     {
         g_Console.writeToBuffer(40, j, "+", 0xB20);
     }
     //horz obs near spawn pt
     for (int i = 34; i < 40; i++)
     {
-        g_Console.writeToBuffer(i, 12, "+", 0xB20);
+        g_Console.writeToBuffer(i, 14, "+", 0xB20);
     }
     //vert obs near exit pt
     for (int j = 2; j < 6; j++)
@@ -605,6 +613,14 @@ void FirstRoom()
     {
         g_Console.writeToBuffer(49, j, "+", 0xB20);
     }
+        
+
+   
+}
+
+void FirstRoomArray()
+{
+   //array to detect things
     for (int x = 0; x < 15; ++x)
     {
         for (int y = 0; y < 40; ++y)
@@ -612,11 +628,9 @@ void FirstRoom()
             map[x][y] = ' ';
         }
     }
-
-    //array to detect things
-    //player
+   //player
     map[13][20] = 'P';
-
+    spawnenemy();
     //endpoint
     map[1][38] = 'D';
 
@@ -695,14 +709,14 @@ void FirstRoom()
         map[10][i] = '+';
     }
 
-    for (int j = 11; j < 15; j++)
+    for (int j = 12; j < 15; j++)
     {
         map[j][21] = '+';
     }
 
     for (int i = 15; i < 22; i++)
     {
-        map[10][i] = '+';
+        map[12][i] = '+';
     }
 
     for (int j = 1; j < 5; j++)
@@ -715,17 +729,9 @@ void FirstRoom()
         map[j][30] = '+';
     }
 
-
-    for (int x = 0; x < 15; ++x)
-    {
-        for (int y = 0; y < 40; ++y)
-        {
-            std::cout << map[x][y];
-        }
-        std::cout << "" << std::endl;
-    }
-
+    a = true;
 }
+
 
 void SecondRoom()
 {
@@ -890,7 +896,7 @@ void resetroom()
 
 void spawnenemy()
 {
-    bool spawn = false;
+    
     while (spawn == false)
     {
         srand(time(NULL));
@@ -922,8 +928,7 @@ void spawnenemy()
         }
     }
 
-    spawn = false;
-    while (spawn == false)
+    while (spawn2 == false)
     {
         srand(time(NULL));
         int gy2 = rand() % 40;
@@ -948,7 +953,7 @@ void spawnenemy()
         {
             map[gx2][gy2] = 'G';
             g_Console.writeToBuffer(gy2 + 19,gx2 + 2, "G", FOREGROUND_RED);
-            spawn = true;
+            spawn2 = true;
             int b = rand() % 4;
         }
     }
