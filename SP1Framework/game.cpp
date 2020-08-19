@@ -625,7 +625,7 @@ void renderSplashScreen()  // renders the splash screen
 
 void renderGame()
 {
-    FirstRoom();        //render first game room
+    EndRoom();        //render first game room
     renderMap();        // renders the map to the buffer first
     //renderCharacter();  // renders the character into the buffer
     chara.draw(g_Console);
@@ -1339,7 +1339,7 @@ void TPRoomArray()
         map3[14][i] = '+';
     }
     // thick wall in the middle of the map
-    for (int i = 1; i < 14; i++)
+    for (int i = 1; i < 10; i++)
     {
         for (int j = 8; j < 10; j++)
         {
@@ -1382,6 +1382,70 @@ void EndRoom()
 
     /* Ending pt */
     g_Console.writeToBuffer(58, 15, "E", 0x5E);
+
+    // thick wall next to the spawn pt
+    for (int i = 41; i < 47; i++)
+    {
+        for (int j = 2; j < 5; j++)
+        {
+            g_Console.writeToBuffer(i, j, "+", 0xB20);
+        }
+    }
+    for (int i = 25; i < 41; i++)
+    {
+        g_Console.writeToBuffer(i, 4, "+", 0xB20);
+    }
+
+    /* thick wall beside exit pt */
+    for (int i = 33; i < 41; i++)
+    {
+        for (int j = 13; j < 16; j++)
+        {
+            g_Console.writeToBuffer(i, j, "+", 0xB20);
+        }
+    }
+    for (int i = 39; i < 41; i++)
+    {
+        for (int j = 10; j < 13; j++)
+        {
+            g_Console.writeToBuffer(i, j, "+", 0xB20);
+        }
+    }
+    for (int i = 41; i < 53; i++)
+    {
+        g_Console.writeToBuffer(i, 10, "+", 0xB20);
+    }
+
+    // vert wall in the middle
+    for (int i = 33; i < 35; i++)
+    {
+        for (int j = 5; j < 11; j++)
+        {
+            g_Console.writeToBuffer(i, j, "+", 0xB20);
+        }
+    }
+    // horz wall at the top left corner
+    for (int i = 20; i < 28; i++)
+    {
+        g_Console.writeToBuffer(i, 7, "+", 0xB20);
+    }
+
+    // horz wall in the middle left 
+    for (int i = 26; i < 33; i++)
+    {
+        g_Console.writeToBuffer(i, 10, "+", 0xB20);
+    }
+
+    for (int j = 11; j < 14; j++)
+    {
+        g_Console.writeToBuffer(26, j, "+", 0xB20);
+    }
+
+    //horz wall on top of exit pt
+    for (int i = 50; i < 59; i++)
+    {
+        g_Console.writeToBuffer(i, 13, "+", 0xB20);
+    }
 }
 
 void renderLoseScreen()
