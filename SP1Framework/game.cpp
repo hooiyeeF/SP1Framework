@@ -7,6 +7,11 @@
 #include <iostream>
 #include <iomanip>
 #include <sstream>
+#include "Guard.h"
+
+
+
+
 
 double  g_dElapsedTime;
 double  g_dDeltaTime;
@@ -18,6 +23,8 @@ bool spawn = false;
 bool spawn2 = false;
 bool gamestart = false;
 
+
+Guard gara;
 Player chara;
 
 // Game specific variables here
@@ -366,6 +373,7 @@ void renderGame()
     renderMap();        // renders the map to the buffer first
     //renderCharacter();  // renders the character into the buffer
     chara.draw(g_Console);
+    gara.drawG1(g_Console);
     //rendertoiletpaper();     // renders toiletpaper *** add bool statement to check if toilet paper is collected then display ***
     while (a == true)
     {
@@ -388,6 +396,7 @@ void renderSecondRoom()
     SecondRoom();       //render second room
     renderMap();        // renders the map to the buffer first
     renderCharacter();  // renders the character into the buffer
+    gara.drawG2(g_Console);
   //  rendertoiletpaper();
 
     /* Go to toilet paper room */
@@ -407,6 +416,7 @@ void renderTPRoom()
     TPRoom();            //render Toilet paper room
     renderMap();         // renders the map to the buffer first
     renderCharacter();   // renders the character into the buffer
+    gara.drawG3(g_Console);
   //  rendertoiletpaper();
 }
 
