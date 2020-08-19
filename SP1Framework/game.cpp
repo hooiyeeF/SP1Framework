@@ -714,6 +714,8 @@ void FirstRoomArray()
     }
     //player
     map[14][20] = 'P';
+    //Guard
+    map[4][31] = 'G';
 
     //wall
     for (int i = 0; i < 41; i++)
