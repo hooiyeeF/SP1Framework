@@ -482,10 +482,10 @@ void renderGame()
     /* Go to Second room */
     if (chara.x == 58 && chara.y == 2)
     {
+        g_eGameState = S_NEXTROOM;
 
         chara.x = 16; //character position for second room
         chara.y = 4;
-        g_eGameState = S_NEXTROOM;
     }
 }
 
