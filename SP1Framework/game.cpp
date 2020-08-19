@@ -693,7 +693,6 @@ void FirstRoomArray()
     }
    //player
     map[13][20] = 'P';
-    spawnenemy();
     //endpoint
     map[1][38] = 'D';
 
