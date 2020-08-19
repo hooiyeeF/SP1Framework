@@ -56,6 +56,7 @@ void init( void )
     g_Console.setMouseHandler(mouseHandler);
 
     FirstRoomArray();
+    SecondRoomArray();
 }
 
 //--------------------------------------------------------------
@@ -355,43 +356,62 @@ void moveCharacter2()
     // providing a beep sound whenver we shift the character
     if (g_skKeyEvent[K_UP].keyDown && chara.y > 0)
     {
-        if (map[chara.y - 4][chara.x - 15] == '-')
+        if (map2[chara.y - 4][chara.x - 15] == '-')
         {
-            map[chara.y - 4][chara.x - 15] = 'P';
-            map[chara.y - 3][chara.x - 15] = '-';
+            map2[chara.y - 4][chara.x - 15] = 'P';
+            map2[chara.y - 3][chara.x - 15] = '-';
             //Beep(1440, 30);
             chara.y--;
+        }
+        if (map2[chara.y - 4][chara.x - 15] == 'G')
+        {
+            Beep(1440, 30);
+            g_eGameState = S_LOSE;
         }
     }
     if (g_skKeyEvent[K_LEFT].keyDown && chara.x > 0)
     {
-        if (map[chara.y - 3][chara.x - 16] == '-')
+        if (map2[chara.y - 3][chara.x - 16] == '-')
         {
-            gamestart = true;
-            map[chara.y - 3][chara.x - 16] = 'P';
-            map[chara.y - 3][chara.x - 15] = '-';
+            map2[chara.y - 3][chara.x - 16] = 'P';
+            map2[chara.y - 3][chara.x - 15] = '-';
             //Beep(1440, 30);
             chara.x--;
+        }
+        if (map2[chara.y - 3][chara.x - 16] == 'G')
+        {
+            Beep(1440, 30);
+            g_eGameState = S_LOSE;
         }
     }
     if (g_skKeyEvent[K_DOWN].keyDown && chara.y < g_Console.getConsoleSize().Y - 1)
     {
-        if (map[chara.y - 2][chara.x - 15] == '-')
+        if (map2[chara.y - 2][chara.x - 15] == '-')
         {
-            map[chara.y - 2][chara.x - 15] = 'P';
-            map[chara.y - 3][chara.x - 15] = '-';
+            map2[chara.y - 2][chara.x - 15] = 'P';
+            map2[chara.y - 3][chara.x - 15] = '-';
             //Beep(1440, 30);
             chara.y++;
+        }
+        if (map2[chara.y - 2][chara.x - 15] == 'G')
+        {
+            Beep(1440, 30);
+            g_eGameState = S_LOSE;
         }
     }
     if (g_skKeyEvent[K_RIGHT].keyDown && chara.x < g_Console.getConsoleSize().X - 1)
     {
-        if (map[chara.y - 3][chara.x - 15] == '-')
+        if (map2[chara.y - 3][chara.x - 14] == '-')
         {
-            map[chara.y - 3][chara.x - 15] = 'P';
-            map[chara.y - 3][chara.x - 15] = '-';
+            map2[chara.y - 3][chara.x - 14] = 'P';
+            map2[chara.y - 3][chara.x - 15] = '-';
             //Beep(1440, 30);
             chara.x++;
+        }
+        if (map2[chara.y - 3][chara.x - 14] == 'G')
+        {
+            Beep(1440, 30);
+            g_eGameState = S_LOSE;
         }
     }
     if (g_skKeyEvent[K_SPACE].keyDown)
@@ -495,10 +515,10 @@ void renderGame()
     /* Go to Second room */
     if (chara.x == 58 && chara.y == 2)
     {
+        g_eGameState = S_NEXTROOM;
 
         chara.x = 16; //character position for second room
         chara.y = 4;
-        g_eGameState = S_NEXTROOM;
     }
 }
 
@@ -513,12 +533,12 @@ void renderSecondRoom()
   //  rendertoiletpaper();
 
     /* Go to toilet paper room */
-    if (g_sChar.m_cLocation.X == 62 && g_sChar.m_cLocation.Y == 13)
+    if (chara.x == 62 && chara.y == 13)
     {
         g_eGameState = S_TPROOM;
 
-        g_sChar.m_cLocation.X = 25; //character position for second room
-        g_sChar.m_cLocation.Y = 1;
+        chara.x = 25; //character position for second room
+        chara.y = 1;
     }
 }
 
@@ -527,17 +547,18 @@ void renderTPRoom()
     clearScreen();
     TPRoom();            //render Toilet paper room
     renderMap();         // renders the map to the buffer first
-    renderCharacter();   // renders the character into the buffer
+    //renderCharacter();   // renders the character into the buffer
+    chara.draw(g_Console);
     gara.drawG3(g_Console);
     rendertoiletpaper();
 
     /* Go to the last room */
-    if (g_sChar.m_cLocation.X == 40 && g_sChar.m_cLocation.Y == 16)
+    if (chara.x == 40 && chara.y == 16)
     {
         g_eGameState = S_ENDROOM;
 
-        g_sChar.m_cLocation.X = 40; //character position for second room
-        g_sChar.m_cLocation.Y = 2;
+        chara.x = 40; //character position for second room
+        chara.y = 2;
     }
 }
 
@@ -546,7 +567,7 @@ void renderEndRoom()
     clearScreen();
     EndRoom();            //render Toilet paper room
     renderMap();         // renders the map to the buffer first
-    renderCharacter();   // renders the character into the buffer
+    chara.draw(g_Console);   // renders the character into the buffer
 }
 
 void renderMap()
@@ -1006,7 +1027,10 @@ void SecondRoomArray()
         map2[j][48] = '+';
     }
     /* Starting pt */
-    map[1][1] = 'P';
+    map2[1][1] = 'P';
+    //Guard
+    map2[2][13] = 'G';
+    map2[5][29] = 'G';
 
     /* Obstacles (i = horz | j = vert) */
 
