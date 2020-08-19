@@ -283,6 +283,10 @@ void moveCharacter()
             //Beep(1440, 30);
             chara.y--;
         }
+        else if (map[chara.y - 2][chara.x - 19] == 'G')
+        {
+            Beep(1440, 30);
+        }
     }
     if (g_skKeyEvent[K_LEFT].keyDown && chara.x > 0)
     {
@@ -294,6 +298,10 @@ void moveCharacter()
             //Beep(1440, 30);
             chara.x--;
         }
+        if (map[chara.y - 1][chara.x - 20] == 'G')
+        {
+            Beep(1440, 30);
+        }
     }
     if (g_skKeyEvent[K_DOWN].keyDown && chara.y < g_Console.getConsoleSize().Y - 1)
     {
@@ -304,6 +312,10 @@ void moveCharacter()
             //Beep(1440, 30);
             chara.y++;
         }
+        if (map[chara.y][chara.x - 19] == 'G')
+        {
+            Beep(1440, 30);
+        }
     }
     if (g_skKeyEvent[K_RIGHT].keyDown && chara.x < g_Console.getConsoleSize().X - 1)
     {
@@ -313,6 +325,10 @@ void moveCharacter()
             map[chara.y - 1][chara.x - 19] = '-';
             //Beep(1440, 30);
             chara.x++;
+        }
+        if (map[chara.y - 1][chara.x - 18] == 'G')
+        {
+            Beep(1440, 30);
         }
     }
     if (g_skKeyEvent[K_SPACE].keyDown)
