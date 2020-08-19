@@ -621,7 +621,7 @@ void renderSplashScreen()  // renders the splash screen
 
 void renderGame()
 {
-    EndRoom();        //render first game room
+    FirstRoom();        //render first game room
     renderMap();        // renders the map to the buffer first
     //renderCharacter();  // renders the character into the buffer
     chara.draw(g_Console);
