@@ -37,6 +37,7 @@ void init( void )
     g_sChar.m_cLocation.X = g_Console.getConsoleSize().X / 2 - 1;
     g_sChar.m_cLocation.Y = g_Console.getConsoleSize().Y / 2;
     g_sChar.m_bActive = true;
+
     // sets the width, height and the font name to use in the console
     g_Console.setConsoleFont(0, 16, L"Consolas");
 
@@ -333,6 +334,9 @@ void renderGame()
     if (g_sChar.m_cLocation.X == 58 && g_sChar.m_cLocation.Y == 2)
     {
         g_eGameState = S_NextRoom;
+
+        g_sChar.m_cLocation.X = 16;
+        g_sChar.m_cLocation.Y = 4;
     }
 }
 
@@ -544,6 +548,7 @@ void FirstRoom()
     }
     /* Starting pt */ 
     g_Console.writeToBuffer(39, 15, "S", 0x5E);
+
     /* Ending pt */
     g_Console.writeToBuffer(58, 2, "E", 0x5E);
 
@@ -798,7 +803,6 @@ void SecondRoom()
             g_Console.writeToBuffer(i, j, "+", 0xB20);
         }
     }
-    
 }
 
 void TPRoom()
@@ -883,6 +887,76 @@ void resetroom()
     g_Console.clearBuffer(0);          //Resets the whole map
 
 }
+
+void spawnenemy()
+{
+    bool spawn = false;
+    while (spawn == false)
+    {
+        srand(time(NULL));
+        int gy = rand() % 40;
+        int gx = rand() % 15;
+        if (map[gx][gy] == 'P')
+        {
+            spawn = false;
+        }
+        else if (map[gx][gy] == '+')
+        {
+            spawn = false;
+        }
+        else if (map[gx][gy] == 'D')
+        {
+            spawn = false;
+        }
+        else if (map[gx][gy] == 'G')
+        {
+            spawn = false;
+        }
+        else
+        {
+            map[gx][gy] = 'G';
+            g_Console.writeToBuffer(gy + 19, gx + 2, "G", FOREGROUND_RED);
+            spawn = true;
+            int b = rand() % 4;
+
+        }
+    }
+
+    spawn = false;
+    while (spawn == false)
+    {
+        srand(time(NULL));
+        int gy2 = rand() % 40;
+        int gx2 = rand() % 15;
+        if (map[gx2][gy2] == 'P')
+        {
+            spawn = false;
+        }
+        else if (map[gx2][gy2] == '+')
+        {
+            spawn = false;
+        }
+        else if (map[gx2][gy2] == 'D')
+        {
+            spawn = false;
+        }
+        else if (map[gx2][gy2] == 'G')
+        {
+            spawn = false;
+        }
+        else
+        {
+            map[gx2][gy2] = 'G';
+            g_Console.writeToBuffer(gy2 + 19,gx2 + 2, "G", FOREGROUND_RED);
+            spawn = true;
+            int b = rand() % 4;
+        }
+    }
+}
+
+
+
+
 
 bool gettoiletpaper()
 {
