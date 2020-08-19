@@ -520,12 +520,12 @@ void renderSecondRoom()
   //  rendertoiletpaper();
 
     /* Go to toilet paper room */
-    if (g_sChar.m_cLocation.X == 62 && g_sChar.m_cLocation.Y == 13)
+    if (chara.x == 62 && chara.y == 13)
     {
         g_eGameState = S_TPROOM;
 
-        g_sChar.m_cLocation.X = 25; //character position for second room
-        g_sChar.m_cLocation.Y = 1;
+        chara.x = 25; //character position for second room
+        chara.y = 1;
     }
 }
 
@@ -534,17 +534,18 @@ void renderTPRoom()
     clearScreen();
     TPRoom();            //render Toilet paper room
     renderMap();         // renders the map to the buffer first
-    renderCharacter();   // renders the character into the buffer
+    //renderCharacter();   // renders the character into the buffer
+    chara.draw(g_Console);
     gara.drawG3(g_Console);
     rendertoiletpaper();
 
     /* Go to the last room */
-    if (g_sChar.m_cLocation.X == 40 && g_sChar.m_cLocation.Y == 16)
+    if (chara.x == 40 && chara.y == 16)
     {
         g_eGameState = S_ENDROOM;
 
-        g_sChar.m_cLocation.X = 40; //character position for second room
-        g_sChar.m_cLocation.Y = 2;
+        chara.x = 40; //character position for second room
+        chara.y = 2;
     }
 }
 
@@ -553,7 +554,7 @@ void renderEndRoom()
     clearScreen();
     EndRoom();            //render Toilet paper room
     renderMap();         // renders the map to the buffer first
-    renderCharacter();   // renders the character into the buffer
+    chara.draw(g_Console);   // renders the character into the buffer
 }
 
 void renderMap()
