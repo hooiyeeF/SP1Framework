@@ -66,17 +66,18 @@ void renderSplashScreen();  // renders the splash screen
 void renderGame();          // renders the game stuff
 void renderSecondRoom();    // render second game room
 void FirstRoom();           // render first game room
-void FirstRoomArray();
-void SecondRoom();
+void FirstRoomArray();      // first room array
+void SecondRoom();          
+void SecondRoomArray();      // second room array
 void TPRoom();
 void renderMap();           // renders the map to the buffer first
 void rendertoiletpaper();   //renders the toilet paper when collected
 void renderCharacter();     // renders the character into the buffer
+void renderGuard();
 void renderFramerate();     // renders debug information, frame rate, elapsed time, etc
 void renderToScreen();      // dump the contents of the buffer to the screen, one frame worth of game
 void renderInputEvents();   // renders the status of input events
 void resetroom();           // reset map and array
-void spawnenemy();          // spawns enemy
 
 
 bool gettoiletpaper();      //checks for toilet paper
