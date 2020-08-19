@@ -9,10 +9,6 @@
 #include <sstream>
 #include "Guard.h"
 
-
-
-
-
 double  g_dElapsedTime;
 double  g_dDeltaTime;
 SKeyEvent g_skKeyEvent[K_COUNT];
@@ -238,15 +234,14 @@ void update(double dt)
             break;
         case S_GAME: updateGame(); // gameplay logic when we are in the game
             break;
-        case S_NEXTROOM: updateGame();
+        case S_NEXTROOM: updateGame2();
             break;
-        case S_TPROOM: updateGame();
+        case S_TPROOM: updateGame3();
             break;
-        case S_ENDROOM: updateGame();
+        case S_ENDROOM: updateGame4();
             break;
     }
 }
-
 
 void splashScreenWait()    // waits for time to pass in splash screen
 {
@@ -259,6 +254,20 @@ void updateGame()       // gameplay logic
     processUserInput(); // checks if you should change states or do something else with the game, e.g. pause, exit
     moveCharacter();    // moves the character, collision detection, physics, etc
                         // sound can be played here too.
+}
+
+void updateGame2()
+{
+    processUserInput(); // checks if you should change states or do something else with the game, e.g. pause, exit
+    moveCharacter2();    // moves the character, collision detection, physics, etc
+                        // sound can be played here too.
+}
+
+void updateGame3()
+{
+}
+void updateGame4()
+{
 }
 
 void moveCharacter()
@@ -274,6 +283,10 @@ void moveCharacter()
             //Beep(1440, 30);
             chara.y--;
         }
+        else if (map[chara.y - 2][chara.x - 19] == 'G')
+        {
+            Beep(1440, 30);
+        }
     }
     if (g_skKeyEvent[K_LEFT].keyDown && chara.x > 0)
     {
@@ -285,6 +298,10 @@ void moveCharacter()
             //Beep(1440, 30);
             chara.x--;
         }
+        if (map[chara.y - 1][chara.x - 20] == 'G')
+        {
+            Beep(1440, 30);
+        }
     }
     if (g_skKeyEvent[K_DOWN].keyDown && chara.y < g_Console.getConsoleSize().Y - 1)
     {
@@ -294,6 +311,10 @@ void moveCharacter()
             map[chara.y - 1][chara.x - 19] = '-';
             //Beep(1440, 30);
             chara.y++;
+        }
+        if (map[chara.y][chara.x - 19] == 'G')
+        {
+            Beep(1440, 30);
         }
     }
     if (g_skKeyEvent[K_RIGHT].keyDown && chara.x < g_Console.getConsoleSize().X - 1)
@@ -305,6 +326,10 @@ void moveCharacter()
             //Beep(1440, 30);
             chara.x++;
         }
+        if (map[chara.y - 1][chara.x - 18] == 'G')
+        {
+            Beep(1440, 30);
+        }
     }
     if (g_skKeyEvent[K_SPACE].keyDown)
     {
@@ -312,6 +337,56 @@ void moveCharacter()
     }
 }
 
+void moveCharacter2()
+{
+    // Updating the location of the character based on the key release
+    // providing a beep sound whenver we shift the character
+    if (g_skKeyEvent[K_UP].keyDown && chara.y > 0)
+    {
+        if (map[chara.y - 4][chara.x - 15] == '-')
+        {
+            map[chara.y - 4][chara.x - 15] = 'P';
+            map[chara.y - 3][chara.x - 15] = '-';
+            //Beep(1440, 30);
+            chara.y--;
+        }
+    }
+    if (g_skKeyEvent[K_LEFT].keyDown && chara.x > 0)
+    {
+        if (map[chara.y - 3][chara.x - 16] == '-')
+        {
+            gamestart = true;
+            map[chara.y - 3][chara.x - 16] = 'P';
+            map[chara.y - 3][chara.x - 15] = '-';
+            //Beep(1440, 30);
+            chara.x--;
+        }
+    }
+    if (g_skKeyEvent[K_DOWN].keyDown && chara.y < g_Console.getConsoleSize().Y - 1)
+    {
+        if (map[chara.y - 2][chara.x - 15] == '-')
+        {
+            map[chara.y - 2][chara.x - 15] = 'P';
+            map[chara.y - 3][chara.x - 15] = '-';
+            //Beep(1440, 30);
+            chara.y++;
+        }
+    }
+    if (g_skKeyEvent[K_RIGHT].keyDown && chara.x < g_Console.getConsoleSize().X - 1)
+    {
+        if (map[chara.y - 3][chara.x - 15] == '-')
+        {
+            map[chara.y - 3][chara.x - 15] = 'P';
+            map[chara.y - 3][chara.x - 15] = '-';
+            //Beep(1440, 30);
+            chara.x++;
+        }
+    }
+    if (g_skKeyEvent[K_SPACE].keyDown)
+    {
+        g_sChar.m_bActive = !g_sChar.m_bActive;
+    }
+}
 void processUserInput()
 {
     // quits the game if player hits the escape key
@@ -354,8 +429,6 @@ void render()
     renderFramerate();      // renders debug information, frame rate, elapsed time, etc
     renderInputEvents();    // renders status of input events
     renderToScreen();       // dump the contents of the buffer to the screen, one frame worth of game
-
-
 }
 
 void clearScreen()
@@ -392,8 +465,6 @@ void renderSplashScreen()  // renders the splash screen
     c.Y += 5;
     c.X = g_Console.getConsoleSize().X / 2 - 12;
     g_Console.writeToBuffer(c, "Press <Space> to start", 0x5E);
-    c.Y += 1;
-  
 }
 
 void renderGame()
@@ -407,12 +478,11 @@ void renderGame()
     /* Go to Second room */
     if (chara.x == 58 && chara.y == 2)
     {
-        g_eGameState = S_NEXTROOM;
 
         chara.x = 16; //character position for second room
         chara.y = 4;
+        g_eGameState = S_NEXTROOM;
     }
-
 }
 
 void renderSecondRoom()
@@ -432,7 +502,6 @@ void renderSecondRoom()
         g_sChar.m_cLocation.X = 25; //character position for second room
         g_sChar.m_cLocation.Y = 1;
     }
-
 }
 
 void renderTPRoom()
@@ -648,9 +717,6 @@ void renderInputEvents()
             break;
         }
     }
-    
-    
-    
 }
 
 void FirstRoom()
@@ -745,6 +811,8 @@ void FirstRoomArray()
     }
     //player
     map[14][20] = 'P';
+    //Guard
+    map[4][31] = 'G';
 
     //wall
     for (int i = 0; i < 41; i++)
@@ -983,7 +1051,6 @@ void SecondRoomArray()
             map2[j][i] = '+';
         }
     }
-
 }
 
 void TPRoom()
@@ -1052,7 +1119,6 @@ void TPRoom()
     {
         g_Console.writeToBuffer(i, 3, "+", 0xB20);
     }
-
 }
 
 void EndRoom()
@@ -1103,13 +1169,7 @@ void resetroom()
 
 }
 
-
-
-
-
-
 bool gettoiletpaper()
 {
     return true;
 }
-
