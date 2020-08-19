@@ -406,7 +406,8 @@ void renderSecondRoom()
     clearScreen(); 
     SecondRoom();       //render second room
     renderMap();        // renders the map to the buffer first
-    renderCharacter();  // renders the character into the buffer
+    //renderCharacter();  // renders the character into the buffer
+    chara.draw(g_Console);
     gara.drawG2(g_Console);
   //  rendertoiletpaper();
 
