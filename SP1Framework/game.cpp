@@ -15,6 +15,8 @@ char map[15][40];
 bool a = false;
 bool spawn = false;
 bool spawn2 = false;
+bool gamestart = false;
+
 // Game specific variables here
 SGameChar   g_sChar;
 EGAMESTATES g_eGameState = S_SPLASHSCREEN; // initial state
@@ -101,7 +103,7 @@ void keyboardHandler(const KEY_EVENT_RECORD& keyboardEvent)
 {  
     switch (g_eGameState)
     {
-    case S_SPLASHSCREEN: // don't handle anything for the splash screen
+    case S_SPLASHSCREEN: gameplayKBHandler(keyboardEvent);// handle gameplay keyboard event
         break;
     case S_GAME: gameplayKBHandler(keyboardEvent); // handle gameplay keyboard event 
         break;
@@ -205,13 +207,16 @@ void gameplayMouseHandler(const MOUSE_EVENT_RECORD& mouseEvent)
 //--------------------------------------------------------------
 void update(double dt)
 {
-    // get the delta time
-    g_dElapsedTime += dt;
-    g_dDeltaTime = dt;
+    if (gamestart == true)
+    {
+        // get the delta time
+        g_dElapsedTime += dt;
+        g_dDeltaTime = dt;
+    }
 
     switch (g_eGameState)
     {
-        case S_SPLASHSCREEN : splashScreenWait(); // game logic for the splash screen
+        case S_SPLASHSCREEN : GoToGamePlay(); // game logic for the menu screen
             break;
         case S_GAME: updateGame(); // gameplay logic when we are in the game
             break;
@@ -245,6 +250,7 @@ void moveCharacter()
     }
     if (g_skKeyEvent[K_LEFT].keyDown && g_sChar.m_cLocation.X > 0)
     {
+        gamestart = true;
         //Beep(1440, 30);
         g_sChar.m_cLocation.X--;        
     }
@@ -270,6 +276,12 @@ void processUserInput()
     // quits the game if player hits the escape key
     if (g_skKeyEvent[K_ESCAPE].keyReleased)
         g_bQuitGame = true;    
+}
+void GoToGamePlay()
+{
+    // go to gameplay if player hits the space key
+    if (g_skKeyEvent[K_SPACE].keyReleased)
+        g_eGameState = S_GAME;
 }
 
 //--------------------------------------------------------------
@@ -313,16 +325,16 @@ void renderToScreen()
 
 void renderSplashScreen()  // renders the splash screen
 {
-   /* COORD c = g_Console.getConsoleSize();
-    c.Y /= 3;
+    COORD c = g_Console.getConsoleSize();
+    c.Y /= 2;
     c.X = c.X / 2 - 9;
-    g_Console.writeToBuffer(c, "A game in 3 seconds", 0x03);
+ //   g_Console.writeToBuffer(c, "A game in 3 seconds", 0x03);
     c.Y += 1;
-    c.X = g_Console.getConsoleSize().X / 2 - 20;
-    g_Console.writeToBuffer(c, "Press <Space> to change character colour", 0x09);
+    c.X = g_Console.getConsoleSize().X / 2 -10;
+    g_Console.writeToBuffer(c, "Press <Space> to start", 0x09);
     c.Y += 1;
     c.X = g_Console.getConsoleSize().X / 2 - 10;
-    g_Console.writeToBuffer(c, "Press 'Esc' to quit", 0x09);*/
+ //   g_Console.writeToBuffer(c, "Press 'Esc' to quit", 0x09);
 }
 
 void renderGame()
@@ -447,21 +459,25 @@ void renderGuard()
 
 void renderFramerate()
 {
-    COORD c;
-    // displays the framerate
-    std::ostringstream ss;
-    ss << std::fixed << std::setprecision(3);
-    ss << 1.0 / g_dDeltaTime << "fps";
-    c.X = g_Console.getConsoleSize().X - 9;
-    c.Y = 0;
-    g_Console.writeToBuffer(c, ss.str());
+    if (g_eGameState == S_GAME)
+    {
+        COORD c;
+        // displays the framerate
+        std::ostringstream ss;
+        ss << std::fixed << std::setprecision(3);
+        ss << 1.0 / g_dDeltaTime << "fps";
+        c.X = g_Console.getConsoleSize().X - 9;
+        c.Y = 0;
+        g_Console.writeToBuffer(c, ss.str());
 
-    // displays the elapsed time
-    ss.str("");
-    ss << g_dElapsedTime << "secs";
-    c.X = 64;
-    c.Y = 20;
-    g_Console.writeToBuffer(c, ss.str(), 0x59);
+        // displays the elapsed time
+        ss.str("");
+        ss << g_dElapsedTime << "secs";
+        c.X = 64;
+        c.Y = 20;
+        g_Console.writeToBuffer(c, ss.str(), 0x0F);
+    }
+    
 }
 
 void renderInputEvents()
