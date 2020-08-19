@@ -37,6 +37,7 @@ void init( void )
     g_sChar.m_cLocation.X = g_Console.getConsoleSize().X / 2 - 1;
     g_sChar.m_cLocation.Y = g_Console.getConsoleSize().Y / 2;
     g_sChar.m_bActive = true;
+
     // sets the width, height and the font name to use in the console
     g_Console.setConsoleFont(0, 16, L"Consolas");
 
@@ -333,6 +334,9 @@ void renderGame()
     if (g_sChar.m_cLocation.X == 58 && g_sChar.m_cLocation.Y == 2)
     {
         g_eGameState = S_NextRoom;
+
+        g_sChar.m_cLocation.X = 16;
+        g_sChar.m_cLocation.Y = 4;
     }
 }
 
@@ -728,8 +732,6 @@ void SecondRoom()
 {
     //Spawn player
 
-    //g_sChar.m_cLocation.X = 16;
-   // g_sChar.m_cLocation.Y = 4;
     int wallX = 15;
     int wallY = 3;
 
@@ -804,7 +806,6 @@ void SecondRoom()
             g_Console.writeToBuffer(i, j, "+", 0xB20);
         }
     }
-    
 }
 
 void TPRoom()
