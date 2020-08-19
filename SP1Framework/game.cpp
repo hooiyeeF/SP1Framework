@@ -56,6 +56,7 @@ void init( void )
     g_Console.setMouseHandler(mouseHandler);
 
     FirstRoomArray();
+    SecondRoomArray();
 }
 
 //--------------------------------------------------------------
@@ -347,43 +348,62 @@ void moveCharacter2()
     // providing a beep sound whenver we shift the character
     if (g_skKeyEvent[K_UP].keyDown && chara.y > 0)
     {
-        if (map[chara.y - 4][chara.x - 15] == '-')
+        if (map2[chara.y - 4][chara.x - 15] == '-')
         {
-            map[chara.y - 4][chara.x - 15] = 'P';
-            map[chara.y - 3][chara.x - 15] = '-';
+            map2[chara.y - 4][chara.x - 15] = 'P';
+            map2[chara.y - 3][chara.x - 15] = '-';
             //Beep(1440, 30);
             chara.y--;
+        }
+        if (map2[chara.y - 4][chara.x - 15] == 'G')
+        {
+            Beep(1440, 30);
+            g_eGameState = S_LOSE;
         }
     }
     if (g_skKeyEvent[K_LEFT].keyDown && chara.x > 0)
     {
-        if (map[chara.y - 3][chara.x - 16] == '-')
+        if (map2[chara.y - 3][chara.x - 16] == '-')
         {
-            gamestart = true;
-            map[chara.y - 3][chara.x - 16] = 'P';
-            map[chara.y - 3][chara.x - 15] = '-';
+            map2[chara.y - 3][chara.x - 16] = 'P';
+            map2[chara.y - 3][chara.x - 15] = '-';
             //Beep(1440, 30);
             chara.x--;
+        }
+        if (map2[chara.y - 3][chara.x - 16] == 'G')
+        {
+            Beep(1440, 30);
+            g_eGameState = S_LOSE;
         }
     }
     if (g_skKeyEvent[K_DOWN].keyDown && chara.y < g_Console.getConsoleSize().Y - 1)
     {
-        if (map[chara.y - 2][chara.x - 15] == '-')
+        if (map2[chara.y - 2][chara.x - 15] == '-')
         {
-            map[chara.y - 2][chara.x - 15] = 'P';
-            map[chara.y - 3][chara.x - 15] = '-';
+            map2[chara.y - 2][chara.x - 15] = 'P';
+            map2[chara.y - 3][chara.x - 15] = '-';
             //Beep(1440, 30);
             chara.y++;
+        }
+        if (map2[chara.y - 2][chara.x - 15] == 'G')
+        {
+            Beep(1440, 30);
+            g_eGameState = S_LOSE;
         }
     }
     if (g_skKeyEvent[K_RIGHT].keyDown && chara.x < g_Console.getConsoleSize().X - 1)
     {
-        if (map[chara.y - 3][chara.x - 15] == '-')
+        if (map2[chara.y - 3][chara.x - 14] == '-')
         {
-            map[chara.y - 3][chara.x - 15] = 'P';
-            map[chara.y - 3][chara.x - 15] = '-';
+            map2[chara.y - 3][chara.x - 14] = 'P';
+            map2[chara.y - 3][chara.x - 15] = '-';
             //Beep(1440, 30);
             chara.x++;
+        }
+        if (map2[chara.y - 3][chara.x - 14] == 'G')
+        {
+            Beep(1440, 30);
+            g_eGameState = S_LOSE;
         }
     }
     if (g_skKeyEvent[K_SPACE].keyDown)
@@ -993,7 +1013,10 @@ void SecondRoomArray()
         map2[j][48] = '+';
     }
     /* Starting pt */
-    map[1][1] = 'P';
+    map2[1][1] = 'P';
+    //Guard
+    map2[2][13] = 'G';
+    map2[5][29] = 'G';
 
     /* Obstacles (i = horz | j = vert) */
 
