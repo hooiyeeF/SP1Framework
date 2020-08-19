@@ -335,7 +335,7 @@ void renderGame()
     {
         g_eGameState = S_NextRoom;
 
-        g_sChar.m_cLocation.X = 16;
+        g_sChar.m_cLocation.X = 16; //character position for second room
         g_sChar.m_cLocation.Y = 4;
     }
 }
