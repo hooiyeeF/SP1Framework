@@ -459,7 +459,7 @@ void renderGuard()
 
 void renderFramerate()
 {
-    if (g_eGameState == S_GAME)
+    if (g_eGameState != S_SPLASHSCREEN)
     {
         COORD c;
         // displays the framerate
@@ -513,44 +513,50 @@ void renderInputEvents()
         COORD c = { startPos.X, startPos.Y + i };
         g_Console.writeToBuffer(c, ss.str(), 0x17);
     }
-    // mouse events    
-    ss.str("");
-    ss << "Mouse position (" << g_mouseEvent.mousePosition.X << ", " << g_mouseEvent.mousePosition.Y << ")";
-    g_Console.writeToBuffer(g_mouseEvent.mousePosition, ss.str(), 0x59);
-    ss.str("");
-    switch (g_mouseEvent.eventFlags)
+    // mouse events
+    if (g_eGameState != S_SPLASHSCREEN)
     {
-    case 0:
-        if (g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
+        ss.str("");
+        ss << "Mouse position (" << g_mouseEvent.mousePosition.X << ", " << g_mouseEvent.mousePosition.Y << ")";
+        g_Console.writeToBuffer(g_mouseEvent.mousePosition, ss.str(), 0x59);
+        ss.str("");
+
+        switch (g_mouseEvent.eventFlags)
         {
-            ss.str("Left Button Pressed");
-            g_Console.writeToBuffer(g_mouseEvent.mousePosition.X, g_mouseEvent.mousePosition.Y + 1, ss.str(), 0x59);
+        case 0:
+            if (g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
+            {
+                ss.str("Left Button Pressed");
+                g_Console.writeToBuffer(g_mouseEvent.mousePosition.X, g_mouseEvent.mousePosition.Y + 1, ss.str(), 0x59);
+            }
+            else if (g_mouseEvent.buttonState == RIGHTMOST_BUTTON_PRESSED)
+            {
+                ss.str("Right Button Pressed");
+                g_Console.writeToBuffer(g_mouseEvent.mousePosition.X, g_mouseEvent.mousePosition.Y + 2, ss.str(), 0x59);
+            }
+            else
+            {
+                ss.str("Some Button Pressed");
+                g_Console.writeToBuffer(g_mouseEvent.mousePosition.X, g_mouseEvent.mousePosition.Y + 3, ss.str(), 0x59);
+            }
+            break;
+        case DOUBLE_CLICK:
+            ss.str("Double Clicked");
+            g_Console.writeToBuffer(g_mouseEvent.mousePosition.X, g_mouseEvent.mousePosition.Y + 4, ss.str(), 0x59);
+            break;
+        case MOUSE_WHEELED:
+            if (g_mouseEvent.buttonState & 0xFF000000)
+                ss.str("Mouse wheeled down");
+            else
+                ss.str("Mouse wheeled up");
+            g_Console.writeToBuffer(g_mouseEvent.mousePosition.X, g_mouseEvent.mousePosition.Y + 5, ss.str(), 0x59);
+            break;
+        default:
+            break;
         }
-        else if (g_mouseEvent.buttonState == RIGHTMOST_BUTTON_PRESSED)
-        {
-            ss.str("Right Button Pressed");
-            g_Console.writeToBuffer(g_mouseEvent.mousePosition.X, g_mouseEvent.mousePosition.Y + 2, ss.str(), 0x59);
-        }
-        else
-        {
-            ss.str("Some Button Pressed");
-            g_Console.writeToBuffer(g_mouseEvent.mousePosition.X, g_mouseEvent.mousePosition.Y + 3, ss.str(), 0x59);
-        }
-        break;
-    case DOUBLE_CLICK:
-        ss.str("Double Clicked");
-        g_Console.writeToBuffer(g_mouseEvent.mousePosition.X, g_mouseEvent.mousePosition.Y + 4, ss.str(), 0x59);
-        break;        
-    case MOUSE_WHEELED:
-        if (g_mouseEvent.buttonState & 0xFF000000)
-            ss.str("Mouse wheeled down");
-        else
-            ss.str("Mouse wheeled up");
-        g_Console.writeToBuffer(g_mouseEvent.mousePosition.X, g_mouseEvent.mousePosition.Y + 5, ss.str(), 0x59);
-        break;
-    default:        
-        break;
     }
+    
+    
     
 }
 
