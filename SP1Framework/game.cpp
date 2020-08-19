@@ -9,10 +9,6 @@
 #include <sstream>
 #include "Guard.h"
 
-
-
-
-
 double  g_dElapsedTime;
 double  g_dDeltaTime;
 SKeyEvent g_skKeyEvent[K_COUNT];
@@ -247,7 +243,6 @@ void update(double dt)
     }
 }
 
-
 void splashScreenWait()    // waits for time to pass in splash screen
 {
     if (g_dElapsedTime > 3.0) // wait for 3 seconds to switch to game mode, else do nothing
@@ -350,8 +345,6 @@ void render()
     renderFramerate();      // renders debug information, frame rate, elapsed time, etc
     renderInputEvents();    // renders status of input events
     renderToScreen();       // dump the contents of the buffer to the screen, one frame worth of game
-
-
 }
 
 void clearScreen()
@@ -388,8 +381,6 @@ void renderSplashScreen()  // renders the splash screen
     c.Y += 5;
     c.X = g_Console.getConsoleSize().X / 2 - 12;
     g_Console.writeToBuffer(c, "Press <Space> to start", 0x5E);
-    c.Y += 1;
-  
 }
 
 void renderGame()
@@ -408,7 +399,6 @@ void renderGame()
         chara.x = 16; //character position for second room
         chara.y = 4;
     }
-
 }
 
 void renderSecondRoom()
@@ -428,7 +418,6 @@ void renderSecondRoom()
         g_sChar.m_cLocation.X = 25; //character position for second room
         g_sChar.m_cLocation.Y = 1;
     }
-
 }
 
 void renderTPRoom()
@@ -627,9 +616,6 @@ void renderInputEvents()
             break;
         }
     }
-    
-    
-    
 }
 
 void FirstRoom()
@@ -962,7 +948,6 @@ void SecondRoomArray()
             map2[j][i] = '+';
         }
     }
-
 }
 
 void TPRoom()
@@ -1031,7 +1016,6 @@ void TPRoom()
     {
         g_Console.writeToBuffer(i, 3, "+", 0xB20);
     }
-
 }
 
 void EndRoom()
@@ -1071,13 +1055,7 @@ void resetroom()
 
 }
 
-
-
-
-
-
 bool gettoiletpaper()
 {
     return true;
 }
-
