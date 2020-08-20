@@ -65,7 +65,6 @@ void splashScreenWait();    // waits for time to pass in splash screen
 void updateGame();          // gameplay logic
 void updateGame2();         // 2nd room gameplay logic
 void updateGame3();         // 3rd room gameplay logic
-void updateGame4();         // 4th room gameplay logic
 void moveCharacter();       // moves the character, collision detection, physics, etc
 void moveCharacter2();      // moves the character, collision detection, physics, etc in the 2nd room
 void moveCharacter3();      // moves the character, collision detection, physics, etc in the 2nd room
@@ -96,7 +95,6 @@ void renderGuard();
 void renderFramerate();     // renders debug information, frame rate, elapsed time, etc
 void renderToScreen();      // dump the contents of the buffer to the screen, one frame worth of game
 void renderInputEvents();   // renders the status of input events
-void resetroom();           // reset map and array
 
 
 // keyboard and mouse input event managers
