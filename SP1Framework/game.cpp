@@ -573,14 +573,17 @@ void GoToGamePlay()
 void PlayAgain()
 {
     if (g_skKeyEvent[K_SPACE].keyReleased)
+    {
         g_eGameState = S_SPLASHSCREEN;
-
-    reset();
+        reset();
+    }
+        
 }
 void reset()
 {
     g_dElapsedTime = 0.0;
     gamestart = false;
+    collected = false;
     a = 0;
     chara.x = g_Console.getConsoleSize().X / 2 - 1;
     chara.y = g_Console.getConsoleSize().Y / 2;
