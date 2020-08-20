@@ -88,6 +88,7 @@ void TPRoomArray();         // TP Room Array
 void EndRoom();
 void EndRoomArray();        // End Room Array
 void renderLoseScreen();
+void renderWinScreen();
 void renderMap();           // renders the map to the buffer first
 void rendertoiletpaper();   //renders the toilet paper when collected
 void renderCharacter();     // renders the character into the buffer
@@ -97,8 +98,6 @@ void renderToScreen();      // dump the contents of the buffer to the screen, on
 void renderInputEvents();   // renders the status of input events
 void resetroom();           // reset map and array
 
-
-bool gettoiletpaper();      //checks for toilet paper
 
 // keyboard and mouse input event managers
 void keyboardHandler(const KEY_EVENT_RECORD& keyboardEvent);  // define this function for the console to call when there are keyboard events

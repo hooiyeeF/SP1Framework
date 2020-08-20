@@ -253,6 +253,10 @@ void update(double dt)
             break;
         case S_ENDROOM: updateGame();
             break;
+        case S_WIN:
+            processUserInput();
+            PlayAgain();
+            break;
         case S_LOSE: 
             processUserInput();
             PlayAgain();
@@ -597,6 +601,8 @@ void render()
     case S_TPROOM: renderTPRoom();
         break;
     case S_ENDROOM: renderEndRoom();
+        break;
+    case S_WIN: renderWinScreen();
         break;
     case S_LOSE: renderLoseScreen();
         break;
@@ -1586,6 +1592,25 @@ void EndRoomArray()
     }
 }
 
+void renderWinScreen()
+{
+    COORD c = g_Console.getConsoleSize();
+    c.Y /= 2;
+    c.Y -= 5;
+    c.X = c.X / 2 - 4;
+    g_Console.writeToBuffer(c, "C O N G R A T U L A T I O N S !   congratulations !", 0x0A);
+    c.Y += 2;
+    c.X = g_Console.getConsoleSize().X / 2 - 13;
+    g_Console.writeToBuffer(c, "Y O U  W I N !", 0x0A);
+    c.Y += 5;
+    c.X = g_Console.getConsoleSize().X / 2 - 13;
+    g_Console.writeToBuffer(c, "Y O U  H A V E  U S E .... !", 0x0A);
+    c.Y += 8;
+    c.X = g_Console.getConsoleSize().X / 2 - 13;
+    g_Console.writeToBuffer(c, "Press <SPACE> to play again", 0x07);
+
+}
+
 void renderLoseScreen()
 {
     COORD c = g_Console.getConsoleSize();
@@ -1614,9 +1639,4 @@ void resetroom()
     }
     g_Console.clearBuffer(0);          //Resets the whole map
 
-}
-
-bool gettoiletpaper()
-{
-    return true;
 }
