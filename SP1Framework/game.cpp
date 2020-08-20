@@ -298,6 +298,7 @@ void moveCharacter()
         }
         else if (map[chara.y - 2][chara.x - 19] == 'G')
         {
+            map[chara.y - 1][chara.x - 19] = '-';
             Beep(1440, 30);
             g_eGameState = S_LOSE;
         }
@@ -314,6 +315,7 @@ void moveCharacter()
         }
         if (map[chara.y - 1][chara.x - 20] == 'G')
         {
+            map[chara.y - 1][chara.x - 19] = '-';
             Beep(1440, 30);
             g_eGameState = S_LOSE;
         }
@@ -329,6 +331,7 @@ void moveCharacter()
         }
         if (map[chara.y][chara.x - 19] == 'G')
         {
+            map[chara.y - 1][chara.x - 19] = '-';
             Beep(1440, 30);
             g_eGameState = S_LOSE;
         }
@@ -344,6 +347,7 @@ void moveCharacter()
         }
         if (map[chara.y - 1][chara.x - 18] == 'G')
         {
+            map[chara.y - 1][chara.x - 19] = '-';
             Beep(1440, 30);
             g_eGameState = S_LOSE;
         }
@@ -351,6 +355,10 @@ void moveCharacter()
     if (g_skKeyEvent[K_SPACE].keyDown)
     {
         g_sChar.m_bActive = !g_sChar.m_bActive;
+    }
+    if (map[1][39] == 'P')
+    {
+        map[1][39] = '-';
     }
 }
 
@@ -369,6 +377,7 @@ void moveCharacter2()
         }
         if (map2[chara.y - 4][chara.x - 15] == 'G')
         {
+            map2[chara.y - 3][chara.x - 15] = '-';
             Beep(1440, 30);
             g_eGameState = S_LOSE;
         }
@@ -384,6 +393,7 @@ void moveCharacter2()
         }
         if (map2[chara.y - 3][chara.x - 16] == 'G')
         {
+            map2[chara.y - 3][chara.x - 15] = '-';
             Beep(1440, 30);
             g_eGameState = S_LOSE;
         }
@@ -399,6 +409,7 @@ void moveCharacter2()
         }
         if (map2[chara.y - 2][chara.x - 15] == 'G')
         {
+            map2[chara.y - 3][chara.x - 15] = '-';
             Beep(1440, 30);
             g_eGameState = S_LOSE;
         }
@@ -414,6 +425,7 @@ void moveCharacter2()
         }
         if (map2[chara.y - 3][chara.x - 14] == 'G')
         {
+            map2[chara.y - 3][chara.x - 15] = '-';
             Beep(1440, 30);
             g_eGameState = S_LOSE;
         }
@@ -422,6 +434,11 @@ void moveCharacter2()
     {
         g_sChar.m_bActive = !g_sChar.m_bActive;
     }
+    if (map[12][48] == 'P')
+    {
+        map[12][48] = '-';
+    }
+    
 }
 
 void moveCharacter3()
@@ -439,6 +456,7 @@ void moveCharacter3()
         }
         if (map3[chara.y - 1][chara.x - 24] == 'G')
         {
+            map3[chara.y][chara.x - 24] = '-';
             Beep(1440, 30);
             g_eGameState = S_LOSE;
         }
@@ -462,6 +480,7 @@ void moveCharacter3()
         }
         if (map3[chara.y][chara.x - 25] == 'G')
         {
+            map3[chara.y][chara.x - 24] = '-';
             Beep(1440, 30);
             g_eGameState = S_LOSE;
         }
@@ -485,6 +504,7 @@ void moveCharacter3()
         }
         if (map3[chara.y + 1][chara.x - 24] == 'G')
         {
+            map3[chara.y][chara.x - 24] = '-';
             Beep(1440, 30);
             g_eGameState = S_LOSE;
         }
@@ -508,6 +528,7 @@ void moveCharacter3()
         }
         if (map3[chara.y][chara.x - 23] == 'G')
         {
+            map3[chara.y][chara.x - 24] = '-';
             Beep(1440, 30);
             g_eGameState = S_LOSE;
         }
