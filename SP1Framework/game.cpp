@@ -251,7 +251,8 @@ void update(double dt)
             break;
         case S_ENDROOM: updateGame4();
             break;
-        case S_LOSE: processUserInput();
+        case S_LOSE: 
+            processUserInput();
             PlayAgain();
             break;
     }
@@ -575,7 +576,7 @@ void render()
         break;
     case S_TPROOM: renderTPRoom();
         break;
-    case S_ENDROOM: renderTPRoom();
+    case S_ENDROOM: renderEndRoom();
         break;
     case S_LOSE: renderLoseScreen();
         break;
@@ -656,7 +657,7 @@ void renderSecondRoom()
     {
         g_eGameState = S_TPROOM;
 
-        chara.x = 25; //character position for second room
+        chara.x = 25; //character position for toilet paper room
         chara.y = 1;
     }
 }
@@ -675,7 +676,7 @@ void renderTPRoom()
     {
         g_eGameState = S_ENDROOM;
 
-        chara.x = 40; //character position for second room
+        chara.x = 40; //character position for last room
         chara.y = 2;
     }
 }
@@ -1445,6 +1446,11 @@ void EndRoom()
     for (int i = 50; i < 59; i++)
     {
         g_Console.writeToBuffer(i, 13, "+", 0xB20);
+    }
+
+    for (int i = 56; i < 59; i++)
+    {
+         g_Console.writeToBuffer(i, 2, "+", 0xB20);
     }
 }
 
