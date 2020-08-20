@@ -18,6 +18,7 @@ char map2[12][49];
 char map3[18][33];
 int a = 0;
 bool gamestart = false;
+bool gameEnd = false;
 bool collected = false;
 
 
@@ -236,7 +237,7 @@ void gameplayMouseHandler(const MOUSE_EVENT_RECORD& mouseEvent)
 //--------------------------------------------------------------
 void update(double dt)
 {
-    if (gamestart == true)
+    if (gamestart == true && gameEnd == false)
     {
         // get the delta time
         g_dElapsedTime += dt;
@@ -749,6 +750,7 @@ void renderEndRoom()
     if (chara.x == 58 && chara.y == 15 )
     {
         g_eGameState = S_WIN;
+        gameEnd = true;
     }
 }
 
@@ -1672,19 +1674,28 @@ void renderWinScreen()
     COORD c = g_Console.getConsoleSize();
     c.Y /= 2;
     c.Y -= 10;
-    c.X = c.X / 2 - 13;
+    c.X = c.X / 2 - 14;
     g_Console.writeToBuffer(c, "C O N G R A T U L A T I O N S !", 0x0A);
     c.Y += 2;
-    c.X = g_Console.getConsoleSize().X / 2 - 5;
+    c.X = g_Console.getConsoleSize().X / 2 - 6;
     g_Console.writeToBuffer(c, "Y O U  W I N !", 0x0A);
     c.Y += 8;
-    c.X = g_Console.getConsoleSize().X / 2 - 12;
-    g_Console.writeToBuffer(c, "Time Taken: ", 0x09);
+    c.X = g_Console.getConsoleSize().X / 2 - 10;
+    g_Console.writeToBuffer(c, "  Time Taken: ", 0xB0);
+
+    std::ostringstream ss;
+    ss << std::fixed << std::setprecision(2);
+    ss.str("");
+    ss << g_dElapsedTime << "s  ";
+    c.X = 44;
+    c.Y = 15;
+    g_Console.writeToBuffer(c, ss.str(), 0xB0);
+
     c.Y += 5;
-    c.X = g_Console.getConsoleSize().X / 2 - 13;
+    c.X = g_Console.getConsoleSize().X / 2 - 12;
     g_Console.writeToBuffer(c, "Press <SPACE> to play again", 0x07);
     c.Y += 2;
-    c.X = g_Console.getConsoleSize().X / 2 - 10;
+    c.X = g_Console.getConsoleSize().X / 2 - 8;
     g_Console.writeToBuffer(c, "Press <ESC> to exit", 0x07);
 
 }
