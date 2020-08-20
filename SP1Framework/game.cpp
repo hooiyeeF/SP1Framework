@@ -477,7 +477,6 @@ void moveCharacter3()
             map3[chara.y - 1][chara.x - 24] = 'P';
             map3[chara.y][chara.x - 24] = '-';
             chara.y--;
-            gettoiletpaper();
         }
     }
     if (g_skKeyEvent[K_LEFT].keyDown && chara.x > 0)
@@ -500,7 +499,6 @@ void moveCharacter3()
             map3[chara.y][chara.x - 25] = 'P';
             map3[chara.y][chara.x - 24] = '-';
             chara.x--;
-            gettoiletpaper();
         }
     }
     if (g_skKeyEvent[K_DOWN].keyDown && chara.y < g_Console.getConsoleSize().Y - 1)
@@ -523,7 +521,6 @@ void moveCharacter3()
             map3[chara.y + 1][chara.x - 24] = 'P';
             map3[chara.y][chara.x - 24] = '-';
             chara.y++;
-            gettoiletpaper();
         }
     }
     if (g_skKeyEvent[K_RIGHT].keyDown && chara.x < g_Console.getConsoleSize().X - 1)
@@ -546,7 +543,6 @@ void moveCharacter3()
             map3[chara.y][chara.x - 23] = 'P';
             map3[chara.y][chara.x - 24] = '-';
             chara.x++;
-            gettoiletpaper();
         }
     }
     if (g_skKeyEvent[K_SPACE].keyDown)
