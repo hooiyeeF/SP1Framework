@@ -48,13 +48,6 @@ enum EGAMESTATES
     S_COUNT,
 };
 
-// struct for the game character
-struct SGameChar
-{
-    COORD m_cLocation;
-    bool  m_bActive;
-};
-
 void init        ( void );      // initialize your variables, allocate memory, etc
 void getInput    ( void );      // get input from player
 void update      ( double dt ); // update the game and the state of the game
@@ -78,20 +71,14 @@ void renderGame();          // renders the game stuff
 void renderSecondRoom();    // render second game room
 void renderTPRoom();
 void renderEndRoom();
-void FirstRoom();           // render first game room
 void FirstRoomArray();      // First Room Array
-void SecondRoom();          
 void SecondRoomArray();     // Second Room Array
-void TPRoom();
 void TPRoomArray();         // TP Room Array
-void EndRoom();
 void EndRoomArray();        // End Room Array
 void renderLoseScreen();
 void renderWinScreen();
 void renderMap();           // renders the map to the buffer first
 void rendertoiletpaper();   //renders the toilet paper when collected
-void renderCharacter();     // renders the character into the buffer
-void renderGuard();
 void renderFramerate();     // renders debug information, frame rate, elapsed time, etc
 void renderToScreen();      // dump the contents of the buffer to the screen, one frame worth of game
 void renderInputEvents();   // renders the status of input events
