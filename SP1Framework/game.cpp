@@ -1021,6 +1021,7 @@ void FirstRoomArray()
     //Guard
     map[4][31] = 'G';
 
+
     //wall
     for (int i = 0; i < 41; i++)
     {
