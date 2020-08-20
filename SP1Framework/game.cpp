@@ -586,6 +586,7 @@ void reset()
 {
     g_dElapsedTime = 0.0;
     gamestart = false;
+    gameEnd = false;
     collected = false;
     a = 0;
     chara.x = g_Console.getConsoleSize().X / 2 - 1;
