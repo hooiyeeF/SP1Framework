@@ -269,12 +269,6 @@ void update(double dt)
     }
 }
 
-void splashScreenWait()    // waits for time to pass in splash screen
-{
-    if (g_dElapsedTime > 3.0) // wait for 3 seconds to switch to game mode, else do nothing
-        g_eGameState = S_GAME;
-}
-
 void updateGame()       // gameplay logic
 {
     processUserInput(); // checks if you should change states or do something else with the game, e.g. pause, exit
@@ -547,6 +541,7 @@ void moveCharacter3()
         map3[16][16] = '-';
     }
 }
+
 void processUserInput()
 {
     // quits the game if player hits the escape key
