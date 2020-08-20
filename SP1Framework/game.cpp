@@ -13,12 +13,8 @@ double  g_dElapsedTime;
 double  g_dDeltaTime;
 SKeyEvent g_skKeyEvent[K_COUNT];
 SMouseEvent g_mouseEvent;
-char map[16][41];
-char map2[12][49];
-char map3[18][33];
-int a = 0;
-int b = 0;
-int c = 0;
+char map[18][80];
+int Gtimer = 0;
 bool gamestart = false;
 bool gameEnd = false;
 bool collected = false;
@@ -62,10 +58,7 @@ void init( void )
     g_Console.setMouseHandler(mouseHandler);
 
     FirstRoomArray();
-    SecondRoomArray();
-    TPRoomArray();
-    srand(time(NULL));
-    b = 5;
+    Gtimer = 5;
 }
 
 //--------------------------------------------------------------
@@ -254,9 +247,9 @@ void update(double dt)
             break;
         case S_GAME: updateGame(); // gameplay logic when we are in the game
             break;
-        case S_NEXTROOM: updateGame2();
+        case S_NEXTROOM: updateGame();
             break;
-        case S_TPROOM: updateGame3();
+        case S_TPROOM: updateGame();
             break;
         case S_ENDROOM: updateGame();
             break;
@@ -284,85 +277,71 @@ void updateGame()       // gameplay logic
                         // sound can be played here too.
 }
 
-void updateGame2()
-{
-    processUserInput(); // checks if you should change states or do something else with the game, e.g. pause, exit
-    moveCharacter2();    // moves the character, collision detection, physics, etc
-                        // sound can be played here too.
-}
-
-void updateGame3()
-{
-    processUserInput(); // checks if you should change states or do something else with the game, e.g. pause, exit
-    moveCharacter3();    // moves the character, collision detection, physics, etc
-                        // sound can be played here too.
-}
-
 void moveCharacter()
 {
     // Updating the location of the character based on the key release
     // providing a beep sound whenver we shift the character
     if (g_skKeyEvent[K_UP].keyDown && chara.y > 0)
     {
-        if (map[chara.y - 2][chara.x - 19] == '-')
+        if (map[chara.y - 1][chara.x] == '-' || map[chara.y - 1][chara.x] == 'T')
         {
-            map[chara.y - 2][chara.x - 19] = 'P';
-            map[chara.y - 1][chara.x - 19] = '-';
+            map[chara.y - 1][chara.x] = 'P';
+            map[chara.y][chara.x] = '-';
             //Beep(1440, 30);
             chara.y--;
         }
-        else if (map[chara.y - 2][chara.x - 19] == 'G')
+        else if (map[chara.y - 1][chara.x] == 'G')
         {
-            map[chara.y - 1][chara.x - 19] = '-';
+            map[chara.y][chara.x] = '-';
             Beep(1440, 30);
             g_eGameState = S_LOSE;
         }
     }
     if (g_skKeyEvent[K_LEFT].keyDown && chara.x > 0)
     {
-        if (map[chara.y - 1][chara.x - 20] == '-')
+        if (map[chara.y][chara.x - 1] == '-' || map[chara.y][chara.x - 1] == 'T')
         {
             gamestart = true;
-            map[chara.y - 1][chara.x - 20] = 'P';
-            map[chara.y - 1][chara.x - 19] = '-';
+            map[chara.y][chara.x - 1] = 'P';
+            map[chara.y][chara.x] = '-';
             //Beep(1440, 30);
             chara.x--;
         }
-        else if (map[chara.y - 1][chara.x - 19] == 'G')
+        else if (map[chara.y][chara.x - 1] == 'G')
         {
-            map[chara.y - 1][chara.x - 18] = '-';
+            map[chara.y][chara.x] = '-';
             Beep(1440, 30);
             g_eGameState = S_LOSE;
         }
     }
     if (g_skKeyEvent[K_DOWN].keyDown && chara.y < g_Console.getConsoleSize().Y - 1)
     {
-        if (map[chara.y][chara.x - 19] == '-')
+        if (map[chara.y + 1][chara.x] == '-' || map[chara.y + 1][chara.x] == 'T')
         {
-            map[chara.y][chara.x - 19] = 'P';
-            map[chara.y - 1][chara.x - 19] = '-';
+            map[chara.y + 1][chara.x] = 'P';
+            map[chara.y][chara.x] = '-';
             //Beep(1440, 30);
             chara.y++;
         }
-        else if (map[chara.y][chara.x - 19] == 'G')
+        else if (map[chara.y + 1][chara.x] == 'G')
         {
-            map[chara.y - 1][chara.x - 19] = '-';
+            map[chara.y][chara.x] = '-';
             Beep(1440, 30);
             g_eGameState = S_LOSE;
         }
     }
     if (g_skKeyEvent[K_RIGHT].keyDown && chara.x < g_Console.getConsoleSize().X - 1)
     {
-        if (map[chara.y - 1][chara.x - 18] == '-')
+        if (map[chara.y][chara.x + 1] == '-' || map[chara.y][chara.x + 1] == 'T')
         {
-            map[chara.y - 1][chara.x - 18] = 'P';
-            map[chara.y - 1][chara.x - 19] = '-';
+            map[chara.y][chara.x + 1] = 'P';
+            map[chara.y][chara.x] = '-';
             //Beep(1440, 30);
             chara.x++;
         }
-        else if (map[chara.y - 1][chara.x - 18] == 'G')
+        else if (map[chara.y][chara.x + 1] == 'G')
         {
-            map[chara.y - 1][chara.x - 19] = '-';
+            map[chara.y][chara.x] = '-';
             Beep(1440, 30);
             g_eGameState = S_LOSE;
         }
@@ -371,9 +350,9 @@ void moveCharacter()
     {
         g_sChar.m_bActive = !g_sChar.m_bActive;
     }
-    if (map[1][39] == 'P')
+    if (map[2][58] == 'P')
     {
-        map[1][39] = '-';
+        map[2][58] = '-';
     }
     if (map[15][21] == 'P')
     {
@@ -381,186 +360,7 @@ void moveCharacter()
     }
 }
 
-void moveCharacter2()
-{
-    // Updating the location of the character based on the key release
-    // providing a beep sound whenver we shift the character
-    if (g_skKeyEvent[K_UP].keyDown && chara.y > 0)
-    {
-        if (map2[chara.y - 4][chara.x - 15] == '-')
-        {
-            map2[chara.y - 4][chara.x - 15] = 'P';
-            map2[chara.y - 3][chara.x - 15] = '-';
-            //Beep(1440, 30);
-            chara.y--;
-        }
-        else if (map2[chara.y - 4][chara.x - 15] == 'G')
-        {
-            map2[chara.y - 3][chara.x - 15] = '-';
-            Beep(1440, 30);
-            g_eGameState = S_LOSE;
-        }
-    }
-    if (g_skKeyEvent[K_LEFT].keyDown && chara.x > 0)
-    {
-        if (map2[chara.y - 3][chara.x - 16] == '-')
-        {
-            map2[chara.y - 3][chara.x - 16] = 'P';
-            map2[chara.y - 3][chara.x - 15] = '-';
-            //Beep(1440, 30);
-            chara.x--;
-        }
-        else if (map2[chara.y - 3][chara.x - 16] == 'G')
-        {
-            map2[chara.y - 3][chara.x - 15] = '-';
-            Beep(1440, 30);
-            g_eGameState = S_LOSE;
-        }
-    }
-    if (g_skKeyEvent[K_DOWN].keyDown && chara.y < g_Console.getConsoleSize().Y - 1)
-    {
-        if (map2[chara.y - 2][chara.x - 15] == '-')
-        {
-            map2[chara.y - 2][chara.x - 15] = 'P';
-            map2[chara.y - 3][chara.x - 15] = '-';
-            //Beep(1440, 30);
-            chara.y++;
-        }
-        else if (map2[chara.y - 2][chara.x - 15] == 'G')
-        {
-            map2[chara.y - 3][chara.x - 15] = '-';
-            Beep(1440, 30);
-            g_eGameState = S_LOSE;
-        }
-    }
-    if (g_skKeyEvent[K_RIGHT].keyDown && chara.x < g_Console.getConsoleSize().X - 1)
-    {
-        if (map2[chara.y - 3][chara.x - 14] == '-')
-        {
-            map2[chara.y - 3][chara.x - 14] = 'P';
-            map2[chara.y - 3][chara.x - 15] = '-';
-            //Beep(1440, 30);
-            chara.x++;
-        }
-        else if (map2[chara.y - 3][chara.x - 14] == 'G')
-        {
-            map2[chara.y - 3][chara.x - 15] = '-';
-            Beep(1440, 30);
-            g_eGameState = S_LOSE;
-        }
-    }
-    if (g_skKeyEvent[K_SPACE].keyDown)
-    {
-        g_sChar.m_bActive = !g_sChar.m_bActive;
-    }
-    if (map2[10][47] == 'P')
-    {
-        map2[10][47] = '-';
-    }
-    
-}
 
-void moveCharacter3()
-{
-    // Updating the location of the character based on the key release
-    // providing a beep sound whenver we shift the character
-    if (g_skKeyEvent[K_UP].keyDown && chara.y > 0)
-    {
-        if (map3[chara.y - 1][chara.x - 24] == '-')
-        {
-            map3[chara.y - 1][chara.x - 24] = 'P';
-            map3[chara.y][chara.x - 24] = '-';
-            //Beep(1440, 30);
-            chara.y--;
-        }
-        else if (map3[chara.y - 1][chara.x - 24] == 'G')
-        {
-            map3[chara.y][chara.x - 24] = '-';
-            Beep(1440, 30);
-            g_eGameState = S_LOSE;
-        }
-        else if (map3[chara.y - 1][chara.x - 24] == 'T')
-        {
-            map3[chara.y - 1][chara.x - 24] = 'P';
-            map3[chara.y][chara.x - 24] = '-';
-            chara.y--;
-        }
-    }
-    if (g_skKeyEvent[K_LEFT].keyDown && chara.x > 0)
-    {
-        if (map3[chara.y][chara.x - 25] == '-')
-        {
-            map3[chara.y][chara.x - 25] = 'P';
-            map3[chara.y][chara.x - 24] = '-';
-            //Beep(1440, 30);
-            chara.x--;
-        }
-        else if (map3[chara.y][chara.x - 25] == 'G')
-        {
-            map3[chara.y][chara.x - 24] = '-';
-            Beep(1440, 30);
-            g_eGameState = S_LOSE;
-        }
-        else if (map3[chara.y - 1][chara.x - 24] == 'T')
-        {
-            map3[chara.y][chara.x - 25] = 'P';
-            map3[chara.y][chara.x - 24] = '-';
-            chara.x--;
-        }
-    }
-    if (g_skKeyEvent[K_DOWN].keyDown && chara.y < g_Console.getConsoleSize().Y - 1)
-    {
-        if (map3[chara.y + 1][chara.x - 24] == '-')
-        {
-            map3[chara.y + 1][chara.x - 24] = 'P';
-            map3[chara.y][chara.x - 24] = '-';
-            //Beep(1440, 30);
-            chara.y++;
-        }
-        else if (map3[chara.y + 1][chara.x - 24] == 'G')
-        {
-            map3[chara.y][chara.x - 24] = '-';
-            Beep(1440, 30);
-            g_eGameState = S_LOSE;
-        }
-        else if (map3[chara.y - 1][chara.x - 24] == 'T')
-        {
-            map3[chara.y + 1][chara.x - 24] = 'P';
-            map3[chara.y][chara.x - 24] = '-';
-            chara.y++;
-        }
-    }
-    if (g_skKeyEvent[K_RIGHT].keyDown && chara.x < g_Console.getConsoleSize().X - 1)
-    {
-        if (map3[chara.y][chara.x - 23] == '-')
-        {
-            map3[chara.y][chara.x - 23] = 'P';
-            map3[chara.y][chara.x - 24] = '-';
-            //Beep(1440, 30);
-            chara.x++;
-        }
-        else if (map3[chara.y][chara.x - 23] == 'G')
-        {
-            map3[chara.y][chara.x - 24] = '-';
-            Beep(1440, 30);
-            g_eGameState = S_LOSE;
-        }
-        else if (map3[chara.y - 1][chara.x - 24] == 'T')
-        {
-            map3[chara.y][chara.x - 23] = 'P';
-            map3[chara.y][chara.x - 24] = '-';
-            chara.x++;
-        }
-    }
-    if (g_skKeyEvent[K_SPACE].keyDown)
-    {
-        g_sChar.m_bActive = !g_sChar.m_bActive;
-    }
-    if (map3[16][16] == 'P')
-    {
-        map3[16][16] = '-';
-    }
-}
 void processUserInput()
 {
     // quits the game if player hits the escape key
@@ -587,7 +387,6 @@ void reset()
     g_dElapsedTime = 0.0;
     gamestart = false;
     collected = false;
-    a = 0;
     chara.x = g_Console.getConsoleSize().X / 2 - 1;
     chara.y = g_Console.getConsoleSize().Y / 2;
     init();
@@ -671,31 +470,32 @@ void renderGame()
     gara.drawG1(g_Console);
 
 
-    
-    
-    if (b > 0 && b < 100)
+    if (map[chara.y][chara.x] == 'G')
+    {
+        map[chara.y][chara.x] = '-';
+        Beep(1440, 30);
+        g_eGameState = S_LOSE;
+    }
+    if (Gtimer > 0 && Gtimer < 100)
     {
         guarddetectroom1();   
-        b++;
+        Gtimer++;
     }
-    else if (b >= 100 && b < 300)
+    else if (Gtimer >= 100 && Gtimer < 300)
     {
         removeguard();
-        b++;
+        Gtimer++;
     }
     else
     {
-        b = 1;
+        Gtimer = 1;
     }
     
-    
-    
-    //rendertoiletpaper();     // renders toiletpaper *** add bool statement to check if toilet paper is collected then display ***
     /* Go to Second room */
     if (chara.x == 58 && chara.y == 2)
     {
         g_eGameState = S_NEXTROOM;
-
+        SecondRoomArray();
         chara.x = 16; //character position for second room
         chara.y = 4;
     }
@@ -709,13 +509,33 @@ void renderSecondRoom()
     //renderCharacter();  // renders the character into the buffer
     chara.draw(g_Console);
     gara.drawG2(g_Console);
-  //  rendertoiletpaper();
+
+    if (map[chara.y][chara.x] == 'G')
+    {
+        map[chara.y][chara.x] = '-';
+        Beep(1440, 30);
+        g_eGameState = S_LOSE;
+    }
+    if (Gtimer > 0 && Gtimer < 100)
+    {
+        guarddetectroom2();
+        Gtimer++;
+    }
+    else if (Gtimer >= 100 && Gtimer < 300)
+    {
+        removeguard2();
+        Gtimer++;
+    }
+    else
+    {
+        Gtimer = 1;
+    }
 
     /* Go to toilet paper room */
     if (chara.x == 62 && chara.y == 13)
     {
         g_eGameState = S_TPROOM;
-
+        TPRoomArray();
         chara.x = 25; //character position for toilet paper room
         chara.y = 1;
     }
@@ -729,6 +549,27 @@ void renderTPRoom()
     //renderCharacter();   // renders the character into the buffer
     chara.draw(g_Console);
     gara.drawG3(g_Console);
+
+    if (map[chara.y][chara.x] == 'G')
+    {
+        map[chara.y][chara.x] = '-';
+        Beep(1440, 30);
+        g_eGameState = S_LOSE;
+    }
+    if (Gtimer > 0 && Gtimer < 100)
+    {
+        guarddetectroom3();
+        Gtimer++;
+    }
+    else if (Gtimer >= 100 && Gtimer < 300)
+    {
+        removeguard3();
+        Gtimer++;
+    }
+    else
+    {
+        Gtimer = 1;
+    }
 
     if (chara.x == 49 && chara.y == 8)
     {
@@ -744,7 +585,7 @@ void renderTPRoom()
     if (chara.x == 40 && chara.y == 16 && collected == true)
     {
         g_eGameState = S_ENDROOM;
-
+        EndRoomArray();
         chara.x = 40; //character position for last room
         chara.y = 2;
     }
@@ -763,10 +604,26 @@ void renderEndRoom()
     rendertoiletpaper();
     gara.drawG4(g_Console);
     chara.draw(g_Console);   // renders the character into the buffer
-    if (a == 0)
+
+    if (map[chara.y - 1][chara.x - 19] == 'G')
     {
-        EndRoomArray();
-        a++;
+        map[chara.y - 1][chara.x - 19] = '-';
+        Beep(1440, 30);
+        g_eGameState = S_LOSE;
+    }
+    if (Gtimer > 0 && Gtimer < 100)
+    {
+        guarddetectroom4();
+        Gtimer++;
+    }
+    else if (Gtimer >= 100 && Gtimer < 300)
+    {
+        removeguard4();
+        Gtimer++;
+    }
+    else
+    {
+        Gtimer = 1;
     }
 
     /* Go to WIN */
@@ -1045,94 +902,82 @@ void FirstRoom()
    
 }
 
-
-
 void FirstRoomArray()
 {
     //array to detect things
-    for (int x = 0; x < 16; ++x)
+    for (int x = 0; x < 80; ++x)
     {
-        for (int y = 0; y < 41; ++y)
+        for (int y = 0; y < 18; ++y)
         {
-            map[x][y] = '-';
+            map[y][x] = '-';
         }
     }
-    //player
-    map[14][20] = 'P';
-    //Guard
-    map[4][31] = 'G';
-
-
-    //wall
+    //walls in 4 sides
     for (int i = 0; i < 41; i++)
     {
-        map[0][i] = '+';
-        map[15][i] = '+';
+        map[1][19 + i] = '+';
+        map[16][19 + i] = '+';
     }
     for (int j = 0; j < 16; j++)
     {
-        map[j][0] = '+';
-        map[j][40] = '+';
+        map[j + 1][19] = '+';
+        map[j + 1][59] = '+';
     }
+    /* Starting pt */
+    map[15][39] = 'P';
+
     /* Obstacles (i = horz | j = vert) */
 
     //box obs in top left corner
-    for (int i = 1; i < 4; i++)
+    for (int i = 20; i < 23; i++)
     {
-        for (int j = 1; j < 3; j++)
+        for (int j = 2; j < 4; j++)
         {
             map[j][i] = '+';
         }
     }
-
     //box obs in the middle of map
-    for (int i = 12; i < 17; i++)
+    for (int i = 31; i < 36; i++)
     {
-        for (int j = 3; j < 5; j++)
+        for (int j = 4; j < 6; j++)
         {
             map[j][i] = '+';
         }
     }
-
     //horz obs in middle left
-    for (int i = 5; i < 13; i++)
+    for (int i = 24; i < 32; i++)
     {
-        map[7][i] = '+';
+        map[8][i] = '+';
     }
-
     //horz obs below E
-    for (int i = 35; i < 40; i++)
+    for (int i = 54; i < 59; i++)
     {
-        map[3][i] = '+';
+        map[4][i] = '+';
     }
-
     // L shape horz obs
-    for (int i = 30; i < 35; i++)
+    for (int i = 49; i < 54; i++)
     {
-        map[10][i] = '+';
+        map[11][i] = '+';
     }
-
     //vert obs beside spawn pt
-    for (int j = 13; j < 15; j++)
+    for (int j = 14; j < 16; j++)
     {
-        map[j][21] = '+';
+        map[j][40] = '+';
     }
-
     //horz obs near spawn pt
-    for (int i = 15; i < 21; i++)
+    for (int i = 34; i < 40; i++)
     {
-        map[13][i] = '+';
+        map[14][i] = '+';
     }
-
     //vert obs near exit pt
-    for (int j = 1; j < 5; j++)
+    for (int j = 2; j < 6; j++)
     {
-        map[j][26] = '+';
+        map[j][45] = '+';
     }
     // L shape vert obs
-    for (int j = 8; j < 10; j++)
+    for (int j = 9; j < 11; j++)
     {
-        map[j][30] = '+';
+        map[j][49] = '+';
     }
 }
 
@@ -1217,97 +1062,79 @@ void SecondRoom()
 void SecondRoomArray()
 {
     //array to detect things
-    for (int x = 0; x < 12; ++x)
+    for (int x = 0; x < 80; ++x)
     {
-        for (int y = 0; y < 49; ++y)
+        for (int y = 0; y < 18; ++y)
         {
-            map2[x][y] = '-';
+            map[y][x] = '-';
         }
     }
     //walls in 4 sides
     for (int i = 0; i < 49; i++)
     {
-        map2[0][i] = '+';
-        map2[11][i] = '+';
+        map[3][i + 15] = '+';
+        map[14][i + 15] = '+';
     }
     for (int j = 0; j < 12; j++)
     {
-        map2[j][0] = '+';
-        map2[j][48] = '+';
+        map[j + 3][15] = '+';
+        map[j + 3][63] = '+';
     }
     /* Starting pt */
-    map2[1][1] = 'P';
-    //Guard
-    map2[2][13] = 'G';
-    map2[2][14] = 'G';
-    map2[2][12] = 'G';
-    map2[1][13] = 'G';
-    map2[3][13] = 'G';
-    map2[5][29] = 'G';
-    map2[5][28] = 'G';
-    map2[5][30] = 'G';
-    map2[4][29] = 'G';
-    map2[6][29] = 'G';
-
+    map[4][16] = 'P';
     /* Obstacles (i = horz | j = vert) */
 
     //box obs on top left corner
-    for (int i = 1; i < 10; i++)
+    for (int i = 16; i < 25; i++)
     {
-        for (int j = 3; j < 5; j++)
+        for (int j = 6; j < 8; j++)
         {
-            map2[j][i] = '+';
+            map[j][i] = '+';
         }
     }
-
     //box obs on the right
-    for (int i = 35; i < 43; i++)
+    for (int i = 50; i < 58; i++)
     {
-        for (int j = 4; j < 6; j++)
+        for (int j = 7; j < 9; j++)
         {
-            map2[j][i] = '+';
+            map[j][i] = '+';
         }
     }
-
     //L shape horz obs 
-    for (int i = 33; i < 36; i++)
+    for (int i = 48; i < 51; i++)
     {
-        map2[10][i] = '+';
+        map[13][i] = '+';
     }
-
     //reverse L shape horz obs
-    for (int i = 10; i < 21; i++)
+    for (int i = 25; i < 36; i++)
     {
-        map2[8][i] = '+';
+        map[11][i] = '+';
     }
 
     // horz obs on top of exit
-    for (int i = 42; i < 48; i++)
+    for (int i = 57; i < 63; i++)
     {
-        map2[8][i] = '+';
+        map[11][i] = '+';
     }
-
     //reverse L shape vert obs
-    for (int i = 18; i < 21; i++)
-    {
-        for (int j = 5; j < 8; j++)
-        {
-            map2[j][i] = '+';
-        }
-    }
-
-    //vert obs on the top of the middle
-    for (int j = 1; j < 4; j++)
-    {
-        map2[j][27] = '+';
-    }
-
-    //L shape vert obs
-    for (int i = 30; i < 33; i++)
+    for (int i = 33; i < 36; i++)
     {
         for (int j = 8; j < 11; j++)
         {
-            map2[j][i] = '+';
+            map[j][i] = '+';
+        }
+    }
+    //vert obs on the top of the middle
+    for (int j = 4; j < 7; j++)
+    {
+        map[j][42] = '+';
+    }
+    //L shape vert obs
+    for (int i = 45; i < 48; i++)
+    {
+        for (int j = 11; j < 14; j++)
+        {
+            map[j][i] = '+';
         }
     }
 }
@@ -1385,94 +1212,73 @@ void TPRoom()
 
 void TPRoomArray()
 {
-    
     //array to detect things
-    for (int x = 0; x < 18; ++x)
+    for (int x = 0; x < 80; ++x)
     {
-        for (int y = 0; y < 33; ++y)
+        for (int y = 0; y < 18; ++y)
         {
-            map3[x][y] = '-';
+            map[y][x] = '-';
         }
     }
     //walls in 4 sides
     for (int i = 0; i < 33; i++)
     {
-        map3[0][i] = '+';
-        map3[17][i] = '+';
+        map[0][i + 24] = '+';
+        map[17][i + 24] = '+';
     }
     for (int j = 0; j < 18; j++)
     {
-        map3[j][0] = '+';
-        map3[j][32] = '+';
+        map[j][24] = '+';
+        map[j][56] = '+';
     }
     /* Starting pt */
-    map3[1][1] = 'P';
-
-    /* Spawn toilet paper({48,8},{49,8}) */
-    map3[7][25] = 'T';
-    //spawn guards
-    map[6][12] = 'G';
-    map3[5][11] = 'G';
-    map3[5][12] = 'G';
-    map3[5][13] = 'G';
-    map3[4][12] = 'G';
-
-    map3[12][12] = 'G';
-    map3[11][11] = 'G';
-    map3[11][12] = 'G';
-    map3[11][13] = 'G';
-    map3[10][12] = 'G';
-
-    map3[9][31] = 'G';
-    map3[8][32] = 'G';
-    map3[8][31] = 'G';
-    map3[8][30] = 'G';
-    map3[7][31] = 'G';
-    
+    map[1][25] = 'P';
+    map[8][49] = 'T';
 
     /* Walls around toiletpaper spawn pt */
     for (int j = 6; j < 11; j++)
     {
-        map3[j][23] = '+';
+        map[j][47] = '+';
     }
-    for (int i = 24; i < 28; i++)
+    for (int i = 48; i < 52; i++)
     {
-        map3[6][i] = '+';
-        map3[10][i] = '+';
+        map[6][i] = '+';
+        map[10][i] = '+';
     }
     // vert wall beside spawn pt
-    for (int i = 5; i < 8; i++)
+    for (int i = 29; i < 32; i++)
     {
         for (int j = 1; j < 4; j++)
         {
-            map3[j][i] = '+';
+            map[j][i] = '+';
         }
     }
     // wall around exit pt
-    for (int i = 18; i < 20; i++)
+    for (int i = 42; i < 44; i++)
     {
         for (int j = 14; j < 17; j++)
         {
-            map3[j][i] = '+';
+            map[j][i] = '+';
         }
     }
-    for (int i = 14; i < 19; i++)
+    for (int i = 38; i < 43; i++)
     {
-        map3[14][i] = '+';
+        map[14][i] = '+';
     }
     // thick wall in the middle of the map
-    for (int i = 1; i < 10; i++)
+    for (int i = 25; i < 34; i++)
     {
         for (int j = 8; j < 10; j++)
         {
-            map3[j][i] = '+';
+            map[j][i] = '+';
         }
     }
     // horz wall on top of the map
-    for (int i = 17; i < 22; i++)
+    for (int i = 41; i < 46; i++)
     {
-        map3[3][i] = '+';
+        map[3][i] = '+';
     }
+    
 }
 
 void EndRoom()
@@ -1570,121 +1376,95 @@ void EndRoom()
 void EndRoomArray()
 {
     //array to detect things
-    for (int x = 0; x < 16; ++x)
+    for (int x = 0; x < 80; ++x)
     {
-        for (int y = 0; y < 41; ++y)
+        for (int y = 0; y < 18; ++y)
         {
-            map[x][y] = '-';
+            map[y][x] = '-';
         }
     }
-    //wall
-    for (int i = 0; i < 40; i++)
+
+    //walls in 4 sides
+    for (int i = 0; i < 41; i++)
     {
-        map[0][i] = '+';
-        map[15][i] = '+';
+        map[1][19 + i] = '+';
+        map[16][19 + i] = '+';
     }
     for (int j = 0; j < 16; j++)
     {
-        map[j][0] = '+';
-        map[j][40] = '+';
+        map[1 + j][19] = '+';
+        map[1 + j][59] = '+';
     }
     /* Starting pt */
-    map[1][21] = 'P';
-
-    //guardsssss
-    map[2][1] = 'G';
-    map[1][2] = 'G';
-    map[1][1] = 'G';
-    map[1][0] = 'G';
-    map[0][1] = 'G';
-
-
-    map[15][1] = 'G';
-    map[14][2] = 'G';
-    map[14][1] = 'G';
-    map[14][0] = 'G';
-    map[13][1] = 'G';
-
-    map[7][24] = 'G';
-    map[6][25] = 'G';
-    map[6][24] = 'G';
-    map[6][23] = 'G';
-    map[5][24] = 'G';
-
-
-    map[15][22] = 'G';
-    map[14][23] = 'G';
-    map[14][22] = 'G';
-    map[14][21] = 'G';
-    map[13][22] = 'G';
+    map[2][40] = 'P';
 
     // thick wall next to the spawn pt
-    for (int i = 22; i < 28; i++)
+    for (int i = 41; i < 47; i++)
     {
-        for (int j = 1; j < 4; j++)
+        for (int j = 2; j < 5; j++)
         {
             map[j][i] = '+';
         }
     }
-    for (int i = 6; i < 22; i++)
+    for (int i = 25; i < 41; i++)
     {
-        map[3][i] = '+';
+        map[4][i] = '+';
     }
 
     /* thick wall beside exit pt */
-    for (int i = 14; i < 22; i++)
+    for (int i = 33; i < 41; i++)
     {
-        for (int j = 12; j < 15; j++)
+        for (int j = 13; j < 16; j++)
         {
             map[j][i] = '+';
         }
     }
-    for (int i = 20; i < 22; i++)
+    for (int i = 39; i < 41; i++)
     {
-        for (int j = 9; j < 12; j++)
+        for (int j = 10; j < 13; j++)
         {
             map[j][i] = '+';
         }
     }
-    for (int i = 22; i < 34; i++)
+    for (int i = 41; i < 53; i++)
     {
-        map[9][i] = '+';
+        map[10][i] = '+';
     }
 
     // vert wall in the middle
-    for (int i = 14; i < 16; i++)
+    for (int i = 33; i < 35; i++)
     {
-        for (int j = 4; j < 10; j++)
+        for (int j = 5; j < 11; j++)
         {
             map[j][i] = '+';
         }
     }
     // horz wall at the top left corner
-    for (int i = 1; i < 9; i++)
+    for (int i = 20; i < 28; i++)
     {
-        map[6][i] = '+';
+        map[7][i] = '+';
     }
 
     // horz wall in the middle left 
-    for (int i = 7; i < 14; i++)
+    for (int i = 26; i < 33; i++)
     {
-        map[9][i] = '+';
+        map[10][i] = '+';
     }
 
-    for (int j = 10; j < 13; j++)
+    for (int j = 11; j < 14; j++)
     {
-        map[j][7] = '+';
+        map[j][26] = '+';
     }
 
     //horz wall on top of exit pt
-    for (int i = 31; i < 40; i++)
+    for (int i = 50; i < 59; i++)
     {
-        map[12][i] = '+';
+        map[13][i] = '+';
     }
 
-    for (int i = 37; i < 40; i++)
+    for (int i = 56; i < 59; i++)
     {
-        map[1][i] = '+';
+        map[2][i] = '+';
     }
 }
 
@@ -1737,17 +1517,71 @@ void renderLoseScreen()
 
 void guarddetectroom1()
 {
-    map[4][32] = 'G';
-    map[4][30] = 'G';
-    map[3][31] = 'G';
-    map[5][31] = 'G';
-    g_Console.writeToBuffer(51, 5, " ", 79);
-    g_Console.writeToBuffer(49, 5, " ", 79);
-    g_Console.writeToBuffer(50, 4, " ", 79);
-    g_Console.writeToBuffer(50, 6, " ", 79);
+    
+    for (int gx = 47; gx < 54; ++gx)
+    {
+        for (int gy = 3; gy < 8; ++gy)
+        {
+            if (map[gy][gx] == '+')
+            {
+            
+            }
+            else if (gx == 50 && gy == 5)
+            {
+                map[gy][gx] = 'G';
+            }
+            else
+            {
+                map[gy][gx] = 'G';
+                g_Console.writeToBuffer(gx, gy, " ", 79);
+            }
+        }
+    }
 }
 
+void guarddetectroom2()
+{
+    
+}
+
+void guarddetectroom3()
+{
+    
+}
+
+void guarddetectroom4()
+{
+    
+}
+
+
 void removeguard()
+{
+    map[5][50] = '-';
+    map[6][51] = '-';
+    map[6][49] = '-';
+    map[6][50] = '-';
+    map[4][50] = '-';
+    map[4][51] = '-';
+    map[4][49] = '-';
+    map[5][51] = '-';
+    map[5][49] = '-';
+}
+void removeguard2()
+{
+    map[4][32] = '-';
+    map[4][30] = '-';
+    map[3][31] = '-';
+    map[5][31] = '-';
+}
+void removeguard3()
+{
+    map[4][32] = '-';
+    map[4][30] = '-';
+    map[3][31] = '-';
+    map[5][31] = '-';
+}
+void removeguard4()
 {
     map[4][32] = '-';
     map[4][30] = '-';
