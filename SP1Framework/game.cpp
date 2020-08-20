@@ -571,6 +571,8 @@ void PlayAgain()
 }
 void reset()
 {
+    g_dElapsedTime = 0.0;
+    gamestart = false;
     chara.x = g_Console.getConsoleSize().X / 2 - 1;
     chara.y = g_Console.getConsoleSize().Y / 2;
 }
