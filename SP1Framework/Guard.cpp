@@ -66,21 +66,4 @@ void Guard::drawG4(Console& g_console)
 	g_console.writeToBuffer(f, (char)1, charColor);
 	};
 
-//void Guard::detectG(Console& g_console)
-//{
-//	bool detect = false;
-//	while (!detect)
-//	{
-//		if ()
-//		{
-//			bool detect = true;
-//			g_eGameState = S_LOSE;
-//
-//		}
-//		else
-//		{
-//			bool detect = false;
-//		}
-//	}
-//
-//};
+

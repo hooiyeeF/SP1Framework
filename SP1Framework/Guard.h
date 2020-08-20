@@ -9,5 +9,5 @@ public:
 	void drawG2(Console& g_console);
 	void drawG3(Console& g_console);
 	void drawG4(Console& g_console);
-	void detectG(Console& g_console);
+
 };
