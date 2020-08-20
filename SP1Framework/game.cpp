@@ -439,9 +439,9 @@ void moveCharacter2()
     {
         g_sChar.m_bActive = !g_sChar.m_bActive;
     }
-    if (map[12][48] == 'P')
+    if (map2[12][48] == 'P')
     {
-        map[12][48] = '-';
+        map2[12][48] = '-';
     }
     
 }
@@ -549,6 +549,10 @@ void moveCharacter3()
     if (g_skKeyEvent[K_SPACE].keyDown)
     {
         g_sChar.m_bActive = !g_sChar.m_bActive;
+    }
+    if (map3[16][16] == 'P')
+    {
+        map3[16][16] = '-';
     }
 }
 void processUserInput()
@@ -1329,6 +1333,10 @@ void TPRoomArray()
 
     /* Spawn toilet paper({48,8},{49,8}) */
     map3[7][25] = 'T';
+    //spawn guards
+    map3[5][12] = 'G';
+    map3[11][12] = 'G';
+    map3[8][31] = 'G';
 
     /* Walls around toiletpaper spawn pt */
     for (int j = 6; j < 11; j++)
