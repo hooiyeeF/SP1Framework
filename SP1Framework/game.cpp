@@ -1273,7 +1273,10 @@ void TPRoom()
     /* Ending pt */
     g_Console.writeToBuffer(40, 16, "E", 0x5E);
     /* Spawn toilet paper */
-    g_Console.writeToBuffer(49, 8, "T", 0xF0);
+    if (collected == false)
+    {
+        g_Console.writeToBuffer(49, 8, "T", 0xF0);
+    }
 
     /* Walls around toiletpaper spawn pt */
     for (int j = 6; j < 11; j++)
