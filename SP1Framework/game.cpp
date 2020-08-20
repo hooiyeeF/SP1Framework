@@ -1,5 +1,5 @@
 // This is the main file for the game logic and function
-// //
+//
 //
 #include "game.h"
 #include "Framework\console.h"
@@ -17,6 +17,7 @@ char map[16][41];
 char map2[12][49];
 char map3[18][33];
 bool gamestart = false;
+bool collected = false;
 
 
 Guard gara;
@@ -609,8 +610,6 @@ void render()
     renderFramerate();      // renders debug information, frame rate, elapsed time, etc
     renderInputEvents();    // renders status of input events
     renderToScreen();       // dump the contents of the buffer to the screen, one frame worth of game
-   // if (gettoiletpaper() == true)
-     //   rendertoiletpaper();
 }
 
 void clearScreen()
@@ -698,16 +697,26 @@ void renderTPRoom()
 
     if (chara.x == 49 && chara.y == 8)
     {
+        collected = true;
+    }
+    // draw toilet paper
+    if (collected == true)
+    {
         rendertoiletpaper();
     }
 
     /* Go to the last room */
-    if (chara.x == 40 && chara.y == 16)
+    if (chara.x == 40 && chara.y == 16 && collected == true)
     {
         g_eGameState = S_ENDROOM;
 
         chara.x = 40; //character position for last room
         chara.y = 2;
+    }
+    // Not collected
+    else if (chara.x == 40 && chara.y == 16 && collected == false)
+    {
+        g_Console.writeToBuffer(30, 25, "Collect the toilet paper before exit !", 0x06);
     }
 }
 
