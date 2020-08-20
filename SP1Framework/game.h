@@ -72,7 +72,7 @@ void moveCharacter3();      // moves the character, collision detection, physics
 void processUserInput();    // checks if you should change states or do something else with the game, e.g. pause, exit
 void GoToGamePlay();        // check if user hit space key to start game
 void PlayAgain();           // check if user hit key to restart the game
-void reset();             // reset player spawn
+void reset();               // reset player spawn
 void clearScreen();         // clears the current screen and draw from scratch 
 void renderSplashScreen();  // renders the splash screen
 void renderGame();          // renders the game stuff
@@ -86,6 +86,7 @@ void SecondRoomArray();     // Second Room Array
 void TPRoom();
 void TPRoomArray();         // TP Room Array
 void EndRoom();
+void EndRoomArray();        // End Room Array
 void renderLoseScreen();
 void renderMap();           // renders the map to the buffer first
 void rendertoiletpaper();   //renders the toilet paper when collected
