@@ -605,8 +605,8 @@ void render()
     renderFramerate();      // renders debug information, frame rate, elapsed time, etc
     renderInputEvents();    // renders status of input events
     renderToScreen();       // dump the contents of the buffer to the screen, one frame worth of game
-    if (gettoiletpaper() == true)
-        rendertoiletpaper();
+   // if (gettoiletpaper() == true)
+     //   rendertoiletpaper();
 }
 
 void clearScreen()
@@ -692,6 +692,11 @@ void renderTPRoom()
     chara.draw(g_Console);
     gara.drawG3(g_Console);
 
+    if (chara.x == 49 && chara.y == 8)
+    {
+        rendertoiletpaper();
+    }
+
     /* Go to the last room */
     if (chara.x == 40 && chara.y == 16)
     {
@@ -707,6 +712,7 @@ void renderEndRoom()
     clearScreen();
     EndRoom();            //render Toilet paper room
     renderMap();         // renders the map to the buffer first
+    rendertoiletpaper();
     chara.draw(g_Console);   // renders the character into the buffer
 }
 
