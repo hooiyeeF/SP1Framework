@@ -30,7 +30,6 @@ Player chara;
 Map DRoom;
 
 // Game specific variables here
-SGameChar   g_sChar;
 EGAMESTATES g_eGameState = S_SPLASHSCREEN; // initial state
 
 // Console object
@@ -50,9 +49,6 @@ void init( void )
 
     // sets the initial state for the game
     g_eGameState = S_SPLASHSCREEN;
-    g_sChar.m_cLocation.X = g_Console.getConsoleSize().X / 2 - 1;
-    g_sChar.m_cLocation.Y = g_Console.getConsoleSize().Y / 2;
-    g_sChar.m_bActive = true;
     chara.x = g_Console.getConsoleSize().X / 2 - 1;
     chara.y = g_Console.getConsoleSize().Y / 2;
 
@@ -369,10 +365,6 @@ void moveCharacter()
             g_eGameState = S_LOSE;
         }
     }
-    if (g_skKeyEvent[K_SPACE].keyDown)
-    {
-        g_sChar.m_bActive = !g_sChar.m_bActive;
-    }
     if (map[1][39] == 'P')
     {
         map[1][39] = '-';
@@ -450,10 +442,6 @@ void moveCharacter2()
             Beep(1440, 30);
             g_eGameState = S_LOSE;
         }
-    }
-    if (g_skKeyEvent[K_SPACE].keyDown)
-    {
-        g_sChar.m_bActive = !g_sChar.m_bActive;
     }
     if (map2[10][47] == 'P')
     {
@@ -553,10 +541,6 @@ void moveCharacter3()
             map3[chara.y][chara.x - 24] = '-';
             chara.x++;
         }
-    }
-    if (g_skKeyEvent[K_SPACE].keyDown)
-    {
-        g_sChar.m_bActive = !g_sChar.m_bActive;
     }
     if (map3[16][16] == 'P')
     {
@@ -673,9 +657,6 @@ void renderGame()
     //renderCharacter();  // renders the character into the buffer
     chara.draw(g_Console);
     gara.drawG1(g_Console);
-
-
-    
     
     if (b > 0 && b < 100)
     {
@@ -691,7 +672,6 @@ void renderGame()
     {
         b = 1;
     }
-    
     
     /* Go to Second room */
     if (chara.x == 58 && chara.y == 2)
@@ -846,28 +826,6 @@ void rendertoiletpaper()
             }
         }
     }
-}
-
-void renderCharacter()
-{
-    // Draw the location of the character
-    WORD charColor = 0x0F;
-    /*if (g_sChar.m_bActive)
-    {
-        charColor = 0x0A;
-    }*/
-    g_Console.writeToBuffer(g_sChar.m_cLocation, (char)1, charColor);
-} 
-
-void renderGuard()
-{
-    //Draw the location of the guard
-    WORD charColor = 0x0D;
-        if (g_sChar.m_bActive)
-        {
-            charColor = 0x0C;
-        }
-    g_Console.writeToBuffer(g_sChar.m_cLocation, (char)1,charColor);
 }
 
 void renderFramerate()
