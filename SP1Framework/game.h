@@ -78,13 +78,9 @@ void renderGame();          // renders the game stuff
 void renderSecondRoom();    // render second game room
 void renderTPRoom();
 void renderEndRoom();
-void FirstRoom();           // render first game room
 void FirstRoomArray();      // First Room Array
-void SecondRoom();          
 void SecondRoomArray();     // Second Room Array
-void TPRoom();
 void TPRoomArray();         // TP Room Array
-void EndRoom();
 void EndRoomArray();        // End Room Array
 void renderLoseScreen();
 void renderWinScreen();
