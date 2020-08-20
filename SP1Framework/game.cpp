@@ -1333,28 +1333,36 @@ void renderWinScreen()
     COORD c = g_Console.getConsoleSize();
     c.Y /= 2;
     c.Y -= 10;
-    c.X = c.X / 2 - 14;
+    c.X = c.X / 2 - 16;
     g_Console.writeToBuffer(c, "C O N G R A T U L A T I O N S !", 0x0A);
     c.Y += 2;
-    c.X = g_Console.getConsoleSize().X / 2 - 6;
+    c.X = g_Console.getConsoleSize().X / 2 - 8;
     g_Console.writeToBuffer(c, "Y O U  W O N !", 0x0A);
-    c.Y += 8;
-    c.X = g_Console.getConsoleSize().X / 2 - 10;
+
+    c.Y = 11;
+    c.X = 22;
+    g_Console.writeToBuffer(c, "You helped Bob get his toilet paper,", 0x0F);
+    c.Y = 12;
+    c.X = 24;
+    g_Console.writeToBuffer(c, "and now he can do his business!", 0x0F);
+
+    c.Y = 17;
+    c.X = g_Console.getConsoleSize().X / 2 - 12;
     g_Console.writeToBuffer(c, "  Time Taken: ", 0xB0);
 
     std::ostringstream ss;
     ss << std::fixed << std::setprecision(2);
     ss.str("");
     ss << g_dElapsedTime << "s  ";
-    c.X = 44;
-    c.Y = 15;
+    c.X = 42;
+    c.Y = 17;
     g_Console.writeToBuffer(c, ss.str(), 0xB0);
 
     c.Y += 5;
-    c.X = g_Console.getConsoleSize().X / 2 - 12;
+    c.X = g_Console.getConsoleSize().X / 2 - 14;
     g_Console.writeToBuffer(c, "Press <SPACE> to play again", 0x07);
     c.Y += 2;
-    c.X = g_Console.getConsoleSize().X / 2 - 8;
+    c.X = g_Console.getConsoleSize().X / 2 - 10;
     g_Console.writeToBuffer(c, "Press <ESC> to exit", 0x07);
 
 }
@@ -1373,7 +1381,6 @@ void renderLoseScreen()
     c.X = g_Console.getConsoleSize().X / 2 - 10;
     g_Console.writeToBuffer(c, "Press <ESC> to exit", 0x07);
 }
-
 
 void guarddetectroom1()
 {
