@@ -8,6 +8,7 @@
 #include <iomanip>
 #include <sstream>
 #include "Guard.h"
+#include "Map.h"
 
 double  g_dElapsedTime;
 double  g_dDeltaTime;
@@ -22,9 +23,8 @@ bool collected = false;
 
 Guard gara;
 Player chara;
-
+Map room;
 // Game specific variables here
-SGameChar   g_sChar;
 EGAMESTATES g_eGameState = S_SPLASHSCREEN; // initial state
 
 // Console object
@@ -44,9 +44,6 @@ void init( void )
 
     // sets the initial state for the game
     g_eGameState = S_SPLASHSCREEN;
-    g_sChar.m_cLocation.X = g_Console.getConsoleSize().X / 2 - 1;
-    g_sChar.m_cLocation.Y = g_Console.getConsoleSize().Y / 2;
-    g_sChar.m_bActive = true;
     chara.x = g_Console.getConsoleSize().X / 2 - 1;
     chara.y = g_Console.getConsoleSize().Y / 2;
 
@@ -346,10 +343,6 @@ void moveCharacter()
             g_eGameState = S_LOSE;
         }
     }
-    if (g_skKeyEvent[K_SPACE].keyDown)
-    {
-        g_sChar.m_bActive = !g_sChar.m_bActive;
-    }
     if (map[2][58] == 'P')
     {
         map[2][58] = '-';
@@ -463,7 +456,7 @@ void renderSplashScreen()  // renders the splash screen
 
 void renderGame()
 {
-    FirstRoom();        //render first game room
+    room.drawR1(g_Console);        //render first game room
     renderMap();        // renders the map to the buffer first
     //renderCharacter();  // renders the character into the buffer
     chara.draw(g_Console);
@@ -504,7 +497,7 @@ void renderGame()
 void renderSecondRoom()
 {
     clearScreen(); 
-    SecondRoom();       //render second room
+    room.drawR2(g_Console);       //render second room
     renderMap();        // renders the map to the buffer first
     //renderCharacter();  // renders the character into the buffer
     chara.draw(g_Console);
@@ -544,7 +537,7 @@ void renderSecondRoom()
 void renderTPRoom()
 {
     clearScreen();
-    TPRoom();            //render Toilet paper room
+    room.drawRTP(g_Console);            //render Toilet paper room
     renderMap();         // renders the map to the buffer first
     //renderCharacter();   // renders the character into the buffer
     chara.draw(g_Console);
@@ -599,7 +592,7 @@ void renderTPRoom()
 void renderEndRoom()
 {
     clearScreen();
-    EndRoom();            //render Toilet paper room
+    room.drawREnd(g_Console);            //render Toilet paper room
     renderMap();         // renders the map to the buffer first
     rendertoiletpaper();
     gara.drawG4(g_Console);
@@ -698,28 +691,6 @@ void rendertoiletpaper()
             }
         }
     }
-}
-
-void renderCharacter()
-{
-    // Draw the location of the character
-    WORD charColor = 0x0F;
-    /*if (g_sChar.m_bActive)
-    {
-        charColor = 0x0A;
-    }*/
-    g_Console.writeToBuffer(g_sChar.m_cLocation, (char)1, charColor);
-} 
-
-void renderGuard()
-{
-    //Draw the location of the guard
-    WORD charColor = 0x0D;
-        if (g_sChar.m_bActive)
-        {
-            charColor = 0x0C;
-        }
-    g_Console.writeToBuffer(g_sChar.m_cLocation, (char)1,charColor);
 }
 
 void renderFramerate()
@@ -822,86 +793,6 @@ void renderInputEvents()
     }
 }
 
-void FirstRoom()
-{   
-    int wallX = 19;
-    int wallY = 1;
-
-    //walls in 4 sides
-    for (int i = 0; i < 41; i++)
-    {
-        g_Console.writeToBuffer(wallX + i, 1, "+", 0xB20);
-        g_Console.writeToBuffer(wallX + i, 16, "+", 0xB20);
-    }
-    for (int j = 0; j < 16; j++)
-    {
-        g_Console.writeToBuffer(19, wallY + j, "+", 0xB20);
-        g_Console.writeToBuffer(59, wallY + j, "+", 0xB20);
-    }
-    /* Starting pt */ 
-    g_Console.writeToBuffer(39, 15, "S", 0x5E);
-
-    /* Ending pt */
-    g_Console.writeToBuffer(58, 2, "E", 0x5E);
-
-    /* Obstacles (i = horz | j = vert) */  
-   
-    //box obs in top left corner
-    for (int i = 20; i < 23; i++)
-    {
-        for (int j = 2; j < 4; j++)
-        {
-            g_Console.writeToBuffer(i, j, "+", 0xB20);
-        }
-    }
-    //box obs in the middle of map
-    for (int i = 31; i < 36; i++)
-    {
-        for (int j = 4; j < 6; j++)
-        {
-            g_Console.writeToBuffer(i, j, "+", 0xB20);
-        }
-    }
-    //horz obs in middle left
-    for (int i = 24; i < 32; i++)
-    {
-        g_Console.writeToBuffer(i, 8, "+", 0xB20);
-    }
-    //horz obs below E
-    for (int i = 54; i < 59; i++)
-    {
-        g_Console.writeToBuffer(i, 4, "+", 0xB20);
-    }
-    // L shape horz obs
-    for (int i = 49; i < 54; i++)
-    {
-        g_Console.writeToBuffer(i, 11, "+", 0xB20);
-    }
-    //vert obs beside spawn pt
-    for (int j = 14; j < 16; j++)
-    {
-        g_Console.writeToBuffer(40, j, "+", 0xB20);
-    }
-    //horz obs near spawn pt
-    for (int i = 34; i < 40; i++)
-    {
-        g_Console.writeToBuffer(i, 14, "+", 0xB20);
-    }
-    //vert obs near exit pt
-    for (int j = 2; j < 6; j++)
-    {
-        g_Console.writeToBuffer(45, j, "+", 0xB20);
-    }
-    // L shape vert obs
-    for (int j = 9; j < 11; j++)
-    {
-        g_Console.writeToBuffer(49, j, "+", 0xB20);
-    }
-        
-
-   
-}
-
 void FirstRoomArray()
 {
     //array to detect things
@@ -978,84 +869,6 @@ void FirstRoomArray()
     for (int j = 9; j < 11; j++)
     {
         map[j][49] = '+';
-    }
-}
-
-void SecondRoom()
-{
-    int wallX = 15;
-    int wallY = 3;
-
-    //walls in 4 sides
-    for (int i = 0; i < 49; i++)
-    {
-        g_Console.writeToBuffer(wallX + i, 3, "+", 0xB20);
-        g_Console.writeToBuffer(wallX + i, 14, "+", 0xB20);
-    }
-    for (int j = 0; j < 12; j++)
-    {
-        g_Console.writeToBuffer(15, wallY + j, "+", 0xB20);
-        g_Console.writeToBuffer(63, wallY + j, "+", 0xB20);
-    }
-    /* Starting pt */
-    g_Console.writeToBuffer(16, 4, "S", 0x5E);
-    /* Ending pt */
-    g_Console.writeToBuffer(62, 13, "E", 0x5E);
-
-    /* Obstacles (i = horz | j = vert) */
-
-    //box obs on top left corner
-    for (int i = 16; i < 25; i++)
-    {
-        for (int j = 6; j < 8; j++)
-        {
-            g_Console.writeToBuffer(i, j, "+", 0xB20);
-        }
-    }
-    //box obs on the right
-    for (int i = 50; i < 58; i++)
-    {
-        for (int j = 7; j < 9; j++)
-        {
-            g_Console.writeToBuffer(i, j, "+", 0xB20);
-        }
-    }
-    //L shape horz obs 
-    for (int i = 48; i < 51; i++)
-    {
-        g_Console.writeToBuffer(i, 13, "+", 0xB20);
-    }
-    //reverse L shape horz obs
-    for (int i = 25; i < 36; i++)
-    {
-        g_Console.writeToBuffer(i, 11, "+", 0xB20);
-    }
-
-    // horz obs on top of exit
-    for (int i = 57; i < 63; i++)
-    {
-        g_Console.writeToBuffer(i, 11, "+", 0xB20);
-    }
-    //reverse L shape vert obs
-    for (int i = 33; i < 36; i++)
-    {
-        for (int j = 8; j < 11; j++)
-        {
-            g_Console.writeToBuffer(i, j, "+", 0xB20);
-        }
-    }
-    //vert obs on the top of the middle
-    for (int j = 4; j < 7; j++)
-    {
-        g_Console.writeToBuffer(42, j, "+", 0xB20);
-    }
-    //L shape vert obs
-    for (int i = 45; i < 48; i++)
-    {
-        for (int j = 11; j < 14; j++)
-        {
-            g_Console.writeToBuffer(i, j, "+", 0xB20);
-        }
     }
 }
 
@@ -1139,77 +952,6 @@ void SecondRoomArray()
     }
 }
 
-void TPRoom()
-{
-    int wallX = 24;
-    int wallY = 0;
-
-    //walls in 4 sides
-    for (int i = 0; i < 33; i++)
-    {
-        g_Console.writeToBuffer(wallX + i, 0, "+", 0xB20);
-        g_Console.writeToBuffer(wallX + i, 17, "+", 0xB20);
-    }
-    for (int j = 0; j < 18; j++)
-    {
-        g_Console.writeToBuffer(24, wallY + j, "+", 0xB20);
-        g_Console.writeToBuffer(56, wallY + j, "+", 0xB20);
-    }
-    /* Starting pt */
-    g_Console.writeToBuffer(25, 1, "S", 0x5E);
-    /* Ending pt */
-    g_Console.writeToBuffer(40, 16, "E", 0x5E);
-    /* Spawn toilet paper */
-    if (collected == false)
-    {
-        g_Console.writeToBuffer(49, 8, "T", 0xF0);
-    }
-
-    /* Walls around toiletpaper spawn pt */
-    for (int j = 6; j < 11; j++)
-    {
-        g_Console.writeToBuffer(47, j, "+", 0xB20);
-    }
-    for (int i = 48; i < 52; i++)
-    {
-        g_Console.writeToBuffer(i, 6, "+", 0xB20);
-        g_Console.writeToBuffer(i, 10, "+", 0xB20);
-    }
-    // vert wall beside spawn pt
-    for (int i = 29; i < 32; i++)
-    {
-        for (int j = 1; j < 4; j++)
-        {
-            g_Console.writeToBuffer(i, j, "+", 0xB20);
-        }
-    }
-    // wall around exit pt
-    for (int i = 42; i < 44; i++)
-    {
-        for (int j = 14; j < 17; j++)
-        {
-            g_Console.writeToBuffer(i, j, "+", 0xB20);
-        }
-    }
-    for (int i = 38; i < 43; i++)
-    {
-        g_Console.writeToBuffer(i, 14, "+", 0xB20);
-    }
-    // thick wall in the middle of the map
-    for (int i = 25; i < 34; i++)
-    {
-        for (int j = 8; j < 10; j++)
-        {
-            g_Console.writeToBuffer(i, j, "+", 0xB20);
-        }
-    }
-    // horz wall on top of the map
-    for (int i = 41; i < 46; i++)
-    {
-        g_Console.writeToBuffer(i, 3, "+", 0xB20);
-    }
-}
-
 void TPRoomArray()
 {
     //array to detect things
@@ -1279,98 +1021,6 @@ void TPRoomArray()
         map[3][i] = '+';
     }
     
-}
-
-void EndRoom()
-{
-    int wallX = 19;
-    int wallY = 1;
-
-    //walls in 4 sides
-    for (int i = 0; i < 41; i++)
-    {
-        g_Console.writeToBuffer(wallX + i, 1, "+", 0xB20);
-        g_Console.writeToBuffer(wallX + i, 16, "+", 0xB20);
-    }
-    for (int j = 0; j < 16; j++)
-    {
-        g_Console.writeToBuffer(19, wallY + j, "+", 0xB20);
-        g_Console.writeToBuffer(59, wallY + j, "+", 0xB20);
-    }
-    /* Starting pt */
-    g_Console.writeToBuffer(40, 2, "S", 0x5E);
-
-    /* Ending pt */
-    g_Console.writeToBuffer(58, 15, "E", 0x5E);
-
-    // thick wall next to the spawn pt
-    for (int i = 41; i < 47; i++)
-    {
-        for (int j = 2; j < 5; j++)
-        {
-            g_Console.writeToBuffer(i, j, "+", 0xB20);
-        }
-    }
-    for (int i = 25; i < 41; i++)
-    {
-        g_Console.writeToBuffer(i, 4, "+", 0xB20);
-    }
-
-    /* thick wall beside exit pt */
-    for (int i = 33; i < 41; i++)
-    {
-        for (int j = 13; j < 16; j++)
-        {
-            g_Console.writeToBuffer(i, j, "+", 0xB20);
-        }
-    }
-    for (int i = 39; i < 41; i++)
-    {
-        for (int j = 10; j < 13; j++)
-        {
-            g_Console.writeToBuffer(i, j, "+", 0xB20);
-        }
-    }
-    for (int i = 41; i < 53; i++)
-    {
-        g_Console.writeToBuffer(i, 10, "+", 0xB20);
-    }
-
-    // vert wall in the middle
-    for (int i = 33; i < 35; i++)
-    {
-        for (int j = 5; j < 11; j++)
-        {
-            g_Console.writeToBuffer(i, j, "+", 0xB20);
-        }
-    }
-    // horz wall at the top left corner
-    for (int i = 20; i < 28; i++)
-    {
-        g_Console.writeToBuffer(i, 7, "+", 0xB20);
-    }
-
-    // horz wall in the middle left 
-    for (int i = 26; i < 33; i++)
-    {
-        g_Console.writeToBuffer(i, 10, "+", 0xB20);
-    }
-
-    for (int j = 11; j < 14; j++)
-    {
-        g_Console.writeToBuffer(26, j, "+", 0xB20);
-    }
-
-    //horz wall on top of exit pt
-    for (int i = 50; i < 59; i++)
-    {
-        g_Console.writeToBuffer(i, 13, "+", 0xB20);
-    }
-
-    for (int i = 56; i < 59; i++)
-    {
-         g_Console.writeToBuffer(i, 2, "+", 0xB20);
-    }
 }
 
 void EndRoomArray()
@@ -1557,15 +1207,24 @@ void guarddetectroom4()
 
 void removeguard()
 {
-    map[5][50] = '-';
-    map[6][51] = '-';
-    map[6][49] = '-';
-    map[6][50] = '-';
-    map[4][50] = '-';
-    map[4][51] = '-';
-    map[4][49] = '-';
-    map[5][51] = '-';
-    map[5][49] = '-';
+    for (int gx = 47; gx < 54; ++gx)
+    {
+        for (int gy = 3; gy < 8; ++gy)
+        {
+            if (map[gy][gx] == '+')
+            {
+
+            }
+            else if (gx == 50 && gy == 5)
+            {
+                map[gy][gx] = 'G';
+            }
+            else
+            {
+                map[gy][gx] = '-';
+            }
+        }
+    }
 }
 void removeguard2()
 {
