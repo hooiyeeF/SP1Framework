@@ -78,6 +78,7 @@ void renderSplashScreen();  // renders the splash screen
 void renderGame();          // renders the game stuff
 void renderSecondRoom();    // render second game room
 void renderTPRoom();
+void renderEndRoom();
 void FirstRoom();           // render first game room
 void FirstRoomArray();      // First Room Array
 void SecondRoom();          

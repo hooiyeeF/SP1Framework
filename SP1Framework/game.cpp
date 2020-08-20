@@ -157,6 +157,10 @@ void mouseHandler(const MOUSE_EVENT_RECORD& mouseEvent)
         break;
     case S_TPROOM: gameplayMouseHandler(mouseEvent); // handle gameplay mouse event
         break;
+    case S_ENDROOM: gameplayMouseHandler(mouseEvent); // handle gameplay mouse event
+        break;
+    case S_LOSE: gameplayMouseHandler(mouseEvent); // handle gameplay mouse event
+        break;
     }
 }
 
@@ -247,7 +251,8 @@ void update(double dt)
             break;
         case S_ENDROOM: updateGame4();
             break;
-        case S_LOSE: processUserInput();
+        case S_LOSE: 
+            processUserInput();
             PlayAgain();
             break;
     }
@@ -592,7 +597,7 @@ void render()
         break;
     case S_TPROOM: renderTPRoom();
         break;
-    case S_ENDROOM: renderTPRoom();
+    case S_ENDROOM: renderEndRoom();
         break;
     case S_LOSE: renderLoseScreen();
         break;
@@ -673,7 +678,7 @@ void renderSecondRoom()
     {
         g_eGameState = S_TPROOM;
 
-        chara.x = 25; //character position for second room
+        chara.x = 25; //character position for toilet paper room
         chara.y = 1;
     }
 }
@@ -692,7 +697,7 @@ void renderTPRoom()
     {
         g_eGameState = S_ENDROOM;
 
-        chara.x = 40; //character position for second room
+        chara.x = 40; //character position for last room
         chara.y = 2;
     }
 }
@@ -1399,6 +1404,75 @@ void EndRoom()
 
     /* Ending pt */
     g_Console.writeToBuffer(58, 15, "E", 0x5E);
+
+    // thick wall next to the spawn pt
+    for (int i = 41; i < 47; i++)
+    {
+        for (int j = 2; j < 5; j++)
+        {
+            g_Console.writeToBuffer(i, j, "+", 0xB20);
+        }
+    }
+    for (int i = 25; i < 41; i++)
+    {
+        g_Console.writeToBuffer(i, 4, "+", 0xB20);
+    }
+
+    /* thick wall beside exit pt */
+    for (int i = 33; i < 41; i++)
+    {
+        for (int j = 13; j < 16; j++)
+        {
+            g_Console.writeToBuffer(i, j, "+", 0xB20);
+        }
+    }
+    for (int i = 39; i < 41; i++)
+    {
+        for (int j = 10; j < 13; j++)
+        {
+            g_Console.writeToBuffer(i, j, "+", 0xB20);
+        }
+    }
+    for (int i = 41; i < 53; i++)
+    {
+        g_Console.writeToBuffer(i, 10, "+", 0xB20);
+    }
+
+    // vert wall in the middle
+    for (int i = 33; i < 35; i++)
+    {
+        for (int j = 5; j < 11; j++)
+        {
+            g_Console.writeToBuffer(i, j, "+", 0xB20);
+        }
+    }
+    // horz wall at the top left corner
+    for (int i = 20; i < 28; i++)
+    {
+        g_Console.writeToBuffer(i, 7, "+", 0xB20);
+    }
+
+    // horz wall in the middle left 
+    for (int i = 26; i < 33; i++)
+    {
+        g_Console.writeToBuffer(i, 10, "+", 0xB20);
+    }
+
+    for (int j = 11; j < 14; j++)
+    {
+        g_Console.writeToBuffer(26, j, "+", 0xB20);
+    }
+
+    //horz wall on top of exit pt
+    for (int i = 50; i < 59; i++)
+    {
+        g_Console.writeToBuffer(i, 13, "+", 0xB20);
+    }
+
+    for (int i = 56; i < 59; i++)
+    {
+         g_Console.writeToBuffer(i, 2, "+", 0xB20);
+    }
 }
 
 void renderLoseScreen()
