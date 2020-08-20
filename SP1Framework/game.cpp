@@ -1648,16 +1648,4 @@ void renderLoseScreen()
     g_Console.writeToBuffer(c, "Press <ESC> to exit", 0x07);
 }
 
-void resetroom()
-{
-    char map[15][40];                   //Resets array
-    for (int x = 0; x < 15; ++x)
-    {
-        for (int y = 0; y < 40; ++y)
-        {
-            map[x][y] = ' ';
-        }
-    }
-    g_Console.clearBuffer(0);          //Resets the whole map
 
-}
