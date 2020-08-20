@@ -163,6 +163,8 @@ void mouseHandler(const MOUSE_EVENT_RECORD& mouseEvent)
         break;
     case S_ENDROOM: gameplayMouseHandler(mouseEvent); // handle gameplay mouse event
         break;
+    case S_WIN: gameplayMouseHandler(mouseEvent); // handle gameplay mouse event
+        break;
     case S_LOSE: gameplayMouseHandler(mouseEvent); // handle gameplay mouse event
         break;
     }
@@ -571,14 +573,17 @@ void GoToGamePlay()
 void PlayAgain()
 {
     if (g_skKeyEvent[K_SPACE].keyReleased)
+    {
         g_eGameState = S_SPLASHSCREEN;
-
-    reset();
+        reset();
+    }
+        
 }
 void reset()
 {
     g_dElapsedTime = 0.0;
     gamestart = false;
+    collected = false;
     a = 0;
     chara.x = g_Console.getConsoleSize().X / 2 - 1;
     chara.y = g_Console.getConsoleSize().Y / 2;
@@ -1701,16 +1706,4 @@ void renderLoseScreen()
     g_Console.writeToBuffer(c, "Press <ESC> to exit", 0x07);
 }
 
-void resetroom()
-{
-    char map[15][40];                   //Resets array
-    for (int x = 0; x < 15; ++x)
-    {
-        for (int y = 0; y < 40; ++y)
-        {
-            map[x][y] = ' ';
-        }
-    }
-    g_Console.clearBuffer(0);          //Resets the whole map
 
-}
