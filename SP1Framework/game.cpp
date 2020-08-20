@@ -364,6 +364,10 @@ void moveCharacter()
     {
         map[1][39] = '-';
     }
+    if (map[15][21] == 'P')
+    {
+        map[15][21] = '-';
+    }
 }
 
 void moveCharacter2()
@@ -438,9 +442,9 @@ void moveCharacter2()
     {
         g_sChar.m_bActive = !g_sChar.m_bActive;
     }
-    if (map2[12][48] == 'P')
+    if (map2[10][47] == 'P')
     {
-        map2[12][48] = '-';
+        map2[10][47] = '-';
     }
     
 }
