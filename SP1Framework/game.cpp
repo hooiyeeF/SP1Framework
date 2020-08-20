@@ -729,6 +729,7 @@ void renderEndRoom()
     EndRoom();            //render Toilet paper room
     renderMap();         // renders the map to the buffer first
     rendertoiletpaper();
+    gara.drawG4(g_Console);
     chara.draw(g_Console);   // renders the character into the buffer
     if (a == 0)
     {
