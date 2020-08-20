@@ -582,6 +582,7 @@ void reset()
     a = 0;
     chara.x = g_Console.getConsoleSize().X / 2 - 1;
     chara.y = g_Console.getConsoleSize().Y / 2;
+    init();
 }
 
 //--------------------------------------------------------------
@@ -731,6 +732,7 @@ void renderEndRoom()
     EndRoom();            //render Toilet paper room
     renderMap();         // renders the map to the buffer first
     rendertoiletpaper();
+    gara.drawG4(g_Console);
     chara.draw(g_Console);   // renders the character into the buffer
     if (a == 0)
     {
@@ -1532,6 +1534,12 @@ void EndRoomArray()
     }
     /* Starting pt */
     map[1][21] = 'P';
+
+    //guardsssss
+    map[1][1] = 'G';
+    map[14][1] = 'G';
+    map[6][24] = 'G';
+    map[14][22] = 'G';
 
     // thick wall next to the spawn pt
     for (int i = 22; i < 28; i++)
