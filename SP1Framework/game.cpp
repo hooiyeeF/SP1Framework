@@ -126,6 +126,8 @@ void keyboardHandler(const KEY_EVENT_RECORD& keyboardEvent)
         break;
     case S_ENDROOM: gameplayKBHandler(keyboardEvent); // handle gameplay keyboard event 
         break;
+    case S_WIN: gameplayKBHandler(keyboardEvent); // handle gameplay keyboard event 
+        break;
     case S_LOSE: gameplayKBHandler(keyboardEvent); // handle gameplay keyboard event 
         break;
     }
@@ -734,7 +736,13 @@ void renderEndRoom()
     {
         EndRoomArray();
         a++;
-    }   
+    }
+
+    /* Go to WIN */
+    if (chara.x == 58 && chara.y == 15 )
+    {
+        g_eGameState = S_WIN;
+    }
 }
 
 void renderMap()
@@ -827,7 +835,7 @@ void renderGuard()
 
 void renderFramerate()
 {
-    if (g_eGameState != S_SPLASHSCREEN)
+    if ((g_eGameState != S_SPLASHSCREEN) && (g_eGameState != S_WIN) && (g_eGameState != S_LOSE))
     {
         COORD c;
         // displays the framerate
@@ -882,7 +890,7 @@ void renderInputEvents()
         g_Console.writeToBuffer(c, ss.str(), 0x17);
     }
     // mouse events
-    if (g_eGameState != S_SPLASHSCREEN)
+    if ((g_eGameState != S_SPLASHSCREEN) && (g_eGameState != S_WIN) && (g_eGameState != S_LOSE))
     {
         ss.str("");
         ss << "Mouse position (" << g_mouseEvent.mousePosition.X << ", " << g_mouseEvent.mousePosition.Y << ")";
@@ -1599,18 +1607,21 @@ void renderWinScreen()
 {
     COORD c = g_Console.getConsoleSize();
     c.Y /= 2;
-    c.Y -= 5;
-    c.X = c.X / 2 - 4;
-    g_Console.writeToBuffer(c, "C O N G R A T U L A T I O N S !   congratulations !", 0x0A);
+    c.Y -= 10;
+    c.X = c.X / 2 - 13;
+    g_Console.writeToBuffer(c, "C O N G R A T U L A T I O N S !", 0x0A);
     c.Y += 2;
-    c.X = g_Console.getConsoleSize().X / 2 - 13;
+    c.X = g_Console.getConsoleSize().X / 2 - 5;
     g_Console.writeToBuffer(c, "Y O U  W I N !", 0x0A);
+    c.Y += 8;
+    c.X = g_Console.getConsoleSize().X / 2 - 12;
+    g_Console.writeToBuffer(c, "Time Taken: ", 0x09);
     c.Y += 5;
     c.X = g_Console.getConsoleSize().X / 2 - 13;
-    g_Console.writeToBuffer(c, "Y O U  H A V E  U S E .... !", 0x0A);
-    c.Y += 8;
-    c.X = g_Console.getConsoleSize().X / 2 - 13;
     g_Console.writeToBuffer(c, "Press <SPACE> to play again", 0x07);
+    c.Y += 2;
+    c.X = g_Console.getConsoleSize().X / 2 - 10;
+    g_Console.writeToBuffer(c, "Press <ESC> to exit", 0x07);
 
 }
 
@@ -1624,7 +1635,6 @@ void renderLoseScreen()
     c.Y += 8;
     c.X = g_Console.getConsoleSize().X / 2 - 13;
     g_Console.writeToBuffer(c, "Press <SPACE> to play again", 0x07);
-
     c.Y += 2;
     c.X = g_Console.getConsoleSize().X / 2 - 10;
     g_Console.writeToBuffer(c, "Press <ESC> to exit", 0x07);
