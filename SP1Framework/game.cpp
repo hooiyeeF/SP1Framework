@@ -316,7 +316,7 @@ void moveCharacter()
             //Beep(1440, 30);
             chara.x--;
         }
-        if (map[chara.y - 1][chara.x - 20] == 'G')
+        else if (map[chara.y - 1][chara.x - 20] == 'G')
         {
             map[chara.y - 1][chara.x - 19] = '-';
             Beep(1440, 30);
@@ -332,7 +332,7 @@ void moveCharacter()
             //Beep(1440, 30);
             chara.y++;
         }
-        if (map[chara.y][chara.x - 19] == 'G')
+        else if (map[chara.y][chara.x - 19] == 'G')
         {
             map[chara.y - 1][chara.x - 19] = '-';
             Beep(1440, 30);
@@ -348,7 +348,7 @@ void moveCharacter()
             //Beep(1440, 30);
             chara.x++;
         }
-        if (map[chara.y - 1][chara.x - 18] == 'G')
+        else if (map[chara.y - 1][chara.x - 18] == 'G')
         {
             map[chara.y - 1][chara.x - 19] = '-';
             Beep(1440, 30);
@@ -378,7 +378,7 @@ void moveCharacter2()
             //Beep(1440, 30);
             chara.y--;
         }
-        if (map2[chara.y - 4][chara.x - 15] == 'G')
+        else if (map2[chara.y - 4][chara.x - 15] == 'G')
         {
             map2[chara.y - 3][chara.x - 15] = '-';
             Beep(1440, 30);
@@ -394,7 +394,7 @@ void moveCharacter2()
             //Beep(1440, 30);
             chara.x--;
         }
-        if (map2[chara.y - 3][chara.x - 16] == 'G')
+        else if (map2[chara.y - 3][chara.x - 16] == 'G')
         {
             map2[chara.y - 3][chara.x - 15] = '-';
             Beep(1440, 30);
@@ -410,7 +410,7 @@ void moveCharacter2()
             //Beep(1440, 30);
             chara.y++;
         }
-        if (map2[chara.y - 2][chara.x - 15] == 'G')
+        else if (map2[chara.y - 2][chara.x - 15] == 'G')
         {
             map2[chara.y - 3][chara.x - 15] = '-';
             Beep(1440, 30);
@@ -426,7 +426,7 @@ void moveCharacter2()
             //Beep(1440, 30);
             chara.x++;
         }
-        if (map2[chara.y - 3][chara.x - 14] == 'G')
+        else if (map2[chara.y - 3][chara.x - 14] == 'G')
         {
             map2[chara.y - 3][chara.x - 15] = '-';
             Beep(1440, 30);
@@ -457,17 +457,16 @@ void moveCharacter3()
             //Beep(1440, 30);
             chara.y--;
         }
-        if (map3[chara.y - 1][chara.x - 24] == 'G')
+        else if (map3[chara.y - 1][chara.x - 24] == 'G')
         {
             map3[chara.y][chara.x - 24] = '-';
             Beep(1440, 30);
             g_eGameState = S_LOSE;
         }
-        if (map3[chara.y - 1][chara.x - 24] == 'T')
+        else if (map3[chara.y - 1][chara.x - 24] == 'T')
         {
             map3[chara.y - 1][chara.x - 24] = 'P';
             map3[chara.y][chara.x - 24] = '-';
-            Beep(1440, 30);
             chara.y--;
             gettoiletpaper();
         }
@@ -481,17 +480,16 @@ void moveCharacter3()
             //Beep(1440, 30);
             chara.x--;
         }
-        if (map3[chara.y][chara.x - 25] == 'G')
+        else if (map3[chara.y][chara.x - 25] == 'G')
         {
             map3[chara.y][chara.x - 24] = '-';
             Beep(1440, 30);
             g_eGameState = S_LOSE;
         }
-        if (map3[chara.y - 1][chara.x - 24] == 'T')
+        else if (map3[chara.y - 1][chara.x - 24] == 'T')
         {
             map3[chara.y][chara.x - 25] = 'P';
             map3[chara.y][chara.x - 24] = '-';
-            Beep(1440, 30);
             chara.x--;
             gettoiletpaper();
         }
@@ -505,17 +503,16 @@ void moveCharacter3()
             //Beep(1440, 30);
             chara.y++;
         }
-        if (map3[chara.y + 1][chara.x - 24] == 'G')
+        else if (map3[chara.y + 1][chara.x - 24] == 'G')
         {
             map3[chara.y][chara.x - 24] = '-';
             Beep(1440, 30);
             g_eGameState = S_LOSE;
         }
-        if (map3[chara.y - 1][chara.x - 24] == 'T')
+        else if (map3[chara.y - 1][chara.x - 24] == 'T')
         {
             map3[chara.y + 1][chara.x - 24] = 'P';
             map3[chara.y][chara.x - 24] = '-';
-            Beep(1440, 30);
             chara.y++;
             gettoiletpaper();
         }
@@ -529,17 +526,16 @@ void moveCharacter3()
             //Beep(1440, 30);
             chara.x++;
         }
-        if (map3[chara.y][chara.x - 23] == 'G')
+        else if (map3[chara.y][chara.x - 23] == 'G')
         {
             map3[chara.y][chara.x - 24] = '-';
             Beep(1440, 30);
             g_eGameState = S_LOSE;
         }
-        if (map3[chara.y - 1][chara.x - 24] == 'T')
+        else if (map3[chara.y - 1][chara.x - 24] == 'T')
         {
             map3[chara.y][chara.x - 23] = 'P';
             map3[chara.y][chara.x - 24] = '-';
-            Beep(1440, 30);
             chara.x++;
             gettoiletpaper();
         }
