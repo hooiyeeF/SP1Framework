@@ -18,6 +18,8 @@ char map[16][41];
 char map2[12][49];
 char map3[18][33];
 int a = 0;
+int b = 0;
+int c = 0;
 bool gamestart = false;
 bool gameEnd = false;
 bool collected = false;
@@ -64,6 +66,8 @@ void init( void )
     FirstRoomArray();
     SecondRoomArray();
     TPRoomArray();
+    srand(time(NULL));
+    b = 5;
 }
 
 //--------------------------------------------------------------
@@ -669,6 +673,25 @@ void renderGame()
     //renderCharacter();  // renders the character into the buffer
     chara.draw(g_Console);
     gara.drawG1(g_Console);
+
+
+    
+    
+    if (b > 0 && b < 100)
+    {
+        guarddetectroom1();   
+        b++;
+    }
+    else if (b >= 100 && b < 300)
+    {
+        removeguard();
+        b++;
+    }
+    else
+    {
+        b = 1;
+    }
+    
     
     /* Go to Second room */
     if (chara.x == 58 && chara.y == 2)
@@ -961,10 +984,6 @@ void FirstRoomArray()
     map[14][20] = 'P';
     //Guard
     map[4][31] = 'G';
-    map[4][32] = 'G';
-    map[4][30] = 'G';
-    map[3][31] = 'G';
-    map[5][31] = 'G';
 
 
     //wall
@@ -1395,4 +1414,25 @@ void renderLoseScreen()
     c.Y += 2;
     c.X = g_Console.getConsoleSize().X / 2 - 10;
     g_Console.writeToBuffer(c, "Press <ESC> to exit", 0x07);
+}
+
+
+void guarddetectroom1()
+{
+    map[4][32] = 'G';
+    map[4][30] = 'G';
+    map[3][31] = 'G';
+    map[5][31] = 'G';
+    g_Console.writeToBuffer(51, 5, " ", 79);
+    g_Console.writeToBuffer(49, 5, " ", 79);
+    g_Console.writeToBuffer(50, 4, " ", 79);
+    g_Console.writeToBuffer(50, 6, " ", 79);
+}
+
+void removeguard()
+{
+    map[4][32] = '-';
+    map[4][30] = '-';
+    map[3][31] = '-';
+    map[5][31] = '-';
 }
