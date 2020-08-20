@@ -323,9 +323,9 @@ void moveCharacter()
             //Beep(1440, 30);
             chara.x--;
         }
-        else if (map[chara.y - 1][chara.x - 20] == 'G')
+        else if (map[chara.y - 1][chara.x - 19] == 'G')
         {
-            map[chara.y - 1][chara.x - 19] = '-';
+            map[chara.y - 1][chara.x - 18] = '-';
             Beep(1440, 30);
             g_eGameState = S_LOSE;
         }
@@ -661,6 +661,8 @@ void renderGame()
     //renderCharacter();  // renders the character into the buffer
     chara.draw(g_Console);
     gara.drawG1(g_Console);
+    
+    
     //rendertoiletpaper();     // renders toiletpaper *** add bool statement to check if toilet paper is collected then display ***
     /* Go to Second room */
     if (chara.x == 58 && chara.y == 2)
@@ -1015,6 +1017,8 @@ void FirstRoom()
    
 }
 
+
+
 void FirstRoomArray()
 {
     //array to detect things
@@ -1029,6 +1033,10 @@ void FirstRoomArray()
     map[14][20] = 'P';
     //Guard
     map[4][31] = 'G';
+    map[4][32] = 'G';
+    map[4][30] = 'G';
+    map[3][31] = 'G';
+    map[5][31] = 'G';
 
 
     //wall
@@ -1207,7 +1215,15 @@ void SecondRoomArray()
     map2[1][1] = 'P';
     //Guard
     map2[2][13] = 'G';
+    map2[2][14] = 'G';
+    map2[2][12] = 'G';
+    map2[1][13] = 'G';
+    map2[3][13] = 'G';
     map2[5][29] = 'G';
+    map2[5][28] = 'G';
+    map2[5][30] = 'G';
+    map2[4][29] = 'G';
+    map2[6][29] = 'G';
 
     /* Obstacles (i = horz | j = vert) */
 
@@ -1371,9 +1387,24 @@ void TPRoomArray()
     /* Spawn toilet paper({48,8},{49,8}) */
     map3[7][25] = 'T';
     //spawn guards
+    map[6][12] = 'G';
+    map3[5][11] = 'G';
     map3[5][12] = 'G';
+    map3[5][13] = 'G';
+    map3[4][12] = 'G';
+
+    map3[12][12] = 'G';
+    map3[11][11] = 'G';
     map3[11][12] = 'G';
+    map3[11][13] = 'G';
+    map3[10][12] = 'G';
+
+    map3[9][31] = 'G';
+    map3[8][32] = 'G';
     map3[8][31] = 'G';
+    map3[8][30] = 'G';
+    map3[7][31] = 'G';
+    
 
     /* Walls around toiletpaper spawn pt */
     for (int j = 6; j < 11; j++)
@@ -1537,10 +1568,31 @@ void EndRoomArray()
     map[1][21] = 'P';
 
     //guardsssss
+    map[2][1] = 'G';
+    map[1][2] = 'G';
     map[1][1] = 'G';
+    map[1][0] = 'G';
+    map[0][1] = 'G';
+
+
+    map[15][1] = 'G';
+    map[14][2] = 'G';
     map[14][1] = 'G';
+    map[14][0] = 'G';
+    map[13][1] = 'G';
+
+    map[7][24] = 'G';
+    map[6][25] = 'G';
     map[6][24] = 'G';
+    map[6][23] = 'G';
+    map[5][24] = 'G';
+
+
+    map[15][22] = 'G';
+    map[14][23] = 'G';
     map[14][22] = 'G';
+    map[14][21] = 'G';
+    map[13][22] = 'G';
 
     // thick wall next to the spawn pt
     for (int i = 22; i < 28; i++)
