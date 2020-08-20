@@ -16,6 +16,7 @@ SMouseEvent g_mouseEvent;
 char map[16][41];
 char map2[12][49];
 char map3[18][33];
+int a = 0;
 bool gamestart = false;
 
 
@@ -249,7 +250,7 @@ void update(double dt)
             break;
         case S_TPROOM: updateGame3();
             break;
-        case S_ENDROOM: updateGame4();
+        case S_ENDROOM: updateGame();
             break;
         case S_LOSE: 
             processUserInput();
@@ -283,9 +284,6 @@ void updateGame3()
     processUserInput(); // checks if you should change states or do something else with the game, e.g. pause, exit
     moveCharacter3();    // moves the character, collision detection, physics, etc
                         // sound can be played here too.
-}
-void updateGame4()
-{
 }
 
 void moveCharacter()
@@ -712,6 +710,11 @@ void renderEndRoom()
     EndRoom();            //render Toilet paper room
     renderMap();         // renders the map to the buffer first
     chara.draw(g_Console);   // renders the character into the buffer
+    if (a == 0)
+    {
+        EndRoomArray();
+        a++;
+    }   
 }
 
 void renderMap()
@@ -1381,14 +1384,6 @@ void TPRoomArray()
     {
         map3[3][i] = '+';
     }
-    for (int x = 0; x < 18; ++x)
-    {
-        for (int y = 0; y < 33; ++y)
-        {
-            std::cout << map3[x][y];
-        }
-        std::cout << "" << std::endl;
-    }
 }
 
 void EndRoom()
@@ -1480,6 +1475,100 @@ void EndRoom()
     for (int i = 56; i < 59; i++)
     {
          g_Console.writeToBuffer(i, 2, "+", 0xB20);
+    }
+}
+
+void EndRoomArray()
+{
+    //array to detect things
+    for (int x = 0; x < 16; ++x)
+    {
+        for (int y = 0; y < 41; ++y)
+        {
+            map[x][y] = '-';
+        }
+    }
+    //wall
+    for (int i = 0; i < 40; i++)
+    {
+        map[0][i] = '+';
+        map[15][i] = '+';
+    }
+    for (int j = 0; j < 16; j++)
+    {
+        map[j][0] = '+';
+        map[j][40] = '+';
+    }
+    /* Starting pt */
+    map[1][21] = 'P';
+
+    // thick wall next to the spawn pt
+    for (int i = 22; i < 28; i++)
+    {
+        for (int j = 1; j < 4; j++)
+        {
+            map[j][i] = '+';
+        }
+    }
+    for (int i = 6; i < 22; i++)
+    {
+        map[3][i] = '+';
+    }
+
+    /* thick wall beside exit pt */
+    for (int i = 14; i < 22; i++)
+    {
+        for (int j = 12; j < 15; j++)
+        {
+            map[j][i] = '+';
+        }
+    }
+    for (int i = 20; i < 22; i++)
+    {
+        for (int j = 9; j < 12; j++)
+        {
+            map[j][i] = '+';
+        }
+    }
+    for (int i = 22; i < 34; i++)
+    {
+        map[9][i] = '+';
+    }
+
+    // vert wall in the middle
+    for (int i = 14; i < 16; i++)
+    {
+        for (int j = 4; j < 10; j++)
+        {
+            map[j][i] = '+';
+        }
+    }
+    // horz wall at the top left corner
+    for (int i = 1; i < 9; i++)
+    {
+        map[6][i] = '+';
+    }
+
+    // horz wall in the middle left 
+    for (int i = 7; i < 14; i++)
+    {
+        map[9][i] = '+';
+    }
+
+    for (int j = 10; j < 13; j++)
+    {
+        map[j][7] = '+';
+    }
+
+    //horz wall on top of exit pt
+    for (int i = 31; i < 40; i++)
+    {
+        map[12][i] = '+';
+    }
+
+    for (int i = 37; i < 40; i++)
+    {
+        map[1][i] = '+';
     }
 }
 
