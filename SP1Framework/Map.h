@@ -3,6 +3,8 @@
 
 class Map
 {
+private:
+	int wallX, wallY;
 public:
 	bool getTP = false;
 	void drawR1(Console& g_console);
