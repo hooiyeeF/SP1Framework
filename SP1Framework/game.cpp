@@ -20,23 +20,16 @@ bool gamestart = false;
 bool gameEnd = false;
 bool collected = false;
 
-
 Guard gara;
 Player chara;
 Map room;
+
 // Game specific variables here
 EGAMESTATES g_eGameState = S_SPLASHSCREEN; // initial state
 
 // Console object
 Console g_Console(80, 30, "Escape the Factory");
 
-//--------------------------------------------------------------
-// Purpose  : Initialisation function
-//            Initialize variables, allocate memory, load data from file, etc. 
-//            This is called once before entering into your main loop
-// Input    : void
-// Output   : void
-//--------------------------------------------------------------
 void init( void )
 {
     // Set precision for floating point output
@@ -261,12 +254,6 @@ void update(double dt)
     }
 }
 
-void splashScreenWait()    // waits for time to pass in splash screen
-{
-    if (g_dElapsedTime > 3.0) // wait for 3 seconds to switch to game mode, else do nothing
-        g_eGameState = S_GAME;
-}
-
 void updateGame()       // gameplay logic
 {
     processUserInput(); // checks if you should change states or do something else with the game, e.g. pause, exit
@@ -353,7 +340,6 @@ void moveCharacter()
     }
 }
 
-
 void processUserInput()
 {
     // quits the game if player hits the escape key
@@ -379,20 +365,14 @@ void reset()
 {
     g_dElapsedTime = 0.0;
     gamestart = false;
+    gameEnd = false;
     collected = false;
+    room.getTP = false;
     chara.x = g_Console.getConsoleSize().X / 2 - 1;
     chara.y = g_Console.getConsoleSize().Y / 2;
     init();
 }
 
-//--------------------------------------------------------------
-// Purpose  : Render function is to update the console screen
-//            At this point, you should know exactly what to draw onto the screen.
-//            Just draw it!
-//            To get an idea of the values for colours, look at console.h and the URL listed there
-// Input    : void
-// Output   : void
-//--------------------------------------------------------------
 void render()
 {
     clearScreen();      // clears the current screen and draw from scratch 
@@ -456,12 +436,10 @@ void renderSplashScreen()  // renders the splash screen
 
 void renderGame()
 {
-    room.drawR1(g_Console);        //render first game room
-    renderMap();        // renders the map to the buffer first
-    //renderCharacter();  // renders the character into the buffer
+    room.drawR1(g_Console);
+    renderMap();
     chara.draw(g_Console);
     gara.drawG1(g_Console);
-
 
     if (map[chara.y][chara.x] == 'G')
     {
@@ -489,7 +467,9 @@ void renderGame()
     {
         g_eGameState = S_NEXTROOM;
         SecondRoomArray();
-        chara.x = 16; //character position for second room
+
+        //character position for second room
+        chara.x = 16; 
         chara.y = 4;
     }
 }
@@ -497,9 +477,8 @@ void renderGame()
 void renderSecondRoom()
 {
     clearScreen(); 
-    room.drawR2(g_Console);       //render second room
-    renderMap();        // renders the map to the buffer first
-    //renderCharacter();  // renders the character into the buffer
+    room.drawR2(g_Console);
+    renderMap();
     chara.draw(g_Console);
     gara.drawG2(g_Console);
 
@@ -529,7 +508,9 @@ void renderSecondRoom()
     {
         g_eGameState = S_TPROOM;
         TPRoomArray();
-        chara.x = 25; //character position for toilet paper room
+
+        //character position for toilet paper room
+        chara.x = 25; 
         chara.y = 1;
     }
 }
@@ -537,9 +518,8 @@ void renderSecondRoom()
 void renderTPRoom()
 {
     clearScreen();
-    room.drawRTP(g_Console);            //render Toilet paper room
-    renderMap();         // renders the map to the buffer first
-    //renderCharacter();   // renders the character into the buffer
+    room.drawRTP(g_Console);
+    renderMap();
     chara.draw(g_Console);
     gara.drawG3(g_Console);
 
@@ -567,6 +547,7 @@ void renderTPRoom()
     if (chara.x == 49 && chara.y == 8)
     {
         collected = true;
+        room.getTP = true;
     }
     // draw toilet paper
     if (collected == true)
@@ -579,7 +560,8 @@ void renderTPRoom()
     {
         g_eGameState = S_ENDROOM;
         EndRoomArray();
-        chara.x = 40; //character position for last room
+        //character position for last room
+        chara.x = 40; 
         chara.y = 2;
     }
     // Not collected
@@ -592,11 +574,11 @@ void renderTPRoom()
 void renderEndRoom()
 {
     clearScreen();
-    room.drawREnd(g_Console);            //render Toilet paper room
-    renderMap();         // renders the map to the buffer first
+    room.drawREnd(g_Console);
+    renderMap();
     rendertoiletpaper();
     gara.drawG4(g_Console);
-    chara.draw(g_Console);   // renders the character into the buffer
+    chara.draw(g_Console);
 
     if (map[chara.y - 1][chara.x - 19] == 'G')
     {
@@ -739,12 +721,6 @@ void renderInputEvents()
             break;
         default: continue;
         }
-        /*  if (g_skKeyEvent[i].keyDown)
-                ss << key << " pressed";
-            else if (g_skKeyEvent[i].keyReleased)
-                ss << key << " released";
-            else
-                ss << key << " not pressed";*/
 
         COORD c = { startPos.X, startPos.Y + i };
         g_Console.writeToBuffer(c, ss.str(), 0x17);
@@ -1127,7 +1103,7 @@ void renderWinScreen()
     g_Console.writeToBuffer(c, "C O N G R A T U L A T I O N S !", 0x0A);
     c.Y += 2;
     c.X = g_Console.getConsoleSize().X / 2 - 6;
-    g_Console.writeToBuffer(c, "Y O U  W I N !", 0x0A);
+    g_Console.writeToBuffer(c, "Y O U  W O N !", 0x0A);
     c.Y += 8;
     c.X = g_Console.getConsoleSize().X / 2 - 10;
     g_Console.writeToBuffer(c, "  Time Taken: ", 0xB0);
@@ -1163,7 +1139,6 @@ void renderLoseScreen()
     c.X = g_Console.getConsoleSize().X / 2 - 10;
     g_Console.writeToBuffer(c, "Press <ESC> to exit", 0x07);
 }
-
 
 void guarddetectroom1()
 {
