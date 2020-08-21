@@ -1142,7 +1142,7 @@ void renderLoseScreen()
 
 void guarddetectroom1()
 {
-    
+    //50,5
     for (int gx = 47; gx < 54; ++gx)
     {
         for (int gy = 3; gy < 8; ++gy)
@@ -1166,17 +1166,194 @@ void guarddetectroom1()
 
 void guarddetectroom2()
 {
-    
+    //28,5
+    for (int gx = 25; gx < 32; ++gx)
+    {
+        for (int gy = 3; gy < 8; ++gy)
+        {
+            if (map[gy][gx] == '+')
+            {
+
+            }
+            else if (gx == 28 && gy == 5)
+            {
+                map[gy][gx] = 'G';
+            }
+            else
+            {
+                map[gy][gx] = 'G';
+                g_Console.writeToBuffer(gx, gy, " ", 79);
+            }
+        }
+    }
+    //44,8
+    for (int gx = 41; gx < 48; ++gx)
+    {
+        for (int gy = 6; gy < 11; ++gy)
+        {
+            if (map[gy][gx] == '+')
+            {
+
+            }
+            else if (gx == 44 && gy == 8)
+            {
+                map[gy][gx] = 'G';
+            }
+            else
+            {
+                map[gy][gx] = 'G';
+                g_Console.writeToBuffer(gx, gy, " ", 79);
+            }
+        }
+    }
 }
 
 void guarddetectroom3()
 {
-    
+    //36,5
+    for (int gx = 33; gx < 40; ++gx)
+    {
+        for (int gy = 3; gy < 8; ++gy)
+        {
+            if (map[gy][gx] == '+')
+            {
+
+            }
+            else if (gx == 36 && gy == 5)
+            {
+                map[gy][gx] = 'G';
+            }
+            else
+            {
+                map[gy][gx] = 'G';
+                g_Console.writeToBuffer(gx, gy, " ", 79);
+            }
+        }
+    }
+    //36,11
+    for (int gx = 33; gx < 40; ++gx)
+    {
+        for (int gy = 9; gy < 14; ++gy)
+        {
+            if (map[gy][gx] == '+')
+            {
+
+            }
+            else if (gx == 36 && gy == 11)
+            {
+                map[gy][gx] = 'G';
+            }
+            else
+            {
+                map[gy][gx] = 'G';
+                g_Console.writeToBuffer(gx, gy, " ", 79);
+            }
+        }
+    }
+    //55,8
+    for (int gx = 52; gx < 56; ++gx)
+    {
+        for (int gy = 6; gy < 11; ++gy)
+        {
+            if (map[gy][gx] == '+')
+            {
+
+            }
+            else if (gx == 55 && gy == 8)
+            {
+                map[gy][gx] = 'G';
+            }
+            else
+            {
+                map[gy][gx] = 'G';
+                g_Console.writeToBuffer(gx, gy, " ", 79);
+            }
+        }
+    }
 }
 
 void guarddetectroom4()
 {
-    
+    //20,2
+    for (int gx = 20; gx < 24; ++gx)
+    {
+        for (int gy = 2; gy < 5; ++gy)
+        {
+            if (map[gy][gx] == '+')
+            {
+
+            }
+            else if (gx == 20 && gy == 2)
+            {
+                map[gy][gx] = 'G';
+            }
+            else
+            {
+                map[gy][gx] = 'G';
+                g_Console.writeToBuffer(gx, gy, " ", 79);
+            }
+        }
+    }    
+    //20,15
+    for (int gx = 20; gx < 24; ++gx)
+    {
+        for (int gy = 13; gy < 16; ++gy)
+        {
+            if (map[gy][gx] == '+')
+            {
+
+            }
+            else if (gx == 20 && gy == 15)
+            {
+                map[gy][gx] = 'G';
+            }
+            else
+            {
+                map[gy][gx] = 'G';
+                g_Console.writeToBuffer(gx, gy, " ", 79);
+            }
+        }
+    }
+    //43,7
+    for (int gx = 40; gx < 47; ++gx)
+    {
+        for (int gy = 5; gy < 10; ++gy)
+        {
+            if (map[gy][gx] == '+')
+            {
+
+            }
+            else if (gx == 43 && gy == 7)
+            {
+                map[gy][gx] = 'G';
+            }
+            else
+            {
+                map[gy][gx] = 'G';
+                g_Console.writeToBuffer(gx, gy, " ", 79);
+            }
+        }
+    }
+    //41,15
+    for (int gx = 38; gx < 45; ++gx)
+    {
+        for (int gy = 13; gy < 16; ++gy)
+        {
+            if (map[gy][gx] == '+')
+            {
+
+            }
+            else if (gx == 41 && gy == 15)
+            {
+                map[gy][gx] = 'G';
+            }
+            else
+            {
+                map[gy][gx] = 'G';
+                g_Console.writeToBuffer(gx, gy, " ", 79);
+            }
+        }
+    }
 }
 
 
@@ -1203,22 +1380,181 @@ void removeguard()
 }
 void removeguard2()
 {
-    map[4][32] = '-';
-    map[4][30] = '-';
-    map[3][31] = '-';
-    map[5][31] = '-';
+    //28,5
+    for (int gx = 25; gx < 32; ++gx)
+    {
+        for (int gy = 3; gy < 8; ++gy)
+        {
+            if (map[gy][gx] == '+')
+            {
+
+            }
+            else if (gx == 28 && gy == 5)
+            {
+                map[gy][gx] = 'G';
+            }
+            else
+            {
+                map[gy][gx] = '-';
+            }
+        }
+    }
+    //44,8
+    for (int gx = 41; gx < 48; ++gx)
+    {
+        for (int gy = 6; gy < 11; ++gy)
+        {
+            if (map[gy][gx] == '+')
+            {
+
+            }
+            else if (gx == 44 && gy == 8)
+            {
+                map[gy][gx] = 'G';
+            }
+            else
+            {
+                map[gy][gx] = '-';
+            }
+        }
+    }
 }
 void removeguard3()
 {
-    map[4][32] = '-';
-    map[4][30] = '-';
-    map[3][31] = '-';
-    map[5][31] = '-';
+    //36,5
+    for (int gx = 33; gx < 40; ++gx)
+    {
+        for (int gy = 3; gy < 8; ++gy)
+        {
+            if (map[gy][gx] == '+')
+            {
+
+            }
+            else if (gx == 36 && gy == 5)
+            {
+                map[gy][gx] = 'G';
+            }
+            else
+            {
+                map[gy][gx] = '-';
+            }
+        }
+    }
+    //36,11
+    for (int gx = 33; gx < 40; ++gx)
+    {
+        for (int gy = 9; gy < 14; ++gy)
+        {
+            if (map[gy][gx] == '+')
+            {
+
+            }
+            else if (gx == 36 && gy == 11)
+            {
+                map[gy][gx] = 'G';
+            }
+            else
+            {
+                map[gy][gx] = '-';
+            }
+        }
+    }
+    //55,8
+    for (int gx = 52; gx < 56; ++gx)
+    {
+        for (int gy = 6; gy < 11; ++gy)
+        {
+            if (map[gy][gx] == '+')
+            {
+
+            }
+            else if (gx == 55 && gy == 8)
+            {
+                map[gy][gx] = 'G';
+            }
+            else
+            {
+                map[gy][gx] = '-';
+            }
+        }
+    }
 }
 void removeguard4()
 {
-    map[4][32] = '-';
-    map[4][30] = '-';
-    map[3][31] = '-';
-    map[5][31] = '-';
+    //20,2
+    for (int gx = 20; gx < 24; ++gx)
+    {
+        for (int gy = 2; gy < 5; ++gy)
+        {
+            if (map[gy][gx] == '+')
+            {
+
+            }
+            else if (gx == 20 && gy == 2)
+            {
+                map[gy][gx] = 'G';
+            }
+            else
+            {
+                map[gy][gx] = '-';
+            }
+        }
+    }
+    //20,15
+    for (int gx = 20; gx < 24; ++gx)
+    {
+        for (int gy = 13; gy < 16; ++gy)
+        {
+            if (map[gy][gx] == '+')
+            {
+
+            }
+            else if (gx == 20 && gy == 15)
+            {
+                map[gy][gx] = 'G';
+            }
+            else
+            {
+                map[gy][gx] = '-';
+            }
+        }
+    }
+    //43,7
+    for (int gx = 40; gx < 47; ++gx)
+    {
+        for (int gy = 5; gy < 10; ++gy)
+        {
+            if (map[gy][gx] == '+')
+            {
+
+            }
+            else if (gx == 43 && gy == 7)
+            {
+                map[gy][gx] = 'G';
+            }
+            else
+            {
+                map[gy][gx] = '-';
+            }
+        }
+    }
+    //41,15
+    for (int gx = 38; gx < 45; ++gx)
+    {
+        for (int gy = 13; gy < 16; ++gy)
+        {
+            if (map[gy][gx] == '+')
+            {
+
+            }
+            else if (gx == 41 && gy == 15)
+            {
+                map[gy][gx] = 'G';
+            }
+            else
+            {
+                map[gy][gx] = '-';
+            }
+        }
+    }
 }
