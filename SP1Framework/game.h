@@ -48,20 +48,12 @@ enum EGAMESTATES
     S_COUNT,
 };
 
-// struct for the game character
-struct SGameChar
-{
-    COORD m_cLocation;
-    bool  m_bActive;
-};
-
 void init        ( void );      // initialize your variables, allocate memory, etc
 void getInput    ( void );      // get input from player
 void update      ( double dt ); // update the game and the state of the game
 void render      ( void );      // renders the current state of the game to the console
 void shutdown    ( void );      // do clean up, free memory
 
-void splashScreenWait();    // waits for time to pass in splash screen
 void updateGame();          // gameplay logic
 void updateGame2();         // 2nd room gameplay logic
 void updateGame3();         // 3rd room gameplay logic
@@ -84,17 +76,19 @@ void TPRoomArray();         // TP Room Array
 void EndRoomArray();        // End Room Array
 void renderLoseScreen();
 void renderWinScreen();
-void renderMap();           // renders the map to the buffer first
-void rendertoiletpaper();   //renders the toilet paper when collected
-void renderCharacter();     // renders the character into the buffer
-
 void renderFramerate();     // renders debug information, frame rate, elapsed time, etc
 void renderToScreen();      // dump the contents of the buffer to the screen, one frame worth of game
 void renderInputEvents();   // renders the status of input events
 
 
 void guarddetectroom1();    // guard detection
+void guarddetectroom2();    // guard detection
+void guarddetectroom3();    // guard detection
+void guarddetectroom4();    // guard detection
 void removeguard();         // guard removal
+void removeguard2();         // guard removal
+void removeguard3();         // guard removal
+void removeguard4();         // guard removal
 
 // keyboard and mouse input event managers
 void keyboardHandler(const KEY_EVENT_RECORD& keyboardEvent);  // define this function for the console to call when there are keyboard events
