@@ -54,7 +54,6 @@ void update      ( double dt ); // update the game and the state of the game
 void render      ( void );      // renders the current state of the game to the console
 void shutdown    ( void );      // do clean up, free memory
 
-void splashScreenWait();    // waits for time to pass in splash screen
 void updateGame();          // gameplay logic
 void updateGame2();         // 2nd room gameplay logic
 void updateGame3();         // 3rd room gameplay logic
@@ -77,8 +76,6 @@ void TPRoomArray();         // TP Room Array
 void EndRoomArray();        // End Room Array
 void renderLoseScreen();
 void renderWinScreen();
-void renderMap();           // renders the map to the buffer first
-void rendertoiletpaper();   //renders the toilet paper when collected
 void renderFramerate();     // renders debug information, frame rate, elapsed time, etc
 void renderToScreen();      // dump the contents of the buffer to the screen, one frame worth of game
 void renderInputEvents();   // renders the status of input events

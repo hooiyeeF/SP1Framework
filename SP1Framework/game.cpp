@@ -9,6 +9,7 @@
 #include <sstream>
 #include "Guard.h"
 #include "Map.h"
+#include "UI.h"
 
 double  g_dElapsedTime;
 double  g_dDeltaTime;
@@ -23,6 +24,7 @@ bool collected = false;
 Guard gara;
 Player chara;
 Map room;
+UI ui;
 
 // Game specific variables here
 EGAMESTATES g_eGameState = S_SPLASHSCREEN; // initial state
@@ -437,7 +439,7 @@ void renderSplashScreen()  // renders the splash screen
 void renderGame()
 {
     room.drawR1(g_Console);
-    renderMap();
+    ui.drawUI(g_Console);
     chara.draw(g_Console);
     gara.drawG1(g_Console);
 
@@ -478,7 +480,7 @@ void renderSecondRoom()
 {
     clearScreen(); 
     room.drawR2(g_Console);
-    renderMap();
+    ui.drawUI(g_Console);
     chara.draw(g_Console);
     gara.drawG2(g_Console);
 
@@ -519,7 +521,7 @@ void renderTPRoom()
 {
     clearScreen();
     room.drawRTP(g_Console);
-    renderMap();
+    ui.drawUI(g_Console);
     chara.draw(g_Console);
     gara.drawG3(g_Console);
 
@@ -552,7 +554,7 @@ void renderTPRoom()
     // draw toilet paper
     if (collected == true)
     {
-        rendertoiletpaper();
+        ui.drawTP(g_Console);
     }
 
     /* Go to the last room */
@@ -575,8 +577,8 @@ void renderEndRoom()
 {
     clearScreen();
     room.drawREnd(g_Console);
-    renderMap();
-    rendertoiletpaper();
+    ui.drawUI(g_Console);
+    ui.drawTP(g_Console);
     gara.drawG4(g_Console);
     chara.draw(g_Console);
 
@@ -606,72 +608,6 @@ void renderEndRoom()
     {
         g_eGameState = S_WIN;
         gameEnd = true;
-    }
-}
-
-void renderMap()
-{
-    // Set up sample colours, and output shadings
-    //const WORD colors[] = {
-    //    0x1A, 0x2B, 0x3C, 0x4D, 0x5E, 0x6F,
-    //   0xA1, 0xB2, 0xC3, 0xD4, 0xE5, 0xF6
-    //};
-
-    g_Console.writeToBuffer(0, 18, "                                                                                ", 0xFF);
-    g_Console.writeToBuffer(23, 20, "                  ", 0xB2); // 6 space for each sprint **total of 3 sprints/ 18 spaces
-    g_Console.writeToBuffer(23, 21, "                  ", 0xB2); // 6 space for each sprint **total of 3 sprints / 18 spaces
-    g_Console.writeToBuffer(3, 20, "                  ", 0xFF); //box for toiletpaper
-    g_Console.writeToBuffer(3, 28, "                  ", 0xFF); //box for toiletpaper
-    for (int i = 20; i < 28; ++i)
-    {
-        g_Console.writeToBuffer(3, i, " ", 0xFF); //box for toiletpaper
-        g_Console.writeToBuffer(20, i, " ", 0xFF); //box for toiletpaper
-    }
-}
-
-void rendertoiletpaper()
-{
-    for (int ty = 22; ty < 27; ++ty)
-    {
-        for (int tx = 7; tx < 17; ++tx)
-        {
-            if (tx == 11 && ty == 22)
-            {
-                g_Console.writeToBuffer(tx, ty, " ", 79);
-            }
-            else if (tx == 12 && ty == 22)
-            {
-                g_Console.writeToBuffer(tx, ty, " ", 79);
-            }
-            else if (tx == 10 && ty == 23)
-            {
-                g_Console.writeToBuffer(tx, ty, " ", 79);
-            }
-            else if (tx == 13 && ty == 23)
-            {
-                g_Console.writeToBuffer(tx, ty, " ", 79);
-            }
-            else if (tx == 11 && ty == 24)
-            {
-                g_Console.writeToBuffer(tx, ty, " ", 79);
-            }
-            else if (tx == 12 && ty == 24)
-            {
-                g_Console.writeToBuffer(tx, ty, " ", 79);
-            }
-            else if (tx == 11 && ty == 23)
-            {
-                g_Console.writeToBuffer(tx, ty, " ", 0);
-            }
-            else if (tx == 12 && ty == 23)
-            {
-                g_Console.writeToBuffer(tx, ty, " ", 0);
-            }
-            else
-            {
-                g_Console.writeToBuffer(tx, ty, " ", 0xFF);
-            }
-        }
     }
 }
 
@@ -1355,7 +1291,6 @@ void guarddetectroom4()
         }
     }
 }
-
 
 void removeguard()
 {

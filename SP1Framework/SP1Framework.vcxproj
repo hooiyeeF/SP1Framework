@@ -84,7 +84,8 @@
     <ClCompile Include="main.cpp" />
 	<ClCompile Include="Player.cpp" />
     <ClCompile Include="Guard.cpp"/>
-	  <ClCompile Include="Map.cpp"/>
+	<ClCompile Include="Map.cpp"/>
+	<ClCompile Include="UI.cpp"/>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\console.h" />
@@ -92,7 +93,8 @@
     <ClInclude Include="game.h" />
 	<ClInclude Include="Player.h" />
     <CInclude Include="Guard.h"/>
-	  <CInclude Include="Map.h"/>
+	<CInclude Include="Map.h"/>
+	<CInclude Include="UI.h"/>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
