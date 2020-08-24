@@ -582,9 +582,9 @@ void renderEndRoom()
     gara.drawG4(g_Console);
     chara.draw(g_Console);
 
-    if (map[chara.y - 1][chara.x - 19] == 'G')
+    if (map[chara.y][chara.x] == 'G')
     {
-        map[chara.y - 1][chara.x - 19] = '-';
+        map[chara.y][chara.x] = '-';
         Beep(1440, 30);
         g_eGameState = S_LOSE;
     }
