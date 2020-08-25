@@ -118,6 +118,8 @@ void keyboardHandler(const KEY_EVENT_RECORD& keyboardEvent)
         break;
     case S_ROOM4: gameplayKBHandler(keyboardEvent);
         break;
+    case S_CROOM: gameplayKBHandler(keyboardEvent);
+        break;
     case S_TPROOM: gameplayKBHandler(keyboardEvent);
         break;
     case S_ENDROOM: gameplayKBHandler(keyboardEvent); 
@@ -158,6 +160,8 @@ void mouseHandler(const MOUSE_EVENT_RECORD& mouseEvent)
     case S_ROOM3: gameplayMouseHandler(mouseEvent);
         break;
     case S_ROOM4: gameplayMouseHandler(mouseEvent);
+        break;
+    case S_CROOM: gameplayMouseHandler(mouseEvent);
         break;
     case S_TPROOM: gameplayMouseHandler(mouseEvent); 
         break;
@@ -258,6 +262,8 @@ void update(double dt)
         case S_TPROOM: updateGame();
             break;
         case S_ENDROOM: updateGame();
+            break;
+        case S_CROOM: updateGame();
             break;
         case S_WIN:
             processUserInput();
@@ -405,6 +411,8 @@ void render()
         break;
     case S_ENDROOM: renderEndRoom();
         break;
+    case S_CROOM: renderCRoom();
+        break;
     case S_WIN: renderWinScreen();
         break;
     case S_LOSE: renderLoseScreen();
@@ -420,12 +428,12 @@ void clearScreen()
     // Clears the buffer with this colour attribute
     g_Console.clearBuffer(0);
 }
-
 void renderToScreen()
 {
     // Writes the buffer to the console, hence you will see what you have written
     g_Console.flushBufferToConsole();
 }
+
 void renderMenuScreen() 
 {
     COORD c = g_Console.getConsoleSize();
@@ -672,8 +680,26 @@ void renderEndRoom()
         Gtimer = 1;
     }
 
-    /* Go to WIN */
+    /* Go to ChaseRoom */
     if (chara.getx() == 58 && chara.gety() == 15 )
+    {
+        g_eGameState = S_CROOM;
+
+        //character position for last room
+        chara.setx(5);
+        chara.sety(8);
+    }
+}
+void renderCRoom()
+{
+    clearScreen();
+    room.drawLR(g_Console);
+    ui.drawUI(g_Console);
+    ui.drawTP(g_Console);
+    chara.draw(g_Console);
+
+    /* Go to WIN */
+    if (chara.getx() == 78 && chara.gety() == 8)
     {
         g_eGameState = S_WIN;
         gameEnd = true;

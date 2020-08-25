@@ -45,6 +45,7 @@ enum EGAMESTATES
     S_ROOM4,
     S_TPROOM,
     S_ENDROOM,
+    S_CROOM,
     S_WIN,
     S_LOSE,
     S_COUNT,
@@ -68,6 +69,7 @@ void renderFirstRoom();          // renders first game room
 void renderSecondRoom();    // render second game room
 void renderTPRoom();
 void renderEndRoom();
+void renderCRoom();
 void renderLoseScreen();
 void renderWinScreen();
 void renderFramerate();     // renders debug information, frame rate, elapsed time, etc
