@@ -5,10 +5,19 @@
 
 
 
-void Guard::drawG1(Console& g_console)
+void Guard::drawG1a(Console& g_console)
 {
 	COORD c;
 	c.X = 50;
+	c.Y = 5;
+	WORD charColor = 0x0c;
+	g_console.writeToBuffer(c, (char)1, charColor);
+};
+
+void Guard::drawG1b(Console& g_console)
+{
+	COORD c;
+	c.X = 49;
 	c.Y = 5;
 	WORD charColor = 0x0c;
 	g_console.writeToBuffer(c, (char)1, charColor);
@@ -28,7 +37,7 @@ void Guard::drawG2(Console& g_console)
 	g_console.writeToBuffer(d, (char)1, charColor);
 };
 
-void Guard::drawG3(Console& g_console)
+void Guard::drawGTP(Console& g_console)
 {
 	COORD c;
 	COORD d;
@@ -45,7 +54,7 @@ void Guard::drawG3(Console& g_console)
 	g_console.writeToBuffer(e, (char)1, charColor);
 };
 
-void Guard::drawG4(Console& g_console)
+void Guard::drawGEnd(Console& g_console)
 {
 	COORD c;
 	COORD d;

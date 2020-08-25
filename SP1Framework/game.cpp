@@ -11,6 +11,7 @@
 #include "Map.h"
 #include "UI.h"
 #include "Aray.h"
+#include "time.h"
 
 double  g_dElapsedTime;
 double  g_dDeltaTime;
@@ -469,7 +470,7 @@ void renderFirstRoom()
     room.drawR1(g_Console);
     ui.drawUI(g_Console);
     chara.draw(g_Console);
-    gara.drawG1(g_Console);
+    
 
     if (arra.map[chara.gety()][chara.getx()] == 'G')
     {
@@ -477,14 +478,31 @@ void renderFirstRoom()
         Beep(1440, 30);
         g_eGameState = S_LOSE;
     }
-    if (Gtimer > 0 && Gtimer < 100)
+    if (Gtimer > 0 && Gtimer < 200)
     {
-        arra.guarddetectroom1(g_Console);
+        if (Gtimer < 50)
+        {
+            arra.guarddetectroom1a(g_Console);
+            gara.drawG1a(g_Console);
+        }
+        else if (Gtimer >= 50)
+        {
+            arra.guarddetectroom1b(g_Console);
+            gara.drawG1b(g_Console);
+        }
+        Gtimer++;
+
+    }
+    else if (Gtimer >= 200 && Gtimer < 400)
+    {
+        gara.drawG1b(g_Console);
+        arra.removeguardb(g_Console);
         Gtimer++;
     }
-    else if (Gtimer >= 100 && Gtimer < 300)
+    else if (Gtimer >= 400 && Gtimer < 500)
     {
-        arra.removeguard(g_Console);
+        gara.drawG1a(g_Console);
+        arra.removeguarda(g_Console);
         Gtimer++;
     }
     else
@@ -549,7 +567,7 @@ void renderTPRoom()
     room.drawRTP(g_Console);
     ui.drawUI(g_Console);
     chara.draw(g_Console);
-    gara.drawG3(g_Console);
+    gara.drawGTP(g_Console);
 
     if (arra.map[chara.gety()][chara.getx()] == 'G')
     {
@@ -604,7 +622,7 @@ void renderEndRoom()
     room.drawREnd(g_Console);
     ui.drawUI(g_Console);
     ui.drawTP(g_Console);
-    gara.drawG4(g_Console);
+    gara.drawGEnd(g_Console);
     chara.draw(g_Console);
 
     if (arra.map[chara.gety()][chara.getx()] == 'G')
