@@ -426,7 +426,7 @@ void renderToScreen()
     // Writes the buffer to the console, hence you will see what you have written
     g_Console.flushBufferToConsole();
 }
-void renderMenuScreen()  // renders the splash screen
+void renderMenuScreen() 
 {
     COORD c = g_Console.getConsoleSize();
     c.Y /= 2;
@@ -469,13 +469,16 @@ void renderMenuScreen()  // renders the splash screen
     g_Console.writeToBuffer(c, " E - Exit ", 0xE5); 
     c.Y += 1;
     c.X = g_Console.getConsoleSize().X / 2 + 19;
-    g_Console.writeToBuffer(c, " T - Toilet paper ", 0xE5);
-    c.Y += 1;
-    c.X = g_Console.getConsoleSize().X / 2 + 19;
     g_Console.writeToBuffer(c, "   - Guard ", 0xE5);
     c.X = 60;
-    c.Y = 5;
+    c.Y = 4;
     g_Console.writeToBuffer(c, (char)1, 0x0C);
+    c.Y += 1;
+    c.X = g_Console.getConsoleSize().X / 2 + 19;
+    g_Console.writeToBuffer(c, " K - Key ", 0xE5);
+    c.Y += 1;
+    c.X = g_Console.getConsoleSize().X / 2 + 19;
+    g_Console.writeToBuffer(c, " T - Toilet paper ", 0xE5);
 }
 void renderFirstRoom()
 {
