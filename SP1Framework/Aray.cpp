@@ -78,6 +78,28 @@ void Aray::FirstRoomArray(Console& g_console)
         map[j][49] = '+';
     }
 }
+void Aray::SecondRoomArray(Console& g_console)
+{
+    //array to detect things
+    for (int x = 0; x < 80; ++x)
+    {
+        for (int y = 0; y < 18; ++y)
+        {
+            map[y][x] = '-';
+        }
+    }
+    //walls in 4 sides
+    for (int i = 0; i < 41; i++)
+    {
+        map[1][19 + i] = '+';
+        map[16][19 + i] = '+';
+    }
+    for (int j = 0; j < 16; j++)
+    {
+        map[j + 1][19] = '+';
+        map[j + 1][59] = '+';
+    }
+}
 void Aray::ThirdRoomArray(Console& g_console)
 {
     //array to detect things

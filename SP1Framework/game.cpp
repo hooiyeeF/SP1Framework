@@ -532,7 +532,7 @@ void renderFirstRoom()
     if (chara.getx() == 58 && chara.gety() == 2)
     {
         g_eGameState = S_ROOM2;
-
+        arra.SecondRoomArray(g_Console);
         //character position for second room
         chara.setx(20); 
         chara.sety(15);
