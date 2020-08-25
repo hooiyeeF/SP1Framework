@@ -20,6 +20,7 @@ int Gtimer = 0;
 bool gamestart = false;
 bool gameEnd = false;
 bool collected = false;
+int testG = 1;
 
 Guard gara;
 Player chara;
@@ -359,6 +360,7 @@ void PlayAgain()
     if (g_skKeyEvent[K_SPACE].keyReleased)
     {
         g_eGameState = S_SPLASHSCREEN;
+        testG++;
         reset();
     }
         
@@ -433,6 +435,17 @@ void renderSplashScreen()  // renders the splash screen
     c.Y += 5;
     c.X = g_Console.getConsoleSize().X / 2 - 12;
     g_Console.writeToBuffer(c, "Press <Space> to start", 0x5E);
+
+    c.Y -= 10;
+    c.X = g_Console.getConsoleSize().X / 2 - 5;
+    g_Console.writeToBuffer(c, " Test : ", 0xB0);
+
+    std::ostringstream ss;
+    ss.str("");
+    ss << testG << " ";
+    c.X = 42;
+    c.Y = 15;
+    g_Console.writeToBuffer(c, ss.str(), 0xB0);
 }
 void renderGame()
 {
