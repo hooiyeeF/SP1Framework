@@ -177,6 +177,8 @@ void Aray::TPRoomArray(Console& g_console)
     {
         map[j][24] = '+';
         map[j][56] = '+';
+        map[j][57] = '+';
+        map[j][58] = '+';
     }
     /* Starting pt */
     map[1][25] = 'P';
@@ -322,461 +324,65 @@ void Aray::EndRoomArray(Console& g_console)
     }
 }
 
-void Aray::guarddetectroom1a(Console& g_console)
+void Aray::guarddetect(Console& g_console, int gx, int gy)
 {
     //50,5
-    for (int gx = 47; gx < 54; ++gx)
+    //47,54 
+    //3,8
+    int a = gx;
+
+    int c = a + 4;
+    int d = gy;
+
+    int f = d + 3;
+    for (int b = a - 3; b < c; ++b)
     {
-        for (int gy = 3; gy < 8; ++gy)
+        for (int e = d - 2; e < f; ++e)
         {
-            if (map[gy][gx] == '+')
+            if (map[e][b] == '+')
             {
 
             }
-            else if (gx == 50 && gy == 5)
+            else if (b == gx && e == gy)
             {
-                map[gy][gx] = 'G';
+                map[e][b] = 'G';
+                g_console.writeToBuffer(b, e, (char)1, 0x0c);
             }
             else
             {
-                map[gy][gx] = 'G';
-                g_console.writeToBuffer(gx, gy, " ", 79);
+                map[e][b] = 'G';
+                g_console.writeToBuffer(b, e, " ", 79);
             }
         }
     }
-}
-void Aray::guarddetectroom1b(Console& g_console)
-{
-    //49,5
-    for (int gx = 46; gx < 53; ++gx)
-    {
-        for (int gy = 3; gy < 8; ++gy)
-        {
-            if (map[gy][gx] == '+')
-            {
-
-            }
-            else if (gx == 49 && gy == 5)
-            {
-                map[gy][gx] = 'G';
-            }
-            else
-            {
-                map[gy][gx] = 'G';
-                g_console.writeToBuffer(gx, gy, " ", 79);
-            }
-        }
-    }
-}
-void Aray::guarddetectroom2(Console& g_console)
-{
-    //28,5
-    for (int gx = 25; gx < 32; ++gx)
-    {
-        for (int gy = 3; gy < 8; ++gy)
-        {
-            if (map[gy][gx] == '+')
-            {
-
-            }
-            else if (gx == 28 && gy == 5)
-            {
-                map[gy][gx] = 'G';
-            }
-            else
-            {
-                map[gy][gx] = 'G';
-                g_console.writeToBuffer(gx, gy, " ", 79);
-            }
-        }
-    }
-    //44,8
-    for (int gx = 41; gx < 48; ++gx)
-    {
-        for (int gy = 6; gy < 11; ++gy)
-        {
-            if (map[gy][gx] == '+')
-            {
-
-            }
-            else if (gx == 44 && gy == 8)
-            {
-                map[gy][gx] = 'G';
-            }
-            else
-            {
-                map[gy][gx] = 'G';
-                g_console.writeToBuffer(gx, gy, " ", 79);
-            }
-        }
-    }
-}
-void Aray::guarddetectroomTP(Console& g_console)
-{
-    //36,5
-    for (int gx = 33; gx < 40; ++gx)
-    {
-        for (int gy = 3; gy < 8; ++gy)
-        {
-            if (map[gy][gx] == '+')
-            {
-
-            }
-            else if (gx == 36 && gy == 5)
-            {
-                map[gy][gx] = 'G';
-            }
-            else
-            {
-                map[gy][gx] = 'G';
-                g_console.writeToBuffer(gx, gy, " ", 79);
-            }
-        }
-    }
-    //36,11
-    for (int gx = 33; gx < 40; ++gx)
-    {
-        for (int gy = 9; gy < 14; ++gy)
-        {
-            if (map[gy][gx] == '+')
-            {
-
-            }
-            else if (gx == 36 && gy == 11)
-            {
-                map[gy][gx] = 'G';
-            }
-            else
-            {
-                map[gy][gx] = 'G';
-                g_console.writeToBuffer(gx, gy, " ", 79);
-            }
-        }
-    }
-    //55,8
-    for (int gx = 52; gx < 56; ++gx)
-    {
-        for (int gy = 6; gy < 11; ++gy)
-        {
-            if (map[gy][gx] == '+')
-            {
-
-            }
-            else if (gx == 55 && gy == 8)
-            {
-                map[gy][gx] = 'G';
-            }
-            else
-            {
-                map[gy][gx] = 'G';
-                g_console.writeToBuffer(gx, gy, " ", 79);
-            }
-        }
-    }
-}
-void Aray::guarddetectroomEnd(Console& g_console)
-{
-    //20,2
-    for (int gx = 20; gx < 24; ++gx)
-    {
-        for (int gy = 2; gy < 5; ++gy)
-        {
-            if (map[gy][gx] == '+')
-            {
-
-            }
-            else if (gx == 20 && gy == 2)
-            {
-                map[gy][gx] = 'G';
-            }
-            else
-            {
-                map[gy][gx] = 'G';
-                g_console.writeToBuffer(gx, gy, " ", 79);
-            }
-        }
-    }
-    //20,15
-    for (int gx = 20; gx < 24; ++gx)
-    {
-        for (int gy = 13; gy < 16; ++gy)
-        {
-            if (map[gy][gx] == '+')
-            {
-
-            }
-            else if (gx == 20 && gy == 15)
-            {
-                map[gy][gx] = 'G';
-            }
-            else
-            {
-                map[gy][gx] = 'G';
-                g_console.writeToBuffer(gx, gy, " ", 79);
-            }
-        }
-    }
-    //43,7
-    for (int gx = 40; gx < 47; ++gx)
-    {
-        for (int gy = 5; gy < 10; ++gy)
-        {
-            if (map[gy][gx] == '+')
-            {
-
-            }
-            else if (gx == 43 && gy == 7)
-            {
-                map[gy][gx] = 'G';
-            }
-            else
-            {
-                map[gy][gx] = 'G';
-                g_console.writeToBuffer(gx, gy, " ", 79);
-            }
-        }
-    }
-    //41,15
-    for (int gx = 38; gx < 45; ++gx)
-    {
-        for (int gy = 13; gy < 16; ++gy)
-        {
-            if (map[gy][gx] == '+')
-            {
-
-            }
-            else if (gx == 41 && gy == 15)
-            {
-                map[gy][gx] = 'G';
-            }
-            else
-            {
-                map[gy][gx] = 'G';
-                g_console.writeToBuffer(gx, gy, " ", 79);
-            }
-        }
-    }
+    
 }
 
-void Aray::removeguarda(Console& g_console)
+void Aray::removeguard(Console& g_console, int gx, int gy)
 {
-    for (int gx = 47; gx < 54; ++gx)
+    int a = gx;
+
+    int c = a + 4;
+    int d = gy;
+
+    int f = d + 3;
+    for (int b = a - 3; b < c; ++b)
     {
-        for (int gy = 3; gy < 8; ++gy)
+        for (int e = d - 2; e < f; ++e)
         {
-            if (map[gy][gx] == '+')
+            if (map[e][b] == '+')
             {
 
             }
-            else if (gx == 50 && gy == 5)
+            else if (b == gx && e == gy)
             {
-                map[gy][gx] = 'G';
-            }
-            else
-            {
-                map[gy][gx] = '-';
-            }
-        }
-    }
-}
-void Aray::removeguardb(Console& g_console)
-{
-    //49,5
-    for (int gx = 46; gx < 53; ++gx)
-    {
-        for (int gy = 3; gy < 8; ++gy)
-        {
-            if (map[gy][gx] == '+')
-            {
+                map[e][b] = 'G';
+                g_console.writeToBuffer(b, e, (char)1, 0x0c);
 
             }
-            else if (gx == 49 && gy == 5)
-            {
-                map[gy][gx] = 'G';
-            }
             else
             {
-                map[gy][gx] = '-';
-            }
-        }
-    }
-}
-void Aray::removeguard2(Console& g_console)
-{
-    //28,5
-    for (int gx = 25; gx < 32; ++gx)
-    {
-        for (int gy = 3; gy < 8; ++gy)
-        {
-            if (map[gy][gx] == '+')
-            {
-
-            }
-            else if (gx == 28 && gy == 5)
-            {
-                map[gy][gx] = 'G';
-            }
-            else
-            {
-                map[gy][gx] = '-';
-            }
-        }
-    }
-    //44,8
-    for (int gx = 41; gx < 48; ++gx)
-    {
-        for (int gy = 6; gy < 11; ++gy)
-        {
-            if (map[gy][gx] == '+')
-            {
-
-            }
-            else if (gx == 44 && gy == 8)
-            {
-                map[gy][gx] = 'G';
-            }
-            else
-            {
-                map[gy][gx] = '-';
-            }
-        }
-    }
-}
-void Aray::removeguardTP(Console& g_console)
-{
-    //36,5
-    for (int gx = 33; gx < 40; ++gx)
-    {
-        for (int gy = 3; gy < 8; ++gy)
-        {
-            if (map[gy][gx] == '+')
-            {
-
-            }
-            else if (gx == 36 && gy == 5)
-            {
-                map[gy][gx] = 'G';
-            }
-            else
-            {
-                map[gy][gx] = '-';
-            }
-        }
-    }
-    //36,11
-    for (int gx = 33; gx < 40; ++gx)
-    {
-        for (int gy = 9; gy < 14; ++gy)
-        {
-            if (map[gy][gx] == '+')
-            {
-
-            }
-            else if (gx == 36 && gy == 11)
-            {
-                map[gy][gx] = 'G';
-            }
-            else
-            {
-                map[gy][gx] = '-';
-            }
-        }
-    }
-    //55,8
-    for (int gx = 52; gx < 56; ++gx)
-    {
-        for (int gy = 6; gy < 11; ++gy)
-        {
-            if (map[gy][gx] == '+')
-            {
-
-            }
-            else if (gx == 55 && gy == 8)
-            {
-                map[gy][gx] = 'G';
-            }
-            else
-            {
-                map[gy][gx] = '-';
-            }
-        }
-    }
-}
-void Aray::removeguardEnd(Console& g_console)
-{
-    //20,2
-    for (int gx = 20; gx < 24; ++gx)
-    {
-        for (int gy = 2; gy < 5; ++gy)
-        {
-            if (map[gy][gx] == '+')
-            {
-
-            }
-            else if (gx == 20 && gy == 2)
-            {
-                map[gy][gx] = 'G';
-            }
-            else
-            {
-                map[gy][gx] = '-';
-            }
-        }
-    }
-    //20,15
-    for (int gx = 20; gx < 24; ++gx)
-    {
-        for (int gy = 13; gy < 16; ++gy)
-        {
-            if (map[gy][gx] == '+')
-            {
-
-            }
-            else if (gx == 20 && gy == 15)
-            {
-                map[gy][gx] = 'G';
-            }
-            else
-            {
-                map[gy][gx] = '-';
-            }
-        }
-    }
-    //43,7
-    for (int gx = 40; gx < 47; ++gx)
-    {
-        for (int gy = 5; gy < 10; ++gy)
-        {
-            if (map[gy][gx] == '+')
-            {
-
-            }
-            else if (gx == 43 && gy == 7)
-            {
-                map[gy][gx] = 'G';
-            }
-            else
-            {
-                map[gy][gx] = '-';
-            }
-        }
-    }
-    //41,15
-    for (int gx = 38; gx < 45; ++gx)
-    {
-        for (int gy = 13; gy < 16; ++gy)
-        {
-            if (map[gy][gx] == '+')
-            {
-
-            }
-            else if (gx == 41 && gy == 15)
-            {
-                map[gy][gx] = 'G';
-            }
-            else
-            {
-                map[gy][gx] = '-';
+                map[e][b] = '-';
             }
         }
     }
