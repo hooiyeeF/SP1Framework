@@ -107,19 +107,23 @@ void keyboardHandler(const KEY_EVENT_RECORD& keyboardEvent)
 {  
     switch (g_eGameState)
     {
-    case S_SPLASHSCREEN: gameplayKBHandler(keyboardEvent);// handle gameplay keyboard event
+    case S_SPLASHSCREEN: gameplayKBHandler(keyboardEvent);
         break;
-    case S_GAME: gameplayKBHandler(keyboardEvent); // handle gameplay keyboard event 
+    case S_ROOM1: gameplayKBHandler(keyboardEvent);  
         break;
-    case S_NEXTROOM: gameplayKBHandler(keyboardEvent); // handle gameplay keyboard event 
+    case S_ROOM2: gameplayKBHandler(keyboardEvent);  
         break;
-    case S_TPROOM: gameplayKBHandler(keyboardEvent); // handle gameplay keyboard event 
+    case S_ROOM3: gameplayKBHandler(keyboardEvent);
         break;
-    case S_ENDROOM: gameplayKBHandler(keyboardEvent); // handle gameplay keyboard event 
+    case S_ROOM4: gameplayKBHandler(keyboardEvent);
         break;
-    case S_WIN: gameplayKBHandler(keyboardEvent); // handle gameplay keyboard event 
+    case S_TPROOM: gameplayKBHandler(keyboardEvent);
         break;
-    case S_LOSE: gameplayKBHandler(keyboardEvent); // handle gameplay keyboard event 
+    case S_ENDROOM: gameplayKBHandler(keyboardEvent); 
+        break;
+    case S_WIN: gameplayKBHandler(keyboardEvent);  
+        break;
+    case S_LOSE: gameplayKBHandler(keyboardEvent); 
         break;
     }
 }
@@ -144,17 +148,21 @@ void mouseHandler(const MOUSE_EVENT_RECORD& mouseEvent)
 {    
     switch (g_eGameState)
     {
-    case S_SPLASHSCREEN: // don't handle anything for the splash screen
+    case S_SPLASHSCREEN: 
         break;
-    case S_GAME: gameplayMouseHandler(mouseEvent); // handle gameplay mouse event
+    case S_ROOM1: gameplayMouseHandler(mouseEvent); 
         break;
-    case S_NEXTROOM: gameplayMouseHandler(mouseEvent); // handle gameplay mouse event
+    case S_ROOM2: gameplayMouseHandler(mouseEvent);
         break;
-    case S_TPROOM: gameplayMouseHandler(mouseEvent); // handle gameplay mouse event
+    case S_ROOM3: gameplayMouseHandler(mouseEvent);
         break;
-    case S_ENDROOM: gameplayMouseHandler(mouseEvent); // handle gameplay mouse event
+    case S_ROOM4: gameplayMouseHandler(mouseEvent);
         break;
-    case S_LOSE: gameplayMouseHandler(mouseEvent); // handle gameplay mouse event
+    case S_TPROOM: gameplayMouseHandler(mouseEvent); 
+        break;
+    case S_ENDROOM: gameplayMouseHandler(mouseEvent);
+        break;
+    case S_LOSE: gameplayMouseHandler(mouseEvent);
         break;
     }
 }
@@ -238,9 +246,13 @@ void update(double dt)
     {
         case S_SPLASHSCREEN : GoToGamePlay(); // game logic for the menu screen
             break;
-        case S_GAME: updateGame(); // gameplay logic when we are in the game
+        case S_ROOM1: updateGame(); // gameplay logic when we are in the game
             break;
-        case S_NEXTROOM: updateGame();
+        case S_ROOM2: updateGame();
+            break;
+        case S_ROOM3: updateGame();
+            break;
+        case S_ROOM4: updateGame();
             break;
         case S_TPROOM: updateGame();
             break;
@@ -353,7 +365,7 @@ void GoToGamePlay()
 {
     // go to gameplay if player hits the space key
     if (g_skKeyEvent[K_SPACE].keyReleased)
-        g_eGameState = S_GAME;
+        g_eGameState = S_ROOM1;
 }
 void PlayAgain()
 {
@@ -382,11 +394,11 @@ void render()
     clearScreen();      // clears the current screen and draw from scratch 
     switch (g_eGameState)
     {
-    case S_SPLASHSCREEN: renderSplashScreen();
+    case S_SPLASHSCREEN: renderMenuScreen();
         break;
-    case S_GAME: renderGame();
+    case S_ROOM1: renderFirstRoom();
         break;
-    case S_NEXTROOM: renderSecondRoom();
+    case S_ROOM2: renderSecondRoom();
         break;
     case S_TPROOM: renderTPRoom();
         break;
@@ -413,7 +425,7 @@ void renderToScreen()
     // Writes the buffer to the console, hence you will see what you have written
     g_Console.flushBufferToConsole();
 }
-void renderSplashScreen()  // renders the splash screen
+void renderMenuScreen()  // renders the splash screen
 {
     COORD c = g_Console.getConsoleSize();
     c.Y /= 2;
@@ -447,7 +459,7 @@ void renderSplashScreen()  // renders the splash screen
     c.Y = 15;
     g_Console.writeToBuffer(c, ss.str(), 0xB0);
 }
-void renderGame()
+void renderFirstRoom()
 {
     room.drawR1(g_Console);
     ui.drawUI(g_Console);
@@ -478,7 +490,7 @@ void renderGame()
     /* Go to Second room */
     if (chara.getx() == 58 && chara.gety() == 2)
     {
-        g_eGameState = S_NEXTROOM;
+        g_eGameState = S_ROOM2;
         arra.SecondRoomArray(g_Console);
 
         //character position for second room
