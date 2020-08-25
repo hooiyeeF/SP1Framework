@@ -323,6 +323,28 @@ void Aray::EndRoomArray(Console& g_console)
         map[2][i] = '+';
     }
 }
+void Aray::CRoomArray(Console& g_console)
+{
+    //array to detect things
+    for (int x = 0; x < 80; ++x)
+    {
+        for (int y = 0; y < 18; ++y)
+        {
+            map[y][x] = '-';
+        }
+    }
+    //walls in 4 sides
+    for (int i = 0; i < 80; i++)
+    {
+        map[5][i] = '+';
+        map[11][i] = '+';
+    }
+    for (int j = 0; j < 6; j++)
+    {
+        map[5 + j][0] = '+';
+        map[5 + j][79] = '+';
+    }
+}
 
 void Aray::guarddetect(Console& g_console, int gx, int gy)
 {
