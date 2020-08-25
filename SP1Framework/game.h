@@ -70,25 +70,11 @@ void renderGame();          // renders the game stuff
 void renderSecondRoom();    // render second game room
 void renderTPRoom();
 void renderEndRoom();
-void FirstRoomArray();      // First Room Array
-void SecondRoomArray();     // Second Room Array
-void TPRoomArray();         // TP Room Array
-void EndRoomArray();        // End Room Array
 void renderLoseScreen();
 void renderWinScreen();
 void renderFramerate();     // renders debug information, frame rate, elapsed time, etc
 void renderToScreen();      // dump the contents of the buffer to the screen, one frame worth of game
 void renderInputEvents();   // renders the status of input events
-
-
-void guarddetectroom1();    // guard detection
-void guarddetectroom2();    // guard detection
-void guarddetectroom3();    // guard detection
-void guarddetectroom4();    // guard detection
-void removeguard();         // guard removal
-void removeguard2();         // guard removal
-void removeguard3();         // guard removal
-void removeguard4();         // guard removal
 
 // keyboard and mouse input event managers
 void keyboardHandler(const KEY_EVENT_RECORD& keyboardEvent);  // define this function for the console to call when there are keyboard events
