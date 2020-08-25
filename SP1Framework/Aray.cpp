@@ -411,7 +411,7 @@ void Aray::guarddetectroom2(Console& g_console)
         }
     }
 }
-void Aray::guarddetectroom3(Console& g_console)
+void Aray::guarddetectroomTP(Console& g_console)
 {
     //36,5
     for (int gx = 33; gx < 40; ++gx)
@@ -474,7 +474,7 @@ void Aray::guarddetectroom3(Console& g_console)
         }
     }
 }
-void Aray::guarddetectroom4(Console& g_console)
+void Aray::guarddetectroomEnd(Console& g_console)
 {
     //20,2
     for (int gx = 20; gx < 24; ++gx)
@@ -642,7 +642,7 @@ void Aray::removeguard2(Console& g_console)
         }
     }
 }
-void Aray::removeguard3(Console& g_console)
+void Aray::removeguardTP(Console& g_console)
 {
     //36,5
     for (int gx = 33; gx < 40; ++gx)
@@ -702,7 +702,7 @@ void Aray::removeguard3(Console& g_console)
         }
     }
 }
-void Aray::removeguard4(Console& g_console)
+void Aray::removeguardEnd(Console& g_console)
 {
     //20,2
     for (int gx = 20; gx < 24; ++gx)
