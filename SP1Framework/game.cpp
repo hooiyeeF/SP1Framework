@@ -10,6 +10,7 @@
 #include "Guard.h"
 #include "Map.h"
 #include "UI.h"
+#include "Aray.h"
 
 double  g_dElapsedTime;
 double  g_dDeltaTime;
@@ -26,6 +27,7 @@ Guard gara;
 Player chara;
 Map room;
 UI ui;
+Aray RAray;
 
 // Game specific variables here
 EGAMESTATES g_eGameState = S_SPLASHSCREEN; // initial state
