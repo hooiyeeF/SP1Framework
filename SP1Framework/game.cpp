@@ -448,6 +448,7 @@ void renderMenuScreen()  // renders the splash screen
     c.X = g_Console.getConsoleSize().X / 2 - 12;
     g_Console.writeToBuffer(c, "Press <Space> to start", 0x5E);
 
+    /* Playtest counter*/
     c.Y -= 10;
     c.X = g_Console.getConsoleSize().X / 2 - 5;
     g_Console.writeToBuffer(c, " Test : ", 0xB0);
@@ -455,9 +456,13 @@ void renderMenuScreen()  // renders the splash screen
     std::ostringstream ss;
     ss.str("");
     ss << testG << " ";
-    c.X = 42;
+    c.X = 43;
     c.Y = 15;
     g_Console.writeToBuffer(c, ss.str(), 0xB0);
+
+    c.Y -= 14;
+    c.X = g_Console.getConsoleSize().X / 2 +19;
+    g_Console.writeToBuffer(c, " Arrow keys to move ", 0xE5);
 }
 void renderFirstRoom()
 {
