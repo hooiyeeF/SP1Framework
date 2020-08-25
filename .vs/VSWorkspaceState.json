@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\SP1Framework"
+    "\\SP1Framework",
+    "\\SP1Framework\\Framework"
   ],
   "SelectedNode": "\\SP1Framework\\game.h",
   "PreviewInSolutionExplorer": false

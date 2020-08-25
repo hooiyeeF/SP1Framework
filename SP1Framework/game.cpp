@@ -411,7 +411,6 @@ void renderToScreen()
     // Writes the buffer to the console, hence you will see what you have written
     g_Console.flushBufferToConsole();
 }
-
 void renderSplashScreen()  // renders the splash screen
 {
     COORD c = g_Console.getConsoleSize();
@@ -435,7 +434,6 @@ void renderSplashScreen()  // renders the splash screen
     c.X = g_Console.getConsoleSize().X / 2 - 12;
     g_Console.writeToBuffer(c, "Press <Space> to start", 0x5E);
 }
-
 void renderGame()
 {
     room.drawR1(g_Console);
@@ -475,7 +473,6 @@ void renderGame()
         chara.y = 4;
     }
 }
-
 void renderSecondRoom()
 {
     clearScreen(); 
@@ -516,7 +513,6 @@ void renderSecondRoom()
         chara.y = 1;
     }
 }
-
 void renderTPRoom()
 {
     clearScreen();
@@ -572,7 +568,6 @@ void renderTPRoom()
         g_Console.writeToBuffer(30, 25, "Collect the toilet paper before exit !", 0x06);
     }
 }
-
 void renderEndRoom()
 {
     clearScreen();
@@ -633,7 +628,6 @@ void renderFramerate()
     }
     
 }
-
 void renderInputEvents()
 {
     // keyboard events 
@@ -783,7 +777,6 @@ void FirstRoomArray()
         map[j][49] = '+';
     }
 }
-
 void SecondRoomArray()
 {
     //array to detect things
@@ -863,7 +856,6 @@ void SecondRoomArray()
         }
     }
 }
-
 void TPRoomArray()
 {
     //array to detect things
@@ -934,7 +926,6 @@ void TPRoomArray()
     }
     
 }
-
 void EndRoomArray()
 {
     //array to detect things
@@ -1060,7 +1051,6 @@ void renderWinScreen()
     g_Console.writeToBuffer(c, "Press <ESC> to exit", 0x07);
 
 }
-
 void renderLoseScreen()
 {
     COORD c = g_Console.getConsoleSize();
@@ -1099,7 +1089,6 @@ void guarddetectroom1()
         }
     }
 }
-
 void guarddetectroom2()
 {
     //28,5
@@ -1143,7 +1132,6 @@ void guarddetectroom2()
         }
     }
 }
-
 void guarddetectroom3()
 {
     //36,5
@@ -1207,7 +1195,6 @@ void guarddetectroom3()
         }
     }
 }
-
 void guarddetectroom4()
 {
     //20,2
