@@ -596,15 +596,14 @@ void renderTPRoom()
     {
         arra.guarddetect(g_Console, 36, 5);
         arra.removeguard(g_Console, 36, 11);
-        arra.removeguard(g_Console, 55, 8);
+        arra.removeguard(g_Console, 55, 10);
         Gtimer++;
     }
     else if (Gtimer >= 100 && Gtimer < 200)
     {
         arra.guarddetect(g_Console, 36, 11);
-        arra.removeguard(g_Console, 55, 8);
+        arra.removeguard(g_Console, 55, 9);
         arra.removeguard(g_Console, 36, 5);
-
         Gtimer++;
     }
     else if (Gtimer >= 200 && Gtimer < 300)
@@ -612,6 +611,48 @@ void renderTPRoom()
         arra.guarddetect(g_Console, 55, 8);
         arra.removeguard(g_Console, 36, 5);
         arra.removeguard(g_Console, 36, 11);
+        Gtimer++;
+    }
+    else if (Gtimer >= 300 && Gtimer < 400)
+    {
+        arra.guarddetect(g_Console, 36, 11);
+        arra.removeguard(g_Console, 55, 7);
+        arra.removeguard(g_Console, 36, 5);
+        Gtimer++;
+    }
+    else if (Gtimer >= 400 && Gtimer < 500)
+    {
+        arra.guarddetect(g_Console, 55, 6);
+        arra.removeguard(g_Console, 36, 5);
+        arra.removeguard(g_Console, 36, 11);
+        Gtimer++;
+    }
+    else if (Gtimer >= 500 && Gtimer < 600)
+    {
+        arra.guarddetect(g_Console, 36, 5);
+        arra.removeguard(g_Console, 36, 11);
+        arra.removeguard(g_Console, 55, 7);
+        Gtimer++;
+    }
+    else if (Gtimer >= 600 && Gtimer < 700)
+    {
+        arra.guarddetect(g_Console, 55, 8);
+        arra.removeguard(g_Console, 36, 5);
+        arra.removeguard(g_Console, 36, 11);
+        Gtimer++;
+    }
+    else if (Gtimer >= 700 && Gtimer < 800)
+    {
+        arra.guarddetect(g_Console, 36, 11);
+        arra.removeguard(g_Console, 55, 9);
+        arra.removeguard(g_Console, 36, 5);
+        Gtimer++;
+    }
+    else if (Gtimer >= 800 && Gtimer < 900)
+    {
+        arra.removeguard(g_Console, 36, 5);
+        arra.removeguard(g_Console, 36, 11);
+        arra.guarddetect(g_Console, 55, 10);
         Gtimer++;
     }
     else
@@ -676,7 +717,7 @@ void renderEndRoom()
     if (chara.getx() == 58 && chara.gety() == 15 )
     {
         g_eGameState = S_CROOM;
-
+        arra.CRoomArray(g_Console);
         //character position for last room
         chara.setx(5);
         chara.sety(8);
