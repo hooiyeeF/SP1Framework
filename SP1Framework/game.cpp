@@ -7,7 +7,6 @@
 #include <iostream>
 #include <iomanip>
 #include <sstream>
-#include "Guard.h"
 #include "Map.h"
 #include "UI.h"
 #include "Aray.h"
@@ -22,7 +21,6 @@ bool gamestart = false;
 bool gameEnd = false;
 bool collected = false;
 int testG = 1;
-Guard gara;
 Player chara;
 Map room;
 UI ui;
@@ -478,32 +476,26 @@ void renderFirstRoom()
         Beep(1440, 30);
         g_eGameState = S_LOSE;
     }
-    if (Gtimer > 0 && Gtimer < 200)
+    if (Gtimer > 0 && Gtimer < 100)
     {
-        if (Gtimer < 50)
-        {
-            arra.guarddetectroom1a(g_Console);
-            gara.drawG1a(g_Console);
-        }
-        else if (Gtimer >= 50)
-        {
-            arra.guarddetectroom1b(g_Console);
-            arra.removeguarda(g_Console);
-            gara.drawG1b(g_Console);
-        }
+
+        arra.guarddetect(g_Console, 50, 5);
         Gtimer++;
 
     }
-    else if (Gtimer >= 200 && Gtimer < 400)
+    else if (Gtimer >= 100 && Gtimer < 200)
     {
-        gara.drawG1b(g_Console);
-        arra.removeguardb(g_Console);
+        arra.removeguard(g_Console, 50, 5);
         Gtimer++;
     }
-    else if (Gtimer >= 400 && Gtimer < 500)
+    else if (Gtimer >= 200 && Gtimer < 300)
     {
-        gara.drawG1a(g_Console);
-        arra.removeguarda(g_Console);
+        arra.guarddetect(g_Console, 49, 5);
+        Gtimer++;
+    }
+    else if (Gtimer >= 300 && Gtimer < 400)
+    {
+        arra.removeguard(g_Console, 49, 5);
         Gtimer++;
     }
     else
@@ -528,7 +520,6 @@ void renderSecondRoom()
     room.drawR2(g_Console);
     ui.drawUI(g_Console);
     chara.draw(g_Console);
-    gara.drawG2(g_Console);
 
     if (arra.map[chara.gety()][chara.getx()] == 'G')
     {
@@ -538,12 +529,15 @@ void renderSecondRoom()
     }
     if (Gtimer > 0 && Gtimer < 100)
     {
-        arra.guarddetectroom2(g_Console);
+        arra.guarddetect(g_Console, 28, 5);
+        arra.removeguard(g_Console, 44, 8);
+
         Gtimer++;
     }
     else if (Gtimer >= 100 && Gtimer < 300)
     {
-        arra.removeguard2(g_Console);
+        arra.removeguard(g_Console, 28, 5);
+        arra.guarddetect(g_Console, 44, 8);
         Gtimer++;
     }
     else
@@ -568,7 +562,6 @@ void renderTPRoom()
     room.drawRTP(g_Console);
     ui.drawUI(g_Console);
     chara.draw(g_Console);
-    gara.drawGTP(g_Console);
 
     if (arra.map[chara.gety()][chara.getx()] == 'G')
     {
@@ -578,22 +571,24 @@ void renderTPRoom()
     }
     if (Gtimer > 0 && Gtimer < 100)
     {
-        arra.guarddetectroomTP(g_Console);
+        arra.guarddetect(g_Console, 36, 5);
+        arra.removeguard(g_Console, 36, 11);
+        arra.removeguard(g_Console, 55, 8);
         Gtimer++;
     }
     else if (Gtimer >= 100 && Gtimer < 200)
     {
-        arra.removeguardTP(g_Console);
+        arra.guarddetect(g_Console, 36, 11);
+        arra.removeguard(g_Console, 55, 8);
+        arra.removeguard(g_Console, 36, 5);
+
         Gtimer++;
     }
     else if (Gtimer >= 200 && Gtimer < 300)
     {
-        arra.removeguardTP(g_Console);
-        Gtimer++;
-    }
-    else if (Gtimer >= 300 && Gtimer < 400)
-    {
-        arra.removeguardTP(g_Console);
+        arra.guarddetect(g_Console, 55, 8);
+        arra.removeguard(g_Console, 36, 5);
+        arra.removeguard(g_Console, 36, 11);
         Gtimer++;
     }
     else
@@ -633,7 +628,6 @@ void renderEndRoom()
     room.drawREnd(g_Console);
     ui.drawUI(g_Console);
     ui.drawTP(g_Console);
-    gara.drawGEnd(g_Console);
     chara.draw(g_Console);
 
     if (arra.map[chara.gety()][chara.getx()] == 'G')
@@ -644,12 +638,10 @@ void renderEndRoom()
     }
     if (Gtimer > 0 && Gtimer < 100)
     {
-        arra.guarddetectroomEnd(g_Console);
         Gtimer++;
     }
     else if (Gtimer >= 100 && Gtimer < 300)
     {
-        arra.removeguardEnd(g_Console);
         Gtimer++;
     }
     else
