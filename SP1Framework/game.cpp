@@ -483,6 +483,7 @@ void renderFirstRoom()
         else if (Gtimer >= 50)
         {
             arra.guarddetectroom1b(g_Console);
+            arra.removeguarda(g_Console);
             gara.drawG1b(g_Console);
         }
         Gtimer++;
@@ -572,12 +573,22 @@ void renderTPRoom()
     }
     if (Gtimer > 0 && Gtimer < 100)
     {
-        arra.guarddetectroom3(g_Console);
+        arra.guarddetectroomTP(g_Console);
         Gtimer++;
     }
-    else if (Gtimer >= 100 && Gtimer < 300)
+    else if (Gtimer >= 100 && Gtimer < 200)
     {
-        arra.removeguard3(g_Console);
+        arra.removeguardTP(g_Console);
+        Gtimer++;
+    }
+    else if (Gtimer >= 200 && Gtimer < 300)
+    {
+        arra.removeguardTP(g_Console);
+        Gtimer++;
+    }
+    else if (Gtimer >= 300 && Gtimer < 400)
+    {
+        arra.removeguardTP(g_Console);
         Gtimer++;
     }
     else
@@ -628,12 +639,12 @@ void renderEndRoom()
     }
     if (Gtimer > 0 && Gtimer < 100)
     {
-        arra.guarddetectroom4(g_Console);
+        arra.guarddetectroomEnd(g_Console);
         Gtimer++;
     }
     else if (Gtimer >= 100 && Gtimer < 300)
     {
-        arra.removeguard4(g_Console);
+        arra.removeguardEnd(g_Console);
         Gtimer++;
     }
     else
