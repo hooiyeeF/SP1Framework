@@ -79,6 +79,29 @@ void Map::drawR1(Console& g_console)
 
 void Map::drawR2(Console& g_console)
 {
+    int wallX = 19;
+    int wallY = 1;
+
+    //walls in 4 sides
+    for (int i = 0; i < 41; i++)
+    {
+        g_console.writeToBuffer(wallX + i, 1, "+", 0xB20);
+        g_console.writeToBuffer(wallX + i, 16, "+", 0xB20);
+    }
+    for (int j = 0; j < 16; j++)
+    {
+        g_console.writeToBuffer(19, wallY + j, "+", 0xB20);
+        g_console.writeToBuffer(59, wallY + j, "+", 0xB20);
+    }
+    /* Starting pt */
+    g_console.writeToBuffer(20, 15, "S", 0x5E);
+
+    /* Ending pt */
+    g_console.writeToBuffer(58, 10, "E", 0x5E);
+}
+
+void Map::drawR3(Console& g_console)
+{
     int wallX = 15;
     int wallY = 3;
 
@@ -341,3 +364,5 @@ void Map::drawLR(Console& g_console)
     /* Ending pt */
     g_console.writeToBuffer(78, 8, "E", 0x5E);
 }
+
+

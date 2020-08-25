@@ -78,7 +78,7 @@ void Aray::FirstRoomArray(Console& g_console)
         map[j][49] = '+';
     }
 }
-void Aray::SecondRoomArray(Console& g_console)
+void Aray::ThirdRoomArray(Console& g_console)
 {
     //array to detect things
     for (int x = 0; x < 80; ++x)

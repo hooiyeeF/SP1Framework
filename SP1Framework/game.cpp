@@ -405,6 +405,8 @@ void render()
         break;
     case S_ROOM2: renderSecondRoom();
         break;
+    case S_ROOM3: renderThirdRoom();
+        break;
     case S_TPROOM: renderTPRoom();
         break;
     case S_ENDROOM: renderEndRoom();
@@ -530,17 +532,34 @@ void renderFirstRoom()
     if (chara.getx() == 58 && chara.gety() == 2)
     {
         g_eGameState = S_ROOM2;
-        arra.SecondRoomArray(g_Console);
 
         //character position for second room
-        chara.setx(16); 
-        chara.sety(4);
+        chara.setx(20); 
+        chara.sety(15);
     }
 }
 void renderSecondRoom()
 {
-    clearScreen(); 
+    clearScreen();
     room.drawR2(g_Console);
+    ui.drawUI(g_Console);
+    chara.draw(g_Console);
+
+    /* Go to Third room */
+    if (chara.getx() == 58 && chara.gety() == 10)
+    {
+        g_eGameState = S_ROOM3;
+        arra.ThirdRoomArray(g_Console);
+
+        //character position for third room
+        chara.setx(16);
+        chara.sety(4);
+    }
+}
+void renderThirdRoom()
+{
+    clearScreen(); 
+    room.drawR3(g_Console);
     ui.drawUI(g_Console);
     chara.draw(g_Console);
 

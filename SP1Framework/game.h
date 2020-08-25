@@ -64,9 +64,10 @@ void GoToGamePlay();        // check if user hit space key to start game
 void PlayAgain();           // check if user hit key to restart the game
 void reset();               // reset player spawn
 void clearScreen();         // clears the current screen and draw from scratch 
-void renderMenuScreen();  // renders the splash screen
-void renderFirstRoom();          // renders first game room
+void renderMenuScreen();    // renders the splash screen
+void renderFirstRoom();     // renders first game room
 void renderSecondRoom();    // render second game room
+void renderThirdRoom();
 void renderTPRoom();
 void renderEndRoom();
 void renderCRoom();
