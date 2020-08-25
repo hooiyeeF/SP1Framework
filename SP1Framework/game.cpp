@@ -40,8 +40,8 @@ void init( void )
 
     // sets the initial state for the game
     g_eGameState = S_SPLASHSCREEN;
-    chara.x = g_Console.getConsoleSize().X / 2 - 1;
-    chara.y = g_Console.getConsoleSize().Y / 2;
+    chara.setx(g_Console.getConsoleSize().X / 2 - 1);
+    chara.sety(g_Console.getConsoleSize().Y / 2);
 
     // sets the width, height and the font name to use in the console
     g_Console.setConsoleFont(0, 16, L"Consolas");
@@ -268,67 +268,67 @@ void moveCharacter()
 {
     // Updating the location of the character based on the key release
     // providing a beep sound whenver we shift the character
-    if (g_skKeyEvent[K_UP].keyDown && chara.y > 0)
+    if (g_skKeyEvent[K_UP].keyDown && chara.gety() > 0)
     {
-        if (map[chara.y - 1][chara.x] == '-' || map[chara.y - 1][chara.x] == 'T')
+        if (map[chara.gety() - 1][chara.getx()] == '-' || map[chara.gety() - 1][chara.getx()] == 'T')
         {
-            map[chara.y - 1][chara.x] = 'P';
-            map[chara.y][chara.x] = '-';
+            map[chara.gety() - 1][chara.getx()] = 'P';
+            map[chara.gety()][chara.getx()] = '-';
             //Beep(1440, 30);
-            chara.y--;
+            chara.ydec();
         }
-        else if (map[chara.y - 1][chara.x] == 'G')
+        else if (map[chara.gety() - 1][chara.getx()] == 'G')
         {
-            map[chara.y][chara.x] = '-';
+            map[chara.gety()][chara.getx()] = '-';
             Beep(1440, 30);
             g_eGameState = S_LOSE;
         }
     }
-    if (g_skKeyEvent[K_LEFT].keyDown && chara.x > 0)
+    if (g_skKeyEvent[K_LEFT].keyDown && chara.getx() > 0)
     {
-        if (map[chara.y][chara.x - 1] == '-' || map[chara.y][chara.x - 1] == 'T')
+        if (map[chara.gety()][chara.getx() - 1] == '-' || map[chara.gety()][chara.getx() - 1] == 'T')
         {
             gamestart = true;
-            map[chara.y][chara.x - 1] = 'P';
-            map[chara.y][chara.x] = '-';
+            map[chara.gety()][chara.getx() - 1] = 'P';
+            map[chara.gety()][chara.getx()] = '-';
             //Beep(1440, 30);
-            chara.x--;
+            chara.xdec();
         }
-        else if (map[chara.y][chara.x - 1] == 'G')
+        else if (map[chara.gety()][chara.getx() - 1] == 'G')
         {
-            map[chara.y][chara.x] = '-';
+            map[chara.gety()][chara.getx()] = '-';
             Beep(1440, 30);
             g_eGameState = S_LOSE;
         }
     }
-    if (g_skKeyEvent[K_DOWN].keyDown && chara.y < g_Console.getConsoleSize().Y - 1)
+    if (g_skKeyEvent[K_DOWN].keyDown && chara.gety() < g_Console.getConsoleSize().Y - 1)
     {
-        if (map[chara.y + 1][chara.x] == '-' || map[chara.y + 1][chara.x] == 'T')
+        if (map[chara.gety() + 1][chara.getx()] == '-' || map[chara.gety() + 1][chara.getx()] == 'T')
         {
-            map[chara.y + 1][chara.x] = 'P';
-            map[chara.y][chara.x] = '-';
+            map[chara.gety() + 1][chara.getx()] = 'P';
+            map[chara.gety()][chara.getx()] = '-';
             //Beep(1440, 30);
-            chara.y++;
+            chara.yinc();
         }
-        else if (map[chara.y + 1][chara.x] == 'G')
+        else if (map[chara.gety() + 1][chara.getx()] == 'G')
         {
-            map[chara.y][chara.x] = '-';
+            map[chara.gety()][chara.getx()] = '-';
             Beep(1440, 30);
             g_eGameState = S_LOSE;
         }
     }
-    if (g_skKeyEvent[K_RIGHT].keyDown && chara.x < g_Console.getConsoleSize().X - 1)
+    if (g_skKeyEvent[K_RIGHT].keyDown && chara.getx() < g_Console.getConsoleSize().X - 1)
     {
-        if (map[chara.y][chara.x + 1] == '-' || map[chara.y][chara.x + 1] == 'T')
+        if (map[chara.gety()][chara.getx() + 1] == '-' || map[chara.gety()][chara.getx() + 1] == 'T')
         {
-            map[chara.y][chara.x + 1] = 'P';
-            map[chara.y][chara.x] = '-';
+            map[chara.gety()][chara.getx() + 1] = 'P';
+            map[chara.gety()][chara.getx()] = '-';
             //Beep(1440, 30);
-            chara.x++;
+            chara.xinc();
         }
-        else if (map[chara.y][chara.x + 1] == 'G')
+        else if (map[chara.gety()][chara.getx() + 1] == 'G')
         {
-            map[chara.y][chara.x] = '-';
+            map[chara.gety()][chara.getx()] = '-';
             Beep(1440, 30);
             g_eGameState = S_LOSE;
         }
@@ -372,8 +372,8 @@ void reset()
     gameEnd = false;
     collected = false;
     room.getTP = false;
-    chara.x = g_Console.getConsoleSize().X / 2 - 1;
-    chara.y = g_Console.getConsoleSize().Y / 2;
+    chara.setx(g_Console.getConsoleSize().X / 2 - 1);
+    chara.sety(g_Console.getConsoleSize().Y / 2);
     init();
 }
 
@@ -454,9 +454,9 @@ void renderGame()
     chara.draw(g_Console);
     gara.drawG1(g_Console);
 
-    if (map[chara.y][chara.x] == 'G')
+    if (map[chara.gety()][chara.getx()] == 'G')
     {
-        map[chara.y][chara.x] = '-';
+        map[chara.gety()][chara.getx()] = '-';
         Beep(1440, 30);
         g_eGameState = S_LOSE;
     }
@@ -476,14 +476,14 @@ void renderGame()
     }
     
     /* Go to Second room */
-    if (chara.x == 58 && chara.y == 2)
+    if (chara.getx() == 58 && chara.gety() == 2)
     {
         g_eGameState = S_NEXTROOM;
         SecondRoomArray();
 
         //character position for second room
-        chara.x = 16; 
-        chara.y = 4;
+        chara.setx(16); 
+        chara.sety(4);
     }
 }
 void renderSecondRoom()
@@ -494,9 +494,9 @@ void renderSecondRoom()
     chara.draw(g_Console);
     gara.drawG2(g_Console);
 
-    if (map[chara.y][chara.x] == 'G')
+    if (map[chara.gety()][chara.getx()] == 'G')
     {
-        map[chara.y][chara.x] = '-';
+        map[chara.gety()][chara.getx()] = '-';
         Beep(1440, 30);
         g_eGameState = S_LOSE;
     }
@@ -516,14 +516,14 @@ void renderSecondRoom()
     }
 
     /* Go to toilet paper room */
-    if (chara.x == 62 && chara.y == 13)
+    if (chara.getx() == 62 && chara.gety() == 13)
     {
         g_eGameState = S_TPROOM;
         TPRoomArray();
 
         //character position for toilet paper room
-        chara.x = 25; 
-        chara.y = 1;
+        chara.setx(25);
+        chara.sety(1);
     }
 }
 void renderTPRoom()
@@ -534,9 +534,9 @@ void renderTPRoom()
     chara.draw(g_Console);
     gara.drawG3(g_Console);
 
-    if (map[chara.y][chara.x] == 'G')
+    if (map[chara.gety()][chara.getx()] == 'G')
     {
-        map[chara.y][chara.x] = '-';
+        map[chara.gety()][chara.getx()] = '-';
         Beep(1440, 30);
         g_eGameState = S_LOSE;
     }
@@ -555,7 +555,7 @@ void renderTPRoom()
         Gtimer = 1;
     }
 
-    if (chara.x == 49 && chara.y == 8)
+    if (chara.getx() == 49 && chara.gety() == 8)
     {
         collected = true;
         room.getTP = true;
@@ -567,16 +567,16 @@ void renderTPRoom()
     }
 
     /* Go to the last room */
-    if (chara.x == 40 && chara.y == 16 && collected == true)
+    if (chara.getx() == 40 && chara.gety() == 16 && collected == true)
     {
         g_eGameState = S_ENDROOM;
         EndRoomArray();
         //character position for last room
-        chara.x = 40; 
-        chara.y = 2;
+        chara.setx(40);
+        chara.sety(2);
     }
     // Not collected
-    else if (chara.x == 40 && chara.y == 16 && collected == false)
+    else if (chara.getx() == 40 && chara.gety() == 16 && collected == false)
     {
         g_Console.writeToBuffer(30, 25, "Collect the toilet paper before exit !", 0x06);
     }
@@ -590,9 +590,9 @@ void renderEndRoom()
     gara.drawG4(g_Console);
     chara.draw(g_Console);
 
-    if (map[chara.y][chara.x] == 'G')
+    if (map[chara.gety()][chara.getx()] == 'G')
     {
-        map[chara.y][chara.x] = '-';
+        map[chara.gety()][chara.getx()] = '-';
         Beep(1440, 30);
         g_eGameState = S_LOSE;
     }
@@ -612,7 +612,7 @@ void renderEndRoom()
     }
 
     /* Go to WIN */
-    if (chara.x == 58 && chara.y == 15 )
+    if (chara.getx() == 58 && chara.gety() == 15 )
     {
         g_eGameState = S_WIN;
         gameEnd = true;
