@@ -464,6 +464,18 @@ void renderMenuScreen()  // renders the splash screen
     c.Y -= 14;
     c.X = g_Console.getConsoleSize().X / 2 +19;
     g_Console.writeToBuffer(c, " Arrow keys to move ", 0xE5);
+    c.Y += 2;
+    c.X = g_Console.getConsoleSize().X / 2 + 19;
+    g_Console.writeToBuffer(c, " E - Exit ", 0xE5); 
+    c.Y += 1;
+    c.X = g_Console.getConsoleSize().X / 2 + 19;
+    g_Console.writeToBuffer(c, " T - Toilet paper ", 0xE5);
+    c.Y += 1;
+    c.X = g_Console.getConsoleSize().X / 2 + 19;
+    g_Console.writeToBuffer(c, "   - Guard ", 0xE5);
+    c.X = 60;
+    c.Y = 5;
+    g_Console.writeToBuffer(c, (char)1, 0x0C);
 }
 void renderFirstRoom()
 {
