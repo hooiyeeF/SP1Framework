@@ -5,9 +5,10 @@ class Guard
 {
 public:
 	int x, y;
-	void drawG1(Console& g_console);
+	void drawG1a(Console& g_console);
+	void drawG1b(Console& g_console);
 	void drawG2(Console& g_console);
-	void drawG3(Console& g_console);
-	void drawG4(Console& g_console);
+	void drawGTP(Console& g_console);
+	void drawGEnd(Console& g_console);
 
 };

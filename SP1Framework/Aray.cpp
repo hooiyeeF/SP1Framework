@@ -322,7 +322,7 @@ void Aray::EndRoomArray(Console& g_console)
     }
 }
 
-void Aray::guarddetectroom1(Console& g_console)
+void Aray::guarddetectroom1a(Console& g_console)
 {
     //50,5
     for (int gx = 47; gx < 54; ++gx)
@@ -334,6 +334,29 @@ void Aray::guarddetectroom1(Console& g_console)
 
             }
             else if (gx == 50 && gy == 5)
+            {
+                map[gy][gx] = 'G';
+            }
+            else
+            {
+                map[gy][gx] = 'G';
+                g_console.writeToBuffer(gx, gy, " ", 79);
+            }
+        }
+    }
+}
+void Aray::guarddetectroom1b(Console& g_console)
+{
+    //49,5
+    for (int gx = 46; gx < 53; ++gx)
+    {
+        for (int gy = 3; gy < 8; ++gy)
+        {
+            if (map[gy][gx] == '+')
+            {
+
+            }
+            else if (gx == 49 && gy == 5)
             {
                 map[gy][gx] = 'G';
             }
@@ -535,7 +558,7 @@ void Aray::guarddetectroom4(Console& g_console)
     }
 }
 
-void Aray::removeguard(Console& g_console)
+void Aray::removeguarda(Console& g_console)
 {
     for (int gx = 47; gx < 54; ++gx)
     {
@@ -546,6 +569,28 @@ void Aray::removeguard(Console& g_console)
 
             }
             else if (gx == 50 && gy == 5)
+            {
+                map[gy][gx] = 'G';
+            }
+            else
+            {
+                map[gy][gx] = '-';
+            }
+        }
+    }
+}
+void Aray::removeguardb(Console& g_console)
+{
+    //49,5
+    for (int gx = 46; gx < 53; ++gx)
+    {
+        for (int gy = 3; gy < 8; ++gy)
+        {
+            if (map[gy][gx] == '+')
+            {
+
+            }
+            else if (gx == 49 && gy == 5)
             {
                 map[gy][gx] = 'G';
             }
