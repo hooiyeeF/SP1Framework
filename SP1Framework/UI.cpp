@@ -3,8 +3,6 @@
 void UI::drawUI(Console& g_console)
 {
     g_console.writeToBuffer(0, 18, "                                                                                ", 0xFF);
-    g_console.writeToBuffer(23, 20, "                  ", 0xB2); // 6 space for each sprint **total of 3 sprints/ 18 spaces
-    g_console.writeToBuffer(23, 21, "                  ", 0xB2); // 6 space for each sprint **total of 3 sprints / 18 spaces
     g_console.writeToBuffer(3, 20, "                  ", 0xFF); //box for toiletpaper
     g_console.writeToBuffer(3, 28, "                  ", 0xFF); //box for toiletpaper
     for (int i = 20; i < 28; ++i)

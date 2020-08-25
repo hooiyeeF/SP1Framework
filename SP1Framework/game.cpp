@@ -712,6 +712,51 @@ void renderInputEvents()
     }
 }
 
+void renderWinScreen()
+{
+    COORD c = g_Console.getConsoleSize();
+    c.Y /= 2;
+    c.Y -= 10;
+    c.X = c.X / 2 - 14;
+    g_Console.writeToBuffer(c, "C O N G R A T U L A T I O N S !", 0x0A);
+    c.Y += 2;
+    c.X = g_Console.getConsoleSize().X / 2 - 6;
+    g_Console.writeToBuffer(c, "Y O U  W O N !", 0x0A);
+    c.Y += 8;
+    c.X = g_Console.getConsoleSize().X / 2 - 10;
+    g_Console.writeToBuffer(c, "  Time Taken: ", 0xB0);
+
+    std::ostringstream ss;
+    ss << std::fixed << std::setprecision(2);
+    ss.str("");
+    ss << g_dElapsedTime << "s  ";
+    c.X = 44;
+    c.Y = 15;
+    g_Console.writeToBuffer(c, ss.str(), 0xB0);
+
+    c.Y += 5;
+    c.X = g_Console.getConsoleSize().X / 2 - 12;
+    g_Console.writeToBuffer(c, "Press <SPACE> to play again", 0x07);
+    c.Y += 2;
+    c.X = g_Console.getConsoleSize().X / 2 - 8;
+    g_Console.writeToBuffer(c, "Press <ESC> to exit", 0x07);
+
+}
+void renderLoseScreen()
+{
+    COORD c = g_Console.getConsoleSize();
+    c.Y /= 2;
+    c.Y -= 5;
+    c.X = c.X / 2 -4;
+    g_Console.writeToBuffer(c, "L O S E !", 0x0A);
+    c.Y += 8;
+    c.X = g_Console.getConsoleSize().X / 2 - 13;
+    g_Console.writeToBuffer(c, "Press <SPACE> to play again", 0x07);
+    c.Y += 2;
+    c.X = g_Console.getConsoleSize().X / 2 - 10;
+    g_Console.writeToBuffer(c, "Press <ESC> to exit", 0x07);
+}
+
 void FirstRoomArray()
 {
     //array to detect things
@@ -937,7 +982,7 @@ void TPRoomArray()
     {
         map[3][i] = '+';
     }
-    
+
 }
 void EndRoomArray()
 {
@@ -1032,51 +1077,6 @@ void EndRoomArray()
     {
         map[2][i] = '+';
     }
-}
-
-void renderWinScreen()
-{
-    COORD c = g_Console.getConsoleSize();
-    c.Y /= 2;
-    c.Y -= 10;
-    c.X = c.X / 2 - 14;
-    g_Console.writeToBuffer(c, "C O N G R A T U L A T I O N S !", 0x0A);
-    c.Y += 2;
-    c.X = g_Console.getConsoleSize().X / 2 - 6;
-    g_Console.writeToBuffer(c, "Y O U  W O N !", 0x0A);
-    c.Y += 8;
-    c.X = g_Console.getConsoleSize().X / 2 - 10;
-    g_Console.writeToBuffer(c, "  Time Taken: ", 0xB0);
-
-    std::ostringstream ss;
-    ss << std::fixed << std::setprecision(2);
-    ss.str("");
-    ss << g_dElapsedTime << "s  ";
-    c.X = 44;
-    c.Y = 15;
-    g_Console.writeToBuffer(c, ss.str(), 0xB0);
-
-    c.Y += 5;
-    c.X = g_Console.getConsoleSize().X / 2 - 12;
-    g_Console.writeToBuffer(c, "Press <SPACE> to play again", 0x07);
-    c.Y += 2;
-    c.X = g_Console.getConsoleSize().X / 2 - 8;
-    g_Console.writeToBuffer(c, "Press <ESC> to exit", 0x07);
-
-}
-void renderLoseScreen()
-{
-    COORD c = g_Console.getConsoleSize();
-    c.Y /= 2;
-    c.Y -= 5;
-    c.X = c.X / 2 -4;
-    g_Console.writeToBuffer(c, "L O S E !", 0x0A);
-    c.Y += 8;
-    c.X = g_Console.getConsoleSize().X / 2 - 13;
-    g_Console.writeToBuffer(c, "Press <SPACE> to play again", 0x07);
-    c.Y += 2;
-    c.X = g_Console.getConsoleSize().X / 2 - 10;
-    g_Console.writeToBuffer(c, "Press <ESC> to exit", 0x07);
 }
 
 void guarddetectroom1()
