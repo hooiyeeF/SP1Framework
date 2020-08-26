@@ -77,6 +77,8 @@ void Aray::FirstRoomArray(Console& g_console)
     {
         map[j][49] = '+';
     }
+    map[2][54] = '+';
+    map[3][54] = '+';
 }
 void Aray::SecondRoomArray(Console& g_console)
 {
