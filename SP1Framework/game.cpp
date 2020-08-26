@@ -21,6 +21,7 @@ int Gtimer = 0;
 bool gamestart = false;
 bool gameEnd = false;
 bool collected = false;
+double ODDeltaTime = 0;
 int testG = 1;
 Player chara;
 Map room;
@@ -245,6 +246,10 @@ void update(double dt)
         // get the delta time
         g_dElapsedTime += dt;
         g_dDeltaTime = dt;
+    }
+    if (room.getKey == true && g_eGameState == S_ROOM2)
+    {
+        ODDeltaTime = dt;
     }
 
     switch (g_eGameState)
@@ -546,6 +551,16 @@ void renderSecondRoom()
     room.drawR2(g_Console);
     ui.drawUI(g_Console);
     chara.draw(g_Console);
+
+    // key collected
+    if (chara.getx() == 33 && chara.gety() == 15)
+    {
+        room.getKey = true;
+    }
+    if (room.getKey == true) 
+    {
+        room.Dtime -= ODDeltaTime;
+    }
 
     /* Go to Third room */
     if (chara.getx() == 58 && chara.gety() == 10)
