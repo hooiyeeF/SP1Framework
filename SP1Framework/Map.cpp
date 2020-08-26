@@ -84,7 +84,6 @@ void Map::drawR1(Console& g_console)
 
     /* openable door - vert wall */
     /* door open 'animation' - if else */
-    /* [55,2][55,3] */
     if (getKey == false)
     {
         for (int j = 2; j < 4; j++)
@@ -146,7 +145,6 @@ void Map::drawR2(Console& g_console)
 
     /* openable door - vert wall */
     /* door open 'animation' - if else */
-    /* @Ryan: just create an array for [55,2][55,3] , then when key collected , delete the array for that position */
     if (getKey == false)
     {
         for (int j = 2; j < 4; j++) 
