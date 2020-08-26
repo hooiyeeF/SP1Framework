@@ -405,6 +405,7 @@ void render()
     case S_ROOM1: renderFirstRoom();
         break;
     case S_ROOM2: renderSecondRoom();
+        //renderCRoom();
         break;
     case S_ROOM3: renderThirdRoom();
         break;

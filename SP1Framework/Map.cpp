@@ -343,26 +343,74 @@ void Map::drawREnd(Console& g_console)
 
 void Map::drawLR(Console& g_console)
 { 
-    int wallX = 0;
-    int wallY = 5;
+    int wallX = 1;
+    int wallY = 3;
 
     //walls in 4 sides
-    for (int i = 0; i < 80; i++)
+    for (int i = 0; i < 78; i++) // top horz wall
     {
-        g_console.writeToBuffer(wallX + i, 5, "+", 0xB20);
-        g_console.writeToBuffer(wallX + i, 11, "+", 0xB20);
+        g_console.writeToBuffer(wallX + i, 3, "+", 0xB20);
+    }
+    for (int i = 0; i < 73; i++) // bottom left horz wall
+    {
+        g_console.writeToBuffer(wallX + i, 9, "+", 0xB20);
+    }
+    for (int i = 75; i < 79; i++) // bottom left horz wall
+    {
+        g_console.writeToBuffer(i, 9, "+", 0xB20); 
     }
     for (int j = 0; j < 6; j++)
     {
-        g_console.writeToBuffer(0, wallY + j, "+", 0xB20);
-        g_console.writeToBuffer(79, wallY + j, "+", 0xB20);
+        g_console.writeToBuffer(1, wallY + j, "+", 0xB20);
+        g_console.writeToBuffer(78, wallY + j, "+", 0xB20);
+    }
+
+    /* Guard path wall */
+    for (int i = 4; i < 74; i++)  // top horz wall
+    {
+        g_console.writeToBuffer(i, 12, "+", 0xC30);
+    }
+    for (int i = 4; i < 76; i++)  // down horz wall
+    {
+        g_console.writeToBuffer(i, 14, "+", 0xC30);
+    }
+    for (int j = 12; j < 15; j++) // left vert wall
+    {
+        g_console.writeToBuffer(3, j, "+", 0xC30);
+    }
+    for (int j = 10; j < 12; j++) // right short vert wall
+    {
+        g_console.writeToBuffer(73, j, "+", 0xC30);
+    }
+    for (int j = 10; j < 15; j++) // right long vert wall
+    {
+        g_console.writeToBuffer(75, j, "+", 0xC30);
     }
 
     /* Starting pt */
-    g_console.writeToBuffer(5, 8, "S", 0x5E);
+    g_console.writeToBuffer(2, 4, "S", 0x5E);
 
     /* Ending pt */
-    g_console.writeToBuffer(78, 8, "E", 0x5E);
+    g_console.writeToBuffer(77, 8, "E", 0x5E);
+
+    /* wall near exit */
+    for (int i = 72; i < 78; i++)  //horz wall
+    {
+        g_console.writeToBuffer(i, 6, "+", 0xB20);
+    }
+    for (int i = 72; i < 74; i++)  //vert wall
+    {
+        g_console.writeToBuffer(i, 7, "+", 0xB20);
+    } 
+
+    // vert wall beside starting pt
+    for (int i = 5; i < 7; i++)
+    {
+        for (int j = 4; j < 7; j++)
+        {
+            g_console.writeToBuffer(i, j, "+", 0xB20);
+        }
+    }
 }
 
 
