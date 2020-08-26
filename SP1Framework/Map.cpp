@@ -98,6 +98,15 @@ void Map::drawR2(Console& g_console)
 
     /* Ending pt */
     g_console.writeToBuffer(58, 10, "E", 0x5E);
+
+    for (int i = 55; i < 59; i++)
+    {
+        g_console.writeToBuffer(i, 11, "+", 0xB20);
+    }
+    for (int j = 4; j < 12; j++)
+    {
+        g_console.writeToBuffer(55,j, "+", 0xB20);
+    }
 }
 
 void Map::drawR3(Console& g_console)
@@ -398,7 +407,7 @@ void Map::drawLR(Console& g_console)
     {
         g_console.writeToBuffer(i, 6, "+", 0xB20);
     }
-    for (int i = 72; i < 74; i++)  //vert wall
+    for (int i = 72; i < 75; i++)  //vert wall
     {
         g_console.writeToBuffer(i, 7, "+", 0xB20);
     } 
