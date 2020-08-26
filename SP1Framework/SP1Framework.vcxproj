@@ -56,7 +56,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -82,19 +82,21 @@
     <ClCompile Include="Framework\timer.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="main.cpp" />
-	<ClCompile Include="Player.cpp" />
-	<ClCompile Include="Map.cpp"/>
-	<ClCompile Include="UI.cpp"/>
-	<ClCompile Include="Aray.cpp"/>
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Sound.cpp" />
+    <ClCompile Include="UI.cpp" />
+    <ClCompile Include="Aray.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\console.h" />
     <ClInclude Include="Framework\timer.h" />
     <ClInclude Include="game.h" />
-	<ClInclude Include="Player.h" />
-	<CInclude Include="Map.h"/>
-	<CInclude Include="UI.h"/>
-	<CInclude Include="Aray.h"/>
+    <ClInclude Include="Player.h" />
+    <CInclude Include="Map.h" />
+    <CInclude Include="UI.h" />
+    <CInclude Include="Aray.h" />
+    <ClInclude Include="Sound.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
