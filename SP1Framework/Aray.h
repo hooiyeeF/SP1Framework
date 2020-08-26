@@ -14,6 +14,7 @@ public:
 	void FirstRoomArray(Console& g_console);      // First Room Array
 	void SecondRoomArray(Console& g_console);     // Second Room Array
 	void ThirdRoomArray(Console& g_console);     // Third Room Array
+	void FourthRoomArray(Console& g_console);	  // fourth room array
 	void TPRoomArray(Console& g_console);         // TP Room Array
 	void EndRoomArray(Console& g_console);        // End Room Array
 	void CRoomArray(Console& g_console);

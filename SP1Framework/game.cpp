@@ -637,7 +637,7 @@ void renderThirdRoom()
     if (chara.getx() == 62 && chara.gety() == 13)
     {
         g_eGameState = S_ROOM4;
-
+        arra.FourthRoomArray(g_Console);
         //character position for fourth room
         chara.setx(54); 
         chara.sety(3);
