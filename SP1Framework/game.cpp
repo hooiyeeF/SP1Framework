@@ -932,7 +932,7 @@ void renderCRoom()
     chara.draw(g_Console);
 
     /* Go to WIN */
-    if (chara.getx() == 78 && chara.gety() == 8)
+    if (chara.getx() == 77 && chara.gety() == 8)
     {
         g_eGameState = S_WIN;
         gameEnd = true;
