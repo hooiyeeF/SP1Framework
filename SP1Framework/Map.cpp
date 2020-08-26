@@ -22,6 +22,12 @@ void Map::drawR1(Console& g_console)
     /* Ending pt */
     g_console.writeToBuffer(58, 2, "E", 0x5E);
 
+    /* Key spawn pt */
+    if (getKey == false)
+    {
+        g_console.writeToBuffer(58, 15, "K", 0xE5);
+    }
+
     /* Obstacles (i = horz | j = vert) */
 
     //box obs in top left corner
@@ -75,6 +81,29 @@ void Map::drawR1(Console& g_console)
     {
         g_console.writeToBuffer(49, j, "+", 0xB20);
     }
+
+    /* openable door - vert wall */
+    /* door open 'animation' - if else */
+    /* [55,2][55,3] */
+    if (getKey == false)
+    {
+        for (int j = 2; j < 4; j++)
+        {
+            g_console.writeToBuffer(54, j, "+", 0xB20);
+        }
+    }
+    else if (getKey == true && Dtime > 2) // change color
+    {
+        for (int j = 2; j < 4; j++)
+        {
+            g_console.writeToBuffer(54, j, " ", 0x5E);
+        }
+    }
+    else if (getKey == true && Dtime > 1) // door opening
+    {
+        g_console.writeToBuffer(54, 2, " ", 0x5E);
+    }
+
 }
 
 void Map::drawR2(Console& g_console)
@@ -99,14 +128,127 @@ void Map::drawR2(Console& g_console)
     /* Ending pt */
     g_console.writeToBuffer(58, 10, "E", 0x5E);
 
-    for (int i = 55; i < 59; i++)
+    /* Key spawn pt */
+    if (getKey == false)
+    {
+        g_console.writeToBuffer(33, 15, "K", 0xE5);
+    }
+
+    /* wall around exit pt */
+    for (int i = 55; i < 59; i++) //horz wall
     {
         g_console.writeToBuffer(i, 11, "+", 0xB20);
     }
-    for (int j = 4; j < 12; j++)
+    for (int j = 4; j < 12; j++) // vert wall
     {
         g_console.writeToBuffer(55,j, "+", 0xB20);
     }
+
+    /* openable door - vert wall */
+    /* door open 'animation' - if else */
+    /* @Ryan: just create an array for [55,2][55,3] , then when key collected , delete the array for that position */
+    if (getKey == false)
+    {
+        for (int j = 2; j < 4; j++) 
+        {
+            g_console.writeToBuffer(55, j, "+", 0xB20);
+        }
+    }
+    else if (getKey == true && Dtime > 2) // change color
+    {
+        for (int j = 2; j < 4; j++) 
+        {
+            g_console.writeToBuffer(55, j, " ", 0x5E);
+        }
+    }
+    else if (getKey == true && Dtime > 1) // door opening
+    {
+        g_console.writeToBuffer(55, 3, " ", 0x5E);
+    }
+
+    // box wall beside starting pt
+    for (int i = 23; i < 28; i++)
+    {
+        for (int j = 14; j < 16; j++)
+        {
+            g_console.writeToBuffer(i, j, "+", 0xB20);
+        }
+    }
+
+    // box wall on top of starting pt
+    for (int i = 20; i < 30; i++)
+    {
+        for (int j = 10; j < 12; j++)
+        {
+            g_console.writeToBuffer(i, j, "+", 0xB20);
+        }
+    }
+
+    g_console.writeToBuffer(36, 11, "+", 0xB20);
+    g_console.writeToBuffer(35, 12, "+", 0xB20);
+    g_console.writeToBuffer(34, 13, "+", 0xB20);
+    g_console.writeToBuffer(33, 14, "+", 0xB20);
+    g_console.writeToBuffer(32, 15, "+", 0xB20);
+    g_console.writeToBuffer(31, 15, "+", 0xB20);
+
+    // box wall in the center
+    for (int i = 25; i < 37; i++)
+    {
+        for (int j = 6; j < 8; j++)
+        {
+            g_console.writeToBuffer(i, j, "+", 0xB20);
+        }
+    }
+    // top 'dots wall
+    g_console.writeToBuffer(27, 4, "+", 0xB20);
+    g_console.writeToBuffer(30, 2, "+", 0xB20);
+    g_console.writeToBuffer(32, 3, "+", 0xB20);
+
+    // long vert wall
+    for (int i = 37; i < 41; i++)
+    {
+        for (int j = 4; j < 11; j++)
+        {
+            g_console.writeToBuffer(i, j, "+", 0xB20);
+        }
+    }
+    // long vert wall connect to the top
+    for (int i = 46; i < 50; i++)
+    {
+        for (int j = 2; j < 8; j++)
+        {
+            g_console.writeToBuffer(i, j, "+", 0xB20);
+        }
+    }
+
+    //'ZZ' horz wall
+    for (int i = 47; i < 50; i++) 
+    {
+        g_console.writeToBuffer(i, 10, "+", 0xB20);
+    }
+    for (int i = 46; i < 49; i++)
+    {
+        g_console.writeToBuffer(i, 11, "+", 0xB20);
+    }
+    for (int i = 45; i < 48; i++)
+    {
+        g_console.writeToBuffer(i, 12, "+", 0xB20);
+    }
+    for (int i = 44; i < 47; i++)
+    {
+        g_console.writeToBuffer(i, 13, "+", 0xB20);
+    }
+    for (int i = 43; i < 46; i++)
+    {
+        g_console.writeToBuffer(i, 14, "+", 0xB20);
+    }
+    
+    // horz wall beside 'ZZ' wall (bottom)
+    for (int i = 50; i < 57; i++)
+    {
+        g_console.writeToBuffer(i, 13, "+", 0xB20);
+    }
+
 }
 
 void Map::drawR3(Console& g_console)
