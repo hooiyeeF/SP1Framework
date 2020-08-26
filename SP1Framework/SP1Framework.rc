@@ -60,7 +60,7 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_SINGAPORE
 // WAVE
 //
 
-IDR_WAVE1               WAVE                    "C:\\BGM.wav"
+IDR_WAVE1               WAVE                    "C:\\Users\\joelr\\Downloads\\BGM.wav"
 
 #endif    // English (Singapore) resources
 /////////////////////////////////////////////////////////////////////////////
