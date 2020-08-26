@@ -411,6 +411,111 @@ void Map::drawLR(Console& g_console)
             g_console.writeToBuffer(i, j, "+", 0xB20);
         }
     }
+
+    for (int i = 7; i < 12; i++)
+    {
+        g_console.writeToBuffer(i, 8, "+", 0xB20);
+    }
+
+    // top 'box' wall near starting pt
+    for (int i = 10; i < 13; i++)
+    {
+        for (int j = 5; j < 7; j++)
+        {
+            g_console.writeToBuffer(i, j, "+", 0xB20);
+        }
+    }
+    // floating bottom horz wall
+    for (int i = 15; i < 20; i++)
+    {
+        g_console.writeToBuffer(i, 7, "+", 0xB20);
+    }
+    // floating top horz wall
+    for (int i = 18; i < 24; i++)
+    {
+        g_console.writeToBuffer(i, 5, "+", 0xB20);
+    }
+    //vert wall
+    for (int j = 7; j < 9; j++)
+    {
+        g_console.writeToBuffer(24, j, "+", 0xB20);
+    }
+    //vert wall
+    for (int j = 4; j < 7; j++)
+    {
+        g_console.writeToBuffer(27, j, "+", 0xB20);
+    }
+
+    g_console.writeToBuffer(29, 5, "+", 0xB20);
+
+    /*  bottom 2 'connected' horz wall*/
+    for (int i = 30; i < 35; i++)
+    {
+        g_console.writeToBuffer(i, 7, "+", 0xB20);
+    }
+    for (int i = 35; i < 38; i++)
+    {
+        g_console.writeToBuffer(i, 8, "+", 0xB20);
+    }
+
+    // top horz wall
+    for (int i = 33; i < 38; i++)
+    {
+        g_console.writeToBuffer(i, 4, "+", 0xB20);
+    }
+
+    // 'box' wall in the middle
+    for (int i = 39; i < 46; i++)
+    {
+        for (int j = 5; j < 8; j++)
+        {
+            g_console.writeToBuffer(i, j, "+", 0xB20);
+        }
+    }
+
+    g_console.writeToBuffer(47, 7, "+", 0xB20);
+
+    // top box wall
+    for (int i = 49; i < 55; i++)
+    {
+        for (int j = 4; j < 6; j++)
+        {
+            g_console.writeToBuffer(i, j, "+", 0xB20);
+        }
+    }
+
+    g_console.writeToBuffer(51, 8, "+", 0xB20);
+
+    // bottom box wall
+    for (int i = 54; i < 60; i++)
+    {
+        for (int j = 7; j < 9; j++)
+        {
+            g_console.writeToBuffer(i, j, "+", 0xB20);
+        }
+    }
+
+    /* 'dots' wall at the back */
+    g_console.writeToBuffer(57, 5, "+", 0xB20);
+    g_console.writeToBuffer(59, 4, "+", 0xB20);
+    g_console.writeToBuffer(61, 6, "+", 0xB20);
+    g_console.writeToBuffer(62, 8, "+", 0xB20);
+    g_console.writeToBuffer(63, 4, "+", 0xB20);
+    g_console.writeToBuffer(64, 5, "+", 0xB20);
+    g_console.writeToBuffer(64, 8, "+", 0xB20);
+    g_console.writeToBuffer(65, 7, "+", 0xB20);
+    g_console.writeToBuffer(66, 4, "+", 0xB20);
+    g_console.writeToBuffer(66, 6, "+", 0xB20);
+    g_console.writeToBuffer(67, 8, "+", 0xB20);
+    g_console.writeToBuffer(68, 6, "+", 0xB20);
+    g_console.writeToBuffer(69, 5, "+", 0xB20);
+    g_console.writeToBuffer(69, 7, "+", 0xB20);
+    g_console.writeToBuffer(70, 8, "+", 0xB20);
+    g_console.writeToBuffer(71, 4, "+", 0xB20);
+    g_console.writeToBuffer(74, 5, "+", 0xB20);
+    g_console.writeToBuffer(75, 4, "+", 0xB20);
+    g_console.writeToBuffer(76, 5, "+", 0xB20);
+
 }
 
 

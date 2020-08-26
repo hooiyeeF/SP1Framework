@@ -406,7 +406,6 @@ void render()
     case S_ROOM1: renderFirstRoom();
         break;
     case S_ROOM2: renderSecondRoom();
-        //renderCRoom();
         break;
     case S_ROOM3: renderThirdRoom();
         break;
@@ -920,8 +919,8 @@ void renderEndRoom()
         g_eGameState = S_CROOM;
         arra.CRoomArray(g_Console);
         //character position for last room
-        chara.setx(5);
-        chara.sety(8);
+        chara.setx(2);
+        chara.sety(4);
     }
 }
 void renderCRoom()
@@ -933,7 +932,7 @@ void renderCRoom()
     chara.draw(g_Console);
 
     /* Go to WIN */
-    if (chara.getx() == 78 && chara.gety() == 8)
+    if (chara.getx() == 77 && chara.gety() == 8)
     {
         g_eGameState = S_WIN;
         gameEnd = true;
