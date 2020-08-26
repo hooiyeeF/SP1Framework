@@ -52,7 +52,7 @@ void init( void )
 
     arra.FirstRoomArray(g_Console);
     Gtimer = 5;
-    bool music = PlaySound(TEXT("C:/Users/joelr/Source/Repos/hooiyeeF/SP1Framework/SP1Framework/Debug/Music/BGM.wav"), NULL, SND_ASYNC | SND_FILENAME | SND_LOOP);
+    
 }
 
 //--------------------------------------------------------------
