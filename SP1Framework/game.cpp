@@ -12,6 +12,7 @@
 #include "Aray.h"
 #include "time.h"
 #pragma comment(lib, "winmm.lib")
+#include "Sound.h"
 
 double  g_dElapsedTime;
 double  g_dDeltaTime;
@@ -28,6 +29,7 @@ Player chara;
 Map room;
 UI ui;
 Aray arra;
+sound S;
 
 // Game specific variables here
 EGAMESTATES g_eGameState = S_SPLASHSCREEN; // initial state
@@ -54,7 +56,8 @@ void init( void )
 
     arra.FirstRoomArray(g_Console);
     Gtimer = 5;
-  //  bool music = PlaySound(TEXT("C:/Users/joelr/Source/Repos/hooiyeeF/SP1Framework/SP1Framework/Debug/Music/BGM.wav"), NULL, SND_ASYNC | SND_FILENAME | SND_LOOP);
+    S.BGM();
+  
 }
 
 //--------------------------------------------------------------
