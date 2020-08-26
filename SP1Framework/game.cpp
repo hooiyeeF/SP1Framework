@@ -51,7 +51,7 @@ void init( void )
 
     arra.FirstRoomArray(g_Console);
     Gtimer = 5;
-    bool played = PlaySound(L"FASTER-2020-07-30_-_Conspiracy_Theory_-_David_Fesliyan (online-audio-converter.com).wav", NULL, SND_ASYNC | SND_FILENAME | SND_LOOP);
+    bool musicplayed = PlaySound(L"FASTER-2020-07-30_-_Conspiracy_Theory_-_David_Fesliyan (online-audio-converter.com).wav", NULL, SND_ASYNC | SND_FILENAME | SND_LOOP);
 }
 
 //--------------------------------------------------------------
@@ -789,10 +789,123 @@ void renderEndRoom()
     }
     if (Gtimer > 0 && Gtimer < 100)
     {
+        arra.removeguard(g_Console, 20, 2);
+        arra.removeguard(g_Console, 20, 15);
+        arra.removeguard(g_Console, 46, 7);
+        arra.removeguard(g_Console, 41, 15);
         Gtimer++;
     }
-    else if (Gtimer >= 100 && Gtimer < 300)
+    else if (Gtimer >= 50 && Gtimer < 100)
     {
+        arra.guarddetect(g_Console, 20, 2);
+        arra.removeguard(g_Console, 20, 15);
+        arra.guarddetect(g_Console, 47, 7);
+        arra.removeguard(g_Console, 41, 15);
+        Gtimer++;
+    }
+    else if (Gtimer >= 100 && Gtimer < 150)
+    {
+        arra.removeguard(g_Console, 20, 2);
+        arra.guarddetect(g_Console, 20, 15);
+        arra.removeguard(g_Console, 47, 7);
+        arra.guarddetect(g_Console, 41, 15);
+        Gtimer++;
+    }
+    else if (Gtimer >= 150 && Gtimer < 200)
+    {
+        arra.guarddetect(g_Console, 20, 2);
+        arra.removeguard(g_Console, 20, 15);
+        arra.removeguard(g_Console, 48, 7);
+        arra.removeguard(g_Console, 41, 15);
+        Gtimer++;
+    }
+    else if (Gtimer >= 200 && Gtimer < 250)
+    {
+        arra.guarddetect(g_Console, 20, 2);
+        arra.removeguard(g_Console, 20, 15);
+        arra.guarddetect(g_Console, 49, 7);
+        arra.removeguard(g_Console, 41, 15);
+        Gtimer++;
+    }
+    else if (Gtimer >= 250 && Gtimer < 300)
+    {
+        arra.removeguard(g_Console, 20, 2);
+        arra.guarddetect(g_Console, 20, 15);
+        arra.removeguard(g_Console, 49, 7);
+        arra.guarddetect(g_Console, 41, 15);
+        Gtimer++;
+    }
+    else if (Gtimer >= 300 && Gtimer < 350)
+    {
+        arra.removeguard(g_Console, 20, 2);
+        arra.removeguard(g_Console, 20, 15);
+        arra.guarddetect(g_Console, 50, 7);
+        arra.removeguard(g_Console, 41, 15);
+        Gtimer++;
+    }
+    else if (Gtimer >= 350 && Gtimer < 400)
+    {
+        arra.guarddetect(g_Console, 20, 2);
+        arra.removeguard(g_Console, 20, 15);
+        arra.removeguard(g_Console, 50, 7);
+        arra.guarddetect(g_Console, 41, 15);
+        Gtimer++;
+    }
+    else if (Gtimer >= 400 && Gtimer < 450)
+    {
+        arra.removeguard(g_Console, 20, 2);
+        arra.removeguard(g_Console, 20, 15);
+        arra.guarddetect(g_Console, 49, 7);
+        arra.removeguard(g_Console, 41, 15);
+        Gtimer++;
+    }
+    else if (Gtimer >= 450 && Gtimer < 500)
+    {
+        arra.guarddetect(g_Console, 20, 2);
+        arra.guarddetect(g_Console, 20, 15);
+        arra.removeguard(g_Console, 49, 7);
+        arra.guarddetect(g_Console, 41, 15);
+        Gtimer++;
+    }
+    else if (Gtimer >= 500 && Gtimer < 550)
+    {
+        arra.removeguard(g_Console, 20, 2);
+        arra.removeguard(g_Console, 20, 15);
+        arra.guarddetect(g_Console, 48, 7);
+        arra.removeguard(g_Console, 41, 15);
+        Gtimer++;
+    }
+    else if (Gtimer >= 550 && Gtimer < 600)
+    {
+        arra.guarddetect(g_Console, 20, 2);
+        arra.removeguard(g_Console, 20, 15);
+        arra.removeguard(g_Console, 48, 7);
+        arra.guarddetect(g_Console, 41, 15);
+        Gtimer++;
+    }
+    else if (Gtimer >= 600 && Gtimer < 650)
+    {
+        arra.removeguard(g_Console, 20, 2);
+        arra.guarddetect(g_Console, 20, 15);
+        arra.removeguard(g_Console, 47, 7);
+        arra.removeguard(g_Console, 41, 15);
+        Gtimer++;
+
+    }
+    else if (Gtimer >= 650 && Gtimer < 700)
+    {
+        arra.guarddetect(g_Console, 20, 2);
+        arra.removeguard(g_Console, 20, 15);
+        arra.guarddetect(g_Console, 47, 7);
+        arra.removeguard(g_Console, 41, 15);
+        Gtimer++;
+    }
+    else if (Gtimer >= 700 && Gtimer < 750)
+    {
+        arra.removeguard(g_Console, 20, 2);
+        arra.removeguard(g_Console, 20, 15);
+        arra.removeguard(g_Console, 47, 7);
+        arra.guarddetect(g_Console, 41, 15);
         Gtimer++;
     }
     else
