@@ -13,7 +13,7 @@
 #include "time.h"
 #pragma comment(lib, "winmm.lib")
 #include "Sound.h"
-#include "resource.h"
+
 
 double  g_dElapsedTime;
 double  g_dDeltaTime;
