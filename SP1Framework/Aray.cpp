@@ -267,11 +267,18 @@ void Aray::EndRoomArray(Console& g_console)
     {
         map[1][19 + i] = '+';
         map[16][19 + i] = '+';
+        map[0][19 + i] = '+';
+        map[17][17 + i] = '+';
     }
     for (int j = 0; j < 16; j++)
     {
         map[1 + j][19] = '+';
         map[1 + j][59] = '+';
+        map[1 + j][18] = '+';
+        map[j][17] = '+';
+        map[j][18] = '+';
+        map[1 + j][60] = '+';
+        map[1 + j][17] = '+';
     }
     /* Starting pt */
     map[2][40] = 'P';
