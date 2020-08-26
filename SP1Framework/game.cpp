@@ -424,6 +424,8 @@ void render()
         break;
     case S_ROOM3: renderThirdRoom();
         break;
+    case S_ROOM4: renderFourthRoom();
+        break;
     case S_TPROOM: renderTPRoom();
         break;
     case S_ENDROOM: renderEndRoom();
@@ -630,14 +632,31 @@ void renderThirdRoom()
         Gtimer = 1;
     }
 
-    /* Go to toilet paper room */
+    /* Go to Fourth room */
     if (chara.getx() == 62 && chara.gety() == 13)
+    {
+        g_eGameState = S_ROOM4;
+
+        //character position for fourth room
+        chara.setx(54); 
+        chara.sety(3);
+    }
+}
+void renderFourthRoom()
+{
+    clearScreen();
+    room.drawR4(g_Console);
+    ui.drawUI(g_Console);
+    chara.draw(g_Console);
+
+    /* Go to toilet paper room */
+    if (chara.getx() == 24 && chara.gety() == 14)
     {
         g_eGameState = S_TPROOM;
         arra.TPRoomArray(g_Console);
 
         //character position for toilet paper room
-        chara.setx(25); 
+        chara.setx(25);
         chara.sety(1);
     }
 }
