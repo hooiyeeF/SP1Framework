@@ -634,7 +634,6 @@ void Aray::CRoomArray(Console& g_console)
 
 }
 
-
 void Aray::guarddetect(Console& g_console, int gx, int gy)
 {
     //50,5
@@ -697,4 +696,33 @@ void Aray::removeguard(Console& g_console, int gx, int gy)
             }
         }
     }
+}
+
+void Aray::guardmove(Console& g_console)
+{
+    XA = &xa;
+    YA = &ya;
+    if (*YA == 15 && *XA != 4)
+    {
+        *XA--;
+    }
+    else if (*XA == 4 && *YA != 13)
+    {
+        *YA--;
+    }
+    else if (*YA == 13 && *XA != 74)
+    {
+        *XA++;
+    }
+    else if (xa == 74)
+    {
+        *YA++;
+    }
+    else if (*XA == 74 && *YA == 8)
+    {
+        
+    }
+    map[ya][xa] = 'G';
+    g_console.writeToBuffer(ya, xa, (char)1, 0x0c);
+    
 }

@@ -4,6 +4,11 @@
 class Aray
 
 {
+private:
+	int xa = 58;
+	int* XA;
+	int ya = 15;
+	int* YA;
 public:
 	char map[18][80];
 	void FirstRoomArray(Console& g_console);      // First Room Array
@@ -14,5 +19,5 @@ public:
 	void CRoomArray(Console& g_console);
 	void guarddetect(Console& g_console, int gx, int gy);    // guard detection
 	void removeguard(Console& g_console, int gx, int gy);	 // remove guards
-
+	void guardmove(Console& g_console);    // guard move
 };
