@@ -362,18 +362,180 @@ void Aray::CRoomArray(Console& g_console)
             map[y][x] = '-';
         }
     }
-    //walls in 4 sides
-    for (int i = 0; i < 80; i++)
+    //array to detect things
+    for (int x = 0; x < 80; ++x)
     {
-        map[5][i] = '+';
-        map[11][i] = '+';
+        for (int y = 0; y < 18; ++y)
+        {
+            map[y][x] = '-';
+        }
+    }
+
+    //walls in 4 sides
+    for (int i = 0; i < 78; i++) // top horz wall
+    {
+        map[3][i + 1] = '+';
+    }
+    for (int i = 0; i < 73; i++) // bottom left horz wall
+    {
+        map[9][i + 1] = '+';
+    }
+    for (int i = 75; i < 79; i++) // bottom left horz wall
+    {
+        map[9][i] = '+';
     }
     for (int j = 0; j < 6; j++)
     {
-        map[5 + j][0] = '+';
-        map[5 + j][79] = '+';
+        map[j + 3][1] = '+';
+        map[j + 3][78] = '+';
     }
+
+    /* Guard path wall */
+    for (int i = 4; i < 74; i++)  // top horz wall
+    {
+        map[12][i] = '+';
+    }
+    for (int i = 4; i < 76; i++)  // down horz wall
+    {
+        map[14][i] = '+';;
+    }
+    for (int j = 12; j < 15; j++) // left vert wall
+    {
+        map[j][3] = '+';
+    }
+    for (int j = 10; j < 12; j++) // right short vert wall
+    {
+        map[j][73] = '+';
+    }
+    for (int j = 10; j < 15; j++) // right long vert wall
+    {
+        map[j][75] = '+';
+    }
+
+    /* wall near exit */
+    for (int i = 72; i < 78; i++)  //horz wall
+    {
+        map[6][i] = '+';
+    }
+    for (int i = 72; i < 75; i++)  //vert wall
+    {
+        map[7][i] = '+';
+    }
+
+    // vert wall beside starting pt
+    for (int i = 5; i < 7; i++)
+    {
+        for (int j = 4; j < 7; j++)
+        {
+            map[j][i] = '+';
+        }
+    }
+
+    for (int i = 7; i < 12; i++)
+    {
+        map[8][i] = '+';
+    }
+
+    // top 'box' wall near starting pt
+    for (int i = 10; i < 13; i++)
+    {
+        for (int j = 5; j < 7; j++)
+        {
+            map[j][i] = '+';
+        }
+    }
+    // floating bottom horz wall
+    for (int i = 15; i < 20; i++)
+    {
+        map[7][i] = '+';
+    }
+    // floating top horz wall
+    for (int i = 18; i < 24; i++)
+    {
+        map[5][i] = '+';
+    }
+    //vert wall
+    for (int j = 7; j < 9; j++)
+    {
+        map[j][24] = '+';
+    }
+    //vert wall
+    for (int j = 4; j < 7; j++)
+    {
+        map[j][27] = '+';
+    }
+
+    map[5][29] = '+';
+
+    /*  bottom 2 'connected' horz wall*/
+    for (int i = 30; i < 35; i++)
+    {
+        map[7][i] = '+';
+    }
+    for (int i = 35; i < 38; i++)
+    {
+        map[8][i] = '+';
+    }
+
+    // top horz wall
+    for (int i = 33; i < 38; i++)
+    {
+        map[4][i] = '+';
+    }
+
+    // 'box' wall in the middle
+    for (int i = 39; i < 46; i++)
+    {
+        for (int j = 5; j < 8; j++)
+        {
+            map[j][i] = '+';
+        }
+    }
+
+    map[7][47] = '+';
+
+    // top box wall
+    for (int i = 49; i < 55; i++)
+    {
+        for (int j = 4; j < 6; j++)
+        {
+            map[j][i] = '+';
+        }
+    }
+
+    map[8][51] = '+';
+
+    // bottom box wall
+    for (int i = 54; i < 60; i++)
+    {
+        for (int j = 7; j < 9; j++)
+        {
+            map[j][i] = '+';
+        }
+    }
+    /* 'dots' wall at the back */
+    map[5][57] = '+';
+    map[4][59] = '+';
+    map[6][61] = '+';
+    map[8][62] = '+';
+    map[4][63] = '+';
+    map[5][64] = '+';
+    map[8][64] = '+';
+    map[7][65] = '+';
+    map[4][66] = '+';
+    map[6][66] = '+';
+    map[8][67] = '+';
+    map[6][68] = '+';
+    map[5][69] = '+';
+    map[7][69] = '+';
+    map[8][70] = '+';
+    map[4][71] = '+';
+    map[5][74] = '+';
+    map[4][75] = '+';
+    map[5][76] = '+';
+
 }
+
 
 void Aray::guarddetect(Console& g_console, int gx, int gy)
 {
