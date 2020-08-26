@@ -549,6 +549,8 @@ void renderFirstRoom()
     if (chara.getx() == 58 && chara.gety() == 15)
     {
         room.getKey = true;
+        arra.map[2][54] = '-';
+        arra.map[3][54] = '-';
     }
     if (room.getKey == true)
     {
