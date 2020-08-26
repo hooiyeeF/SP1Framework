@@ -51,7 +51,7 @@ void init( void )
 
     arra.FirstRoomArray(g_Console);
     Gtimer = 5;
-    bool played = PlaySound(L"FASTER-2020-07-30_-_Conspiracy_Theory_-_David_Fesliyan (online-audio-converter.com).wav", NULL, SND_ASYNC | SND_FILENAME | SND_LOOP);
+    bool musicplayed = PlaySound(L"FASTER-2020-07-30_-_Conspiracy_Theory_-_David_Fesliyan (online-audio-converter.com).wav", NULL, SND_ASYNC | SND_FILENAME | SND_LOOP);
 }
 
 //--------------------------------------------------------------
