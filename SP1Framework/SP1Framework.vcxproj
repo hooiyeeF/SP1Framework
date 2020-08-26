@@ -96,7 +96,11 @@
     <CInclude Include="Map.h" />
     <CInclude Include="UI.h" />
     <CInclude Include="Aray.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Sound.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="SP1Framework.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
