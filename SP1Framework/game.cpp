@@ -14,7 +14,6 @@
 #pragma comment(lib, "winmm.lib")
 #include "Sound.h"
 
-
 double  g_dElapsedTime;
 double  g_dDeltaTime;
 SKeyEvent g_skKeyEvent[K_COUNT];
@@ -23,9 +22,13 @@ int Gtimer = 0;
 bool gamestart = false;
 bool gameEnd = false;
 bool collected = false;
+bool StartCDown = false;
 double ODDeltaTime = 0;
 double ODDeltaTime2 = 0;
+double CountDowndt = 0;
+double CDownTime = 10;
 int testG = 1;
+
 Player chara;
 Map room;
 UI ui;
@@ -260,6 +263,10 @@ void update(double dt)
     {
         ODDeltaTime2 = dt;
     }
+    if (g_eGameState == S_ROOM4 && StartCDown == true)
+    {
+        CountDowndt = dt;
+    }
 
     switch (g_eGameState)
     {
@@ -401,9 +408,11 @@ void PlayAgain()
 void reset()
 {
     g_dElapsedTime = 0.0;
+    CDownTime = 10;
     gamestart = false;
     gameEnd = false;
     collected = false;
+    StartCDown = false;
     room.getTP = false;
     room.Dtime = 3;
     room.getKey = false;
@@ -425,7 +434,9 @@ void render()
         break;
     case S_ROOM3: renderThirdRoom();
         break;
-    case S_ROOM4: renderFourthRoom();
+    case S_ROOM4: 
+        renderFourthRoom();
+        renderCountDownR4();
         break;
     case S_TPROOM: renderTPRoom();
         break;
@@ -640,7 +651,7 @@ void renderThirdRoom()
         arra.FourthRoomArray(g_Console);
         //character position for fourth room
         chara.setx(54); 
-        chara.sety(3);
+        chara.sety(4);
     }
 }
 void renderFourthRoom()
@@ -650,8 +661,22 @@ void renderFourthRoom()
     ui.drawUI(g_Console);
     chara.draw(g_Console);
 
+    // Count down
+    if (chara.getx() == 53 && chara.gety() == 4)
+    {
+        StartCDown = true;
+    }
+    if (StartCDown == true)
+    {
+        CDownTime -= CountDowndt;
+    }
+    if (CDownTime < 0)
+    {
+        g_eGameState = S_LOSE;
+    }
+
     /* Go to toilet paper room */
-    if (chara.getx() == 24 && chara.gety() == 14)
+    if (chara.getx() == 24 && chara.gety() == 15)
     {
         g_eGameState = S_TPROOM;
         arra.TPRoomArray(g_Console);
@@ -999,10 +1024,77 @@ void renderCRoom()
         gameEnd = true;
     }
 }
+void renderWinScreen()
+{
+    COORD c = g_Console.getConsoleSize();
+    c.Y /= 2;
+    c.Y -= 10;
+    c.X = c.X / 2 - 14;
+    g_Console.writeToBuffer(c, "C O N G R A T U L A T I O N S !", 0x0A);
+    c.Y += 2;
+    c.X = g_Console.getConsoleSize().X / 2 - 6;
+    g_Console.writeToBuffer(c, "Y O U  W O N !", 0x0A);
+    c.Y += 8;
+    c.X = g_Console.getConsoleSize().X / 2 - 10;
+    g_Console.writeToBuffer(c, "  Time Taken: ", 0xB0);
 
+    std::ostringstream ss;
+    ss << std::fixed << std::setprecision(2);
+    ss.str("");
+    ss << g_dElapsedTime << "s  ";
+    c.X = 44;
+    c.Y = 15;
+    g_Console.writeToBuffer(c, ss.str(), 0xB0);
+
+    c.Y += 5;
+    c.X = g_Console.getConsoleSize().X / 2 - 12;
+    g_Console.writeToBuffer(c, "Press <SPACE> to play again", 0x07);
+    c.Y += 2;
+    c.X = g_Console.getConsoleSize().X / 2 - 8;
+    g_Console.writeToBuffer(c, "Press <ESC> to exit", 0x07);
+
+}
+void renderLoseScreen()
+{
+    COORD c = g_Console.getConsoleSize();
+    c.Y /= 2;
+    c.Y -= 5;
+    c.X = c.X / 2 - 4;
+    g_Console.writeToBuffer(c, "L O S E !", 0x0A);
+    c.Y += 8;
+    c.X = g_Console.getConsoleSize().X / 2 - 13;
+    g_Console.writeToBuffer(c, "Press <SPACE> to play again", 0x07);
+    c.Y += 2;
+    c.X = g_Console.getConsoleSize().X / 2 - 10;
+    g_Console.writeToBuffer(c, "Press <ESC> to exit", 0x07);
+}
+
+void renderCountDownR4()
+{
+    COORD c;
+    std::ostringstream ss, ss1;
+    ss1 << std::fixed << std::setprecision(1);
+    ss.str("");
+    ss1.str("");
+    ss << " Go To 'E' before time up! " ;
+    c.X = 27;
+    c.Y = 1;
+    g_Console.writeToBuffer(c, ss.str(), 0x0F);
+    ss1 << CDownTime << "s ";
+    c.X = 40;
+    c.Y = 2;
+    if (CDownTime > 5)
+    {
+        g_Console.writeToBuffer(c, ss1.str(), 0x0F);
+    }
+    else
+    {
+        g_Console.writeToBuffer(c, ss1.str(), 0x0C);
+    }
+}
 void renderFramerate()
 {
-    if ((g_eGameState != S_SPLASHSCREEN) && (g_eGameState != S_WIN) && (g_eGameState != S_LOSE))
+    if ((g_eGameState != S_SPLASHSCREEN) && (g_eGameState != S_ROOM4) && (g_eGameState != S_WIN) && (g_eGameState != S_LOSE))
     {
         COORD c;
         // displays the framerate
@@ -1093,48 +1185,5 @@ void renderInputEvents()
     }
 }
 
-void renderWinScreen()
-{
-    COORD c = g_Console.getConsoleSize();
-    c.Y /= 2;
-    c.Y -= 10;
-    c.X = c.X / 2 - 14;
-    g_Console.writeToBuffer(c, "C O N G R A T U L A T I O N S !", 0x0A);
-    c.Y += 2;
-    c.X = g_Console.getConsoleSize().X / 2 - 6;
-    g_Console.writeToBuffer(c, "Y O U  W O N !", 0x0A);
-    c.Y += 8;
-    c.X = g_Console.getConsoleSize().X / 2 - 10;
-    g_Console.writeToBuffer(c, "  Time Taken: ", 0xB0);
 
-    std::ostringstream ss;
-    ss << std::fixed << std::setprecision(2);
-    ss.str("");
-    ss << g_dElapsedTime << "s  ";
-    c.X = 44;
-    c.Y = 15;
-    g_Console.writeToBuffer(c, ss.str(), 0xB0);
-
-    c.Y += 5;
-    c.X = g_Console.getConsoleSize().X / 2 - 12;
-    g_Console.writeToBuffer(c, "Press <SPACE> to play again", 0x07);
-    c.Y += 2;
-    c.X = g_Console.getConsoleSize().X / 2 - 8;
-    g_Console.writeToBuffer(c, "Press <ESC> to exit", 0x07);
-
-}
-void renderLoseScreen()
-{
-    COORD c = g_Console.getConsoleSize();
-    c.Y /= 2;
-    c.Y -= 5;
-    c.X = c.X / 2 -4;
-    g_Console.writeToBuffer(c, "L O S E !", 0x0A);
-    c.Y += 8;
-    c.X = g_Console.getConsoleSize().X / 2 - 13;
-    g_Console.writeToBuffer(c, "Press <SPACE> to play again", 0x07);
-    c.Y += 2;
-    c.X = g_Console.getConsoleSize().X / 2 - 10;
-    g_Console.writeToBuffer(c, "Press <ESC> to exit", 0x07);
-}
 
