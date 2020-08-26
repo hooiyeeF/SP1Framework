@@ -99,6 +99,102 @@ void Aray::SecondRoomArray(Console& g_console)
         map[j + 1][19] = '+';
         map[j + 1][59] = '+';
     }
+
+    map[2][55] = '+';
+    map[3][55] = '+';
+
+    /* wall around exit pt */
+    for (int i = 55; i < 59; i++) //horz wall
+    {
+        map[11][i] = '+';
+    }
+    for (int j = 4; j < 12; j++) // vert wall
+    {
+        map[j][55] = '+';
+    }
+
+    // box wall beside starting pt
+    for (int i = 23; i < 28; i++)
+    {
+        for (int j = 14; j < 16; j++)
+        {
+            map[j][i] = '+';
+        }
+    }
+
+    // box wall on top of starting pt
+    for (int i = 20; i < 30; i++)
+    {
+        for (int j = 10; j < 12; j++)
+        {
+            map[j][i] = '+';
+        }
+    }
+
+    map[11][36] = '+';
+    map[12][35] = '+';
+    map[13][34] = '+';
+    map[14][33] = '+';
+    map[15][32] = '+';
+    map[15][31] = '+';
+
+    // box wall in the center
+    for (int i = 25; i < 37; i++)
+    {
+        for (int j = 6; j < 8; j++)
+        {
+            map[j][i] = '+';
+        }
+    }
+    // top 'dots wall
+    map[4][27] = '+';
+    map[2][30] = '+';
+    map[3][32] = '+';
+
+    // long vert wall
+    for (int i = 37; i < 41; i++)
+    {
+        for (int j = 4; j < 11; j++)
+        {
+            map[j][i] = '+';
+        }
+    }
+    // long vert wall connect to the top
+    for (int i = 46; i < 50; i++)
+    {
+        for (int j = 2; j < 8; j++)
+        {
+            map[j][i] = '+';
+        }
+    }
+
+    //'ZZ' horz wall
+    for (int i = 47; i < 50; i++)
+    {
+        map[10][i] = '+';
+    }
+    for (int i = 46; i < 49; i++)
+    {
+        map[11][i] = '+';
+    }
+    for (int i = 45; i < 48; i++)
+    {
+        map[12][i] = '+';
+    }
+    for (int i = 44; i < 47; i++)
+    {
+        map[13][i] = '+';
+    }
+    for (int i = 43; i < 46; i++)
+    {
+        map[14][i] = '+';
+    }
+
+    // horz wall beside 'ZZ' wall (bottom)
+    for (int i = 50; i < 57; i++)
+    {
+        map[13][i] = '+';
+    }
 }
 void Aray::ThirdRoomArray(Console& g_console)
 {

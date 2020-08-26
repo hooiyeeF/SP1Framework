@@ -556,6 +556,8 @@ void renderSecondRoom()
     if (chara.getx() == 33 && chara.gety() == 15)
     {
         room.getKey = true;
+        arra.map[2][55] = '-';
+        arra.map[3][55] = '-';
     }
     if (room.getKey == true) 
     {
