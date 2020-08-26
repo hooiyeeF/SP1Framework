@@ -11,6 +11,7 @@
 #include "UI.h"
 #include "Aray.h"
 #include "time.h"
+#pragma comment(lib, "winmm.lib")
 
 double  g_dElapsedTime;
 double  g_dDeltaTime;
