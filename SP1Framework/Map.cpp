@@ -22,6 +22,12 @@ void Map::drawR1(Console& g_console)
     /* Ending pt */
     g_console.writeToBuffer(58, 2, "E", 0x5E);
 
+    /* Key spawn pt */
+    if (getKey == false)
+    {
+        g_console.writeToBuffer(58, 15, "K", 0xE5);
+    }
+
     /* Obstacles (i = horz | j = vert) */
 
     //box obs in top left corner
@@ -75,6 +81,29 @@ void Map::drawR1(Console& g_console)
     {
         g_console.writeToBuffer(49, j, "+", 0xB20);
     }
+
+    /* openable door - vert wall */
+    /* door open 'animation' - if else */
+    /* [55,2][55,3] */
+    if (getKey == false)
+    {
+        for (int j = 2; j < 4; j++)
+        {
+            g_console.writeToBuffer(54, j, "+", 0xB20);
+        }
+    }
+    else if (getKey == true && Dtime > 2) // change color
+    {
+        for (int j = 2; j < 4; j++)
+        {
+            g_console.writeToBuffer(54, j, " ", 0x5E);
+        }
+    }
+    else if (getKey == true && Dtime > 1) // door opening
+    {
+        g_console.writeToBuffer(54, 2, " ", 0x5E);
+    }
+
 }
 
 void Map::drawR2(Console& g_console)
