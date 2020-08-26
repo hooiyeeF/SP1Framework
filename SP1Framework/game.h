@@ -68,6 +68,7 @@ void renderMenuScreen();    // renders the splash screen
 void renderFirstRoom();     // renders first game room
 void renderSecondRoom();    // render second game room
 void renderThirdRoom();
+void renderFourthRoom();
 void renderTPRoom();
 void renderEndRoom();
 void renderCRoom();
