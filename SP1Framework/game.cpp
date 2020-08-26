@@ -22,6 +22,7 @@ bool gamestart = false;
 bool gameEnd = false;
 bool collected = false;
 double ODDeltaTime = 0;
+double ODDeltaTime2 = 0;
 int testG = 1;
 Player chara;
 Map room;
@@ -53,7 +54,7 @@ void init( void )
 
     arra.FirstRoomArray(g_Console);
     Gtimer = 5;
-    bool music = PlaySound(TEXT("C:/Users/joelr/Source/Repos/hooiyeeF/SP1Framework/SP1Framework/Debug/Music/BGM.wav"), NULL, SND_ASYNC | SND_FILENAME | SND_LOOP);
+  //  bool music = PlaySound(TEXT("C:/Users/joelr/Source/Repos/hooiyeeF/SP1Framework/SP1Framework/Debug/Music/BGM.wav"), NULL, SND_ASYNC | SND_FILENAME | SND_LOOP);
 }
 
 //--------------------------------------------------------------
@@ -247,9 +248,13 @@ void update(double dt)
         g_dElapsedTime += dt;
         g_dDeltaTime = dt;
     }
-    if (room.getKey == true && g_eGameState == S_ROOM2)
+    if (room.getKey == true && g_eGameState == S_ROOM1)
     {
         ODDeltaTime = dt;
+    }
+    if (room.getKey == true && g_eGameState == S_ROOM2)
+    {
+        ODDeltaTime2 = dt;
     }
 
     switch (g_eGameState)
@@ -396,6 +401,8 @@ void reset()
     gameEnd = false;
     collected = false;
     room.getTP = false;
+    room.Dtime = 3;
+    room.getKey = false;
     chara.setx(g_Console.getConsoleSize().X / 2 - 1);
     chara.sety(g_Console.getConsoleSize().Y / 2);
     init();
@@ -534,12 +541,24 @@ void renderFirstRoom()
     {
         Gtimer = 1;
     }
+
+    // key collected
+    if (chara.getx() == 58 && chara.gety() == 15)
+    {
+        room.getKey = true;
+    }
+    if (room.getKey == true)
+    {
+        room.Dtime -= ODDeltaTime;
+    }
     
     /* Go to Second room */
     if (chara.getx() == 58 && chara.gety() == 2)
     {
         g_eGameState = S_ROOM2;
         arra.SecondRoomArray(g_Console);
+        room.getKey = false;
+        room.Dtime = 3;
         //character position for second room
         chara.setx(20); 
         chara.sety(15);
@@ -559,7 +578,7 @@ void renderSecondRoom()
     }
     if (room.getKey == true) 
     {
-        room.Dtime -= ODDeltaTime;
+        room.Dtime -= ODDeltaTime2;
     }
 
     /* Go to Third room */
