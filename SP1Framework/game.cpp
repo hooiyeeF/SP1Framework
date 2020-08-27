@@ -1156,8 +1156,18 @@ void renderPathRoom()
         Beep(1440, 30);
         g_eGameState = S_LOSE;
     }
+    if (chara.getx() == 40 && chara.gety() == 5)
+    {
+        room.hitB = true;
+    }
+    if (chara.getx() == 51 && chara.gety() == 13)
+    {
+        room.hitB2 = true;
+    }
+
+
     /* Go to next room */
-    if (chara.getx() == 63 && chara.gety() == 9)
+    if (chara.getx() == 5 && chara.gety() == 10 && room.hitB == true && room.hitB2 == true)
     {
         S.BGMS();
         S.ODoors();
