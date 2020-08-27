@@ -58,7 +58,9 @@ void render      ( void );      // renders the current state of the game to the 
 void shutdown    ( void );      // do clean up, free memory
 
 void updateGame();          // gameplay logic
+void updateGame2();          // gameplay logic
 void moveCharacter();       // moves the character, collision detection, physics, etc
+void moveCharacter2();       // moves the character, collision detection, physics, etc
 void processUserInput();    // checks if you should change states or do something else with the game, e.g. pause, exit
 void GoToGamePlay();        // check if user hit space key to start game
 void PlayAgain();           // check if user hit key to restart the game

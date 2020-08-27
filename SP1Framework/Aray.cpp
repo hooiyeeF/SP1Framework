@@ -463,6 +463,8 @@ void Aray::EndRoomArray(Console& g_console)
 }
 void Aray::CRoomArray(Console& g_console)
 {
+    gxm = 29;
+    gym = 15;
     //array to detect things
     for (int x = 0; x < 80; ++x)
     {
@@ -711,29 +713,33 @@ void Aray::removeguard(Console& g_console, int gx, int gy)
 
 void Aray::guardmove(Console& g_console)
 {
-    XA = &xa;
-    YA = &ya;
-    if (*YA == 15 && *XA != 4)
+
+    if (gym == 15 && gxm != 4)
     {
-        *XA--;
+        gxm = gxm - 1;
     }
-    else if (*XA == 4 && *YA != 13)
+    else if (gxm == 4 && gym != 13)
     {
-        *YA--;
+        gym = gym - 1;
     }
-    else if (*YA == 13 && *XA != 74)
+    else if (gym == 13 && gxm != 74)
     {
-        *XA++;
+        gxm = gxm + 1;
     }
-    else if (xa == 74)
+    else if (gxm == 74 && gym != 8)
     {
-        *YA++;
+        gym = gym - 1;
     }
-    else if (*XA == 74 && *YA == 8)
+    else if (gxm == 74 && gym == 8)
     {
-        
+        gxm = 74;
+        gym = 8;
     }
-    map[ya][xa] = 'G';
-    g_console.writeToBuffer(ya, xa, (char)1, 0x0c);
     
+}
+
+void Aray::guardslast(Console& g_console)
+{
+    map[gym][gxm] = 'G';
+    g_console.writeToBuffer(gxm, gym, (char)1, 0x0c);
 }
