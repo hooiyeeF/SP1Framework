@@ -1156,11 +1156,11 @@ void renderPathRoom()
         Beep(1440, 30);
         g_eGameState = S_LOSE;
     }
-    if (chara.getx() == 40 && chara.gety() == 5)
+    if (arra.map[5][40] == 'G')
     {
         room.hitB = true;
     }
-    if (chara.getx() == 51 && chara.gety() == 13)
+    if (arra.map[13][51] == 'G')
     {
         room.hitB2 = true;
     }
