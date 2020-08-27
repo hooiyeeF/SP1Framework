@@ -44,6 +44,7 @@ enum EGAMESTATES
     S_ROOM3,
     S_ROOM4,
     S_TPROOM,
+    S_PATHROOM,
     S_ENDROOM,
     S_CROOM,
     S_WIN,
@@ -72,6 +73,7 @@ void renderSecondRoom();    // render second game room
 void renderThirdRoom();
 void renderFourthRoom();
 void renderTPRoom();
+void renderPathRoom();
 void renderEndRoom();
 void renderCRoom();
 void renderLoseScreen();

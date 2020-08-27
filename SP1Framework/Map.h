@@ -14,6 +14,7 @@ public:
 	void drawR3(Console& g_console);
 	void drawR4(Console& g_console);
 	void drawRTP(Console& g_console);
+	void drawPR(Console& g_console);
 	void drawREnd(Console& g_console);
 	void drawLR(Console& g_console);
 };
