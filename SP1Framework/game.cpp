@@ -513,8 +513,7 @@ void PlayAgain()
         g_eGameState = S_SPLASHSCREEN;
         testG++;
         reset();
-    }
-        
+    }  
 }
 void reset()
 {
@@ -714,7 +713,12 @@ void renderSecondRoom()
     {
         room.Dtime -= ODDeltaTime2;
     }
-
+    if (arra.map[chara.gety()][chara.getx()] == 'G')
+    {
+        arra.map[chara.gety()][chara.getx()] = '-';
+        Beep(1440, 30);
+        g_eGameState = S_LOSE;
+    }
     if (Gtimer > 0 && Gtimer < 100)
     {
 
