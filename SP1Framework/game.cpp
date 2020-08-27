@@ -1355,10 +1355,10 @@ void renderWinScreen()
     g_Console.writeToBuffer(c, " LEADERBOARD ", 0x0F);
 
     c.Y = 11;
-    lb.saverer(g_dElapsedTime);
+    lb.saverer(ss.str());
     lb.sorterer();
 
-    for (int i : lb.ldb)
+    for (string i : lb.ldb)
     {
         g_Console.writeToBuffer(c, i, 0x0F);
         c.Y++;
