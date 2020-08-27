@@ -715,6 +715,41 @@ void renderSecondRoom()
         room.Dtime -= ODDeltaTime2;
     }
 
+    if (Gtimer > 0 && Gtimer < 100)
+    {
+
+        arra.guarddetect(g_Console, 39, 13);
+        arra.removeguard(g_Console, 24, 4);
+        arra.guarddetect(g_Console, 52, 3);
+        Gtimer++;
+
+    }
+    else if (Gtimer >= 100 && Gtimer < 200)
+    {
+        arra.guarddetect(g_Console, 39, 13);
+        arra.guarddetect(g_Console, 24, 4);
+        arra.removeguard(g_Console, 52, 3);
+        Gtimer++;
+    }
+    else if (Gtimer >= 200 && Gtimer < 300)
+    {
+        arra.removeguard(g_Console, 39, 13);
+        arra.removeguard(g_Console, 24, 4);
+        arra.guarddetect(g_Console, 52, 3);
+        Gtimer++;
+    }
+    else if (Gtimer >= 300 && Gtimer < 400)
+    {
+        arra.removeguard(g_Console, 39, 13);
+        arra.guarddetect(g_Console, 24, 4);
+        arra.removeguard(g_Console, 52, 3);
+        Gtimer++;
+    }
+    else
+    {
+        Gtimer = 1;
+    }
+
     /* Go to Third room */
     if (chara.getx() == 58 && chara.gety() == 10)
     {
