@@ -15,6 +15,7 @@
 #include "Sound.h"
 #include "Leaderboard.h"
 
+
 double  g_dElapsedTime;
 double  g_dDeltaTime;
 SKeyEvent g_skKeyEvent[K_COUNT];

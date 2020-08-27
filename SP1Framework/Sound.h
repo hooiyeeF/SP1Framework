@@ -10,7 +10,7 @@ public:
 	void BGMS(); // Helps to overwrite
 	void Win(); // Win sound
 	void GetK(); // Key sound
-	void LDoors();
-	void ODoors();
+	void LDoors(); //locked door sound
+	void ODoors();// next room sound
 	void Chase(); // chasing bgm
 };
