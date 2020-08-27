@@ -748,6 +748,9 @@ void renderMenuScreen()
     c.Y += 1;
     c.X = g_Console.getConsoleSize().X / 2 + 19;
     g_Console.writeToBuffer(c, " T - Toilet paper ", 0xE5);
+    c.Y += 1;
+    c.X = g_Console.getConsoleSize().X / 2 + 19;
+    g_Console.writeToBuffer(c, " B - Button ", 0xE5);
 }
 void renderFirstRoom()
 {
