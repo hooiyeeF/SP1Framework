@@ -502,7 +502,13 @@ void Map::drawPR(Console& g_console)
     /* Starting pt */
     g_console.writeToBuffer(2, 2, "S", 0x5E);
     /* Ending pt */
-    g_console.writeToBuffer(63, 9, "E", 0x5E);
+    if (hitB == true && hitB2 == true)
+    {
+        g_console.writeToBuffer(5, 10, "E", 0x5E);
+    }
+    /* 2 button spawn pt*/
+    g_console.writeToBuffer(40, 5, "B", 0xE5);
+    g_console.writeToBuffer(51, 13, "B", 0xE5);
 
     //bottom horz wall
     for (int i = 2; i < 20; i++)
@@ -528,6 +534,9 @@ void Map::drawPR(Console& g_console)
     }
     g_console.writeToBuffer(51, 12, "+", 0xB20);
 
+    //2 'dot'
+    g_console.writeToBuffer(19, 13, "+", 0xB20);
+    g_console.writeToBuffer(19, 14, "+", 0xB20);
 }
 
 void Map::drawREnd(Console& g_console)

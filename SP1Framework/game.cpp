@@ -15,6 +15,7 @@
 #include "Sound.h"
 #include "Leaderboard.h"
 
+
 double  g_dElapsedTime;
 double  g_dDeltaTime;
 SKeyEvent g_skKeyEvent[K_COUNT];
@@ -1156,8 +1157,18 @@ void renderPathRoom()
         Beep(1440, 30);
         g_eGameState = S_LOSE;
     }
+    if (arra.map[5][40] == 'G')
+    {
+        room.hitB = true;
+    }
+    if (arra.map[13][51] == 'G')
+    {
+        room.hitB2 = true;
+    }
+
+
     /* Go to next room */
-    if (chara.getx() == 63 && chara.gety() == 9)
+    if (chara.getx() == 5 && chara.gety() == 10 && room.hitB == true && room.hitB2 == true)
     {
         S.BGMS();
         S.ODoors();
