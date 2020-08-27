@@ -1149,8 +1149,8 @@ void renderPathRoom()
         g_eGameState = S_ENDROOM;
         arra.EndRoomArray(g_Console);
         //character position for the next room
-        chara.setx(25);
-        chara.sety(1);
+        chara.setx(40);
+        chara.sety(2);
     }
 }
 void renderEndRoom()
