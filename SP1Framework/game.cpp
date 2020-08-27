@@ -284,7 +284,7 @@ void update(double dt)
             break;
         case S_ENDROOM: updateGame();
             break;
-        case S_CROOM: updateGame();
+        case S_CROOM: updateGame2();
             break;
         case S_WIN:
             processUserInput();
@@ -304,6 +304,12 @@ void updateGame()       // gameplay logic
                         // sound can be played here too.
 }
 
+void updateGame2()       // gameplay logic
+{
+    processUserInput(); // checks if you should change states or do something else with the game, e.g. pause, exit
+    moveCharacter2();    // moves the character, collision detection, physics, etc
+                        // sound can be played here too.
+}
 void moveCharacter()
 {
     // Updating the location of the character based on the key release
@@ -383,6 +389,105 @@ void moveCharacter()
     }
 }
 
+void moveCharacter2()
+{
+    // Updating the location of the character based on the key release
+    // providing a beep sound whenver we shift the character
+    if (g_skKeyEvent[K_UP].keyDown && chara.gety() > 0)
+    {
+        if (arra.map[chara.gety() - 1][chara.getx()] == '-' || arra.map[chara.gety() - 1][chara.getx()] == 'T')
+        {
+            arra.map[chara.gety() - 1][chara.getx()] = 'P';
+            arra.map[chara.gety()][chara.getx()] = '-';
+            //Beep(1440, 30);
+            arra.guardmove(g_Console);
+            chara.ydec();
+
+        }
+        else if (arra.map[chara.gety() - 1][chara.getx()] == 'G')
+        {
+            arra.map[chara.gety()][chara.getx()] = '-';
+            Beep(1440, 30);
+            g_eGameState = S_LOSE;
+        }
+        else
+        {
+            arra.guardmove(g_Console);
+        }
+    }
+    if (g_skKeyEvent[K_LEFT].keyDown && chara.getx() > 0)
+    {
+        if (arra.map[chara.gety()][chara.getx() - 1] == '-' || arra.map[chara.gety()][chara.getx() - 1] == 'T')
+        {
+            gamestart = true;
+            arra.map[chara.gety()][chara.getx() - 1] = 'P';
+            arra.map[chara.gety()][chara.getx()] = '-';
+            arra.guardmove(g_Console);
+            //Beep(1440, 30);
+            chara.xdec();
+        }
+        else if (arra.map[chara.gety()][chara.getx() - 1] == 'G')
+        {
+            arra.map[chara.gety()][chara.getx()] = '-';
+            Beep(1440, 30);
+            g_eGameState = S_LOSE;
+        }
+        else
+        {
+            arra.guardmove(g_Console);
+        }
+    }
+    if (g_skKeyEvent[K_DOWN].keyDown && chara.gety() < g_Console.getConsoleSize().Y - 1)
+    {
+        if (arra.map[chara.gety() + 1][chara.getx()] == '-' || arra.map[chara.gety() + 1][chara.getx()] == 'T')
+        {
+            arra.map[chara.gety() + 1][chara.getx()] = 'P';
+            arra.map[chara.gety()][chara.getx()] = '-';
+            arra.guardmove(g_Console);
+            //Beep(1440, 30);
+            chara.yinc();
+        }
+        else if (arra.map[chara.gety() + 1][chara.getx()] == 'G')
+        {
+            arra.map[chara.gety()][chara.getx()] = '-';
+            Beep(1440, 30);
+            g_eGameState = S_LOSE;
+        }
+        else
+        {
+            arra.guardmove(g_Console);
+        }
+    }
+    if (g_skKeyEvent[K_RIGHT].keyDown && chara.getx() < g_Console.getConsoleSize().X - 1)
+    {
+        if (arra.map[chara.gety()][chara.getx() + 1] == '-' || arra.map[chara.gety()][chara.getx() + 1] == 'T')
+        {
+            arra.map[chara.gety()][chara.getx() + 1] = 'P';
+            arra.map[chara.gety()][chara.getx()] = '-';
+            arra.guardmove(g_Console);
+            //Beep(1440, 30);
+            chara.xinc();
+        }
+        else if (arra.map[chara.gety()][chara.getx() + 1] == 'G')
+        {
+            arra.map[chara.gety()][chara.getx()] = '-';
+            Beep(1440, 30);
+            g_eGameState = S_LOSE;
+        }
+        else
+        {
+            arra.guardmove(g_Console);
+        }
+    }
+    if (arra.map[2][58] == 'P')
+    {
+        arra.map[2][58] = '-';
+    }
+    if (arra.map[15][21] == 'P')
+    {
+        arra.map[15][21] = '-';
+    }
+}
 void processUserInput()
 {
     // quits the game if player hits the escape key
@@ -1016,7 +1121,13 @@ void renderCRoom()
     ui.drawUI(g_Console);
     ui.drawTP(g_Console);
     chara.draw(g_Console);
-
+    arra.guardslast(g_Console);
+    if (arra.map[chara.gety()][chara.getx()] == 'G')
+    {
+        arra.map[chara.gety()][chara.getx()] = '-';
+        Beep(1440, 30);
+        g_eGameState = S_LOSE;
+    }
     /* Go to WIN */
     if (chara.getx() == 77 && chara.gety() == 8)
     {
