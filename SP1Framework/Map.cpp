@@ -502,28 +502,29 @@ void Map::drawPR(Console& g_console)
     /* Starting pt */
     g_console.writeToBuffer(2, 2, "S", 0x5E);
     /* Ending pt */
-    g_console.writeToBuffer(52, 12, "E", 0x5E);
+    g_console.writeToBuffer(63, 9, "E", 0x5E);
 
     //bottom horz wall
     for (int i = 2; i < 20; i++)
     {
         g_console.writeToBuffer(i, 12, "+", 0xB20);
     }
-    // c shape 
-    for (int i = 40; i < 43; i++)
+    // up-c shape 
+    for (int j = 5; j < 7; j++)
     {
-        g_console.writeToBuffer(i, 5, "+", 0xB20);
-        g_console.writeToBuffer(i, 7, "+", 0xB20);
+        g_console.writeToBuffer(39, j, "+", 0xB20);
+        g_console.writeToBuffer(41, j, "+", 0xB20);
     }
     g_console.writeToBuffer(40, 6, "+", 0xB20);
 
     //random dot
     g_console.writeToBuffer(60, 6, "+", 0xB20);
-    // reverse c shape
-    for (int i = 49; i < 52; i++)
+
+    // down-c shape
+    for (int j = 12; j < 14; j++)
     {
-        g_console.writeToBuffer(i, 11, "+", 0xB20);
-        g_console.writeToBuffer(i, 13, "+", 0xB20);
+        g_console.writeToBuffer(50, j, "+", 0xB20);
+        g_console.writeToBuffer(52, j, "+", 0xB20);
     }
     g_console.writeToBuffer(51, 12, "+", 0xB20);
 

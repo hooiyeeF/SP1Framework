@@ -1146,7 +1146,7 @@ void renderPathRoom()
         g_eGameState = S_LOSE;
     }
     /* Go to next room */
-    if (chara.getx() == 52 && chara.gety() == 12)
+    if (chara.getx() == 63 && chara.gety() == 9)
     {
         g_eGameState = S_ENDROOM;
         arra.EndRoomArray(g_Console);
