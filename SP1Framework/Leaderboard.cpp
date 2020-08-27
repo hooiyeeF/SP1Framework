@@ -1,7 +1,7 @@
 #include "Leaderboard.h"
 
 
-void Leaderboard::saverer(double scor)
+void Leaderboard::saverer(string scor)
 {
 	ldb.push_back(scor);
 }
