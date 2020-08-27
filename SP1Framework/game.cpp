@@ -1356,7 +1356,7 @@ void renderWinScreen()
     lb.saverer(g_dElapsedTime);
     lb.sorterer();
 
-    for (int i : lb.lb)
+    for (int i : lb.ldb)
     {
         g_Console.writeToBuffer(c, i, 0x0F);
         c.Y++;

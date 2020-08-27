@@ -3,14 +3,14 @@
 
 void Leaderboard::saverer(double scor)
 {
-	lb.push_back(scor);
+	ldb.push_back(scor);
 }
 
 void Leaderboard::sorterer()
 {
-	sort(lb.begin(), lb.end());
-	if (lb.size() > 5)
+	sort(ldb.begin(), ldb.end());
+	if (ldb.size() > 5)
 	{
-		lb.pop_back();
+		ldb.pop_back();
 	}
 }
