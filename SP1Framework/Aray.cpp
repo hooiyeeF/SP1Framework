@@ -287,6 +287,39 @@ void Aray::FourthRoomArray(Console& g_console)
             map[y][x] = '-';
         }
     }
+
+    //walls in 4 sides
+    for (int i = 0; i < 33; i++)
+    {
+        map[3][23 + i] = '+';
+        map[16][23 + i] = '+';
+    }
+    for (int j = 0; j < 14; j++)
+    {
+        map[j + 3][23] = '+';
+        map[j + 3][55] = '+';
+    }
+
+    //horz wall below starting pt
+    for (int i = 48; i < 56; i++)
+    {
+        map[5][i] = '+';
+    }
+
+    //horz wall above exit pt
+    for (int i = 24; i < 32; i++)
+    {
+        map[14][i] = '+';
+    }
+
+    // box wall in the middle of map
+    for (int i = 34; i < 47; i++)
+    {
+        for (int j = 8; j < 12; j++)
+        {
+            map[j][i] = '+';
+        }
+    }
 }
 void Aray::TPRoomArray(Console& g_console)
 {
