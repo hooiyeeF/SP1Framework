@@ -320,6 +320,47 @@ void Aray::FourthRoomArray(Console& g_console)
             map[j][i] = '+';
         }
     }
+
+    // 'dots' wall on the left
+    map[6][25] = '+';
+    map[6][29] = '+';
+    map[7][28] = '+';
+    map[7][30] = '+';
+    map[8][26] = '+';
+    map[8][29] = '+';
+    map[8][32] = '+';
+    map[9][28] = '+';
+    map[9][30] = '+';
+    map[9][33] = '+';
+    map[10][27] = '+';
+    map[10][31] = '+';
+    map[11][25] = '+';
+    map[11][30] = '+';
+    map[11][33] = '+';
+    map[12][26] = '+';
+    map[12][29] = '+';
+    map[12][32] = '+';
+
+    // 'dots' wall on the right
+    map[7][54] = '+';
+    map[8][48] = '+';
+    map[8][52] = '+';
+    map[9][47] = '+';
+    map[9][50] = '+';
+    map[9][53] = '+';
+    map[10][49] = '+';
+    map[10][51] = '+';
+    map[11][53] = '+';
+    map[11][47] = '+';
+    map[12][48] = '+';
+    map[12][51] = '+';
+    map[12][54] = '+';
+    map[13][50] = '+';
+    map[13][52] = '+';
+    map[14][47] = '+';
+    map[14][51] = '+';
+    map[15][53] = '+';
+    map[15][49] = '+';
 }
 void Aray::TPRoomArray(Console& g_console)
 {
@@ -417,7 +458,29 @@ void Aray::PRArray(Console& g_console)
     {
         map[j + 1][1] = '+';
         map[j + 1][78] = '+';
+    }    
+    //bottom horz wall
+    for (int i = 2; i < 20; i++)
+    {
+        map[12][i] = '+';
     }
+    // c shape 
+    for (int i = 40; i < 43; i++)
+    {
+        map[5][i] = '+';
+        map[7][i] = '+';
+    }
+    map[6][40] = '+';
+    //random dot
+    map[6][60] = '+';
+    // reverse c shape
+    for (int i = 49; i < 52; i++)
+    {
+        map[11][i] = '+';
+        map[13][i] = '+';
+    }
+    map[12][51] = '+';
+    
 }
 void Aray::EndRoomArray(Console& g_console)
 {

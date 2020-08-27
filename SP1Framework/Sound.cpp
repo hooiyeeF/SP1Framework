@@ -22,14 +22,11 @@ void sound::Win()
 	bool win = PlaySound(L"../SP1Framework/Cheer2.wav", NULL, SND_FILENAME | SND_ASYNC  );
 }
 
-void sound::LDoor()
-{
-	bool Ldoor = PlaySound(L"../SP1Framework/Doorlock.wav", NULL, SND_FILENAME | SND_ASYNC );
-}
+
 
 void sound::GetK()
 {
-	bool Getk = PlaySound(L"../SP1Framework/.wav", NULL, SND_FILENAME | SND_ASYNC);
+	bool Getk = PlaySound(L"../SP1Framework/Jingle.wav", NULL, SND_FILENAME | SND_ASYNC  );
 }
 
 //void sound::OpenD()
