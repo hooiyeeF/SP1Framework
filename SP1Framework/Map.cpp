@@ -330,13 +330,13 @@ void Map::drawR3(Console& g_console)
 void Map::drawR4(Console& g_console)
 {
     int wallX = 23;
-    int wallY = 2;
+    int wallY = 3;
 
     //walls in 4 sides
     for (int i = 0; i < 33; i++)
     {
-        g_console.writeToBuffer(wallX + i, 2, "+", 0xB20);
-        g_console.writeToBuffer(wallX + i, 15, "+", 0xB20);
+        g_console.writeToBuffer(wallX + i, 3, "+", 0xB20);
+        g_console.writeToBuffer(wallX + i, 16, "+", 0xB20);
     }
     for (int j = 0; j < 14; j++)
     {
@@ -344,10 +344,31 @@ void Map::drawR4(Console& g_console)
         g_console.writeToBuffer(55, wallY + j, "+", 0xB20);
     }
     /* Starting pt */
-    g_console.writeToBuffer(54, 3, "S", 0x5E);
+    g_console.writeToBuffer(54, 4, "S", 0x5E);
 
     /* Ending pt */
-    g_console.writeToBuffer(24, 14, "E", 0x5E);
+    g_console.writeToBuffer(24, 15, "E", 0x5E);
+
+    //horz wall below starting pt
+    for (int i = 48; i < 56; i++)
+    {
+        g_console.writeToBuffer(i, 5, "+", 0xB20);
+    }
+
+    //horz wall above exit pt
+    for (int i = 24; i < 32; i++)
+    {
+        g_console.writeToBuffer(i, 14, "+", 0xB20);
+    }
+
+    // box wall in the middle of map
+    for (int i = 34; i < 47; i++)
+    {
+        for (int j = 8; j < 12; j++)
+        {
+            g_console.writeToBuffer(i, j, "+", 0xB20);
+        }
+    }
 }
 
 void Map::drawRTP(Console& g_console)
