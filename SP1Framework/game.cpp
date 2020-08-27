@@ -286,7 +286,7 @@ void update(double dt)
             break;
         case S_TPROOM: updateGame();
             break;
-        case S_PATHROOM: updateGame();
+        case S_PATHROOM: updateGame3();
             break;
         case S_ENDROOM: updateGame();
             break;
@@ -314,6 +314,13 @@ void updateGame2()       // gameplay logic
 {
     processUserInput(); // checks if you should change states or do something else with the game, e.g. pause, exit
     moveCharacter2();    // moves the character, collision detection, physics, etc
+                        // sound can be played here too.
+}
+
+void updateGame3()       // gameplay logic
+{
+    processUserInput(); // checks if you should change states or do something else with the game, e.g. pause, exit
+    moveCharacter3();    // moves the character, collision detection, physics, etc
                         // sound can be played here too.
 }
 void moveCharacter()
@@ -494,6 +501,108 @@ void moveCharacter2()
         arra.map[15][21] = '-';
     }
 }
+
+void moveCharacter3()
+{
+    // Updating the location of the character based on the key release
+    // providing a beep sound whenver we shift the character
+    if (g_skKeyEvent[K_UP].keyDown && chara.gety() > 0)
+    {
+        if (arra.map[chara.gety() - 1][chara.getx()] == '-' || arra.map[chara.gety() - 1][chara.getx()] == 'T')
+        {
+            arra.map[chara.gety() - 1][chara.getx()] = 'P';
+            arra.map[chara.gety()][chara.getx()] = '-';
+            //Beep(1440, 30);
+            guardchase();
+            chara.ydec();
+
+        }
+        else if (arra.map[chara.gety() - 1][chara.getx()] == 'G')
+        {
+            arra.map[chara.gety()][chara.getx()] = '-';
+            Beep(1440, 30);
+            g_eGameState = S_LOSE;
+        }
+        else
+        {
+            guardchase();
+        }
+    }
+    if (g_skKeyEvent[K_LEFT].keyDown && chara.getx() > 0)
+    {
+        if (arra.map[chara.gety()][chara.getx() - 1] == '-' || arra.map[chara.gety()][chara.getx() - 1] == 'T')
+        {
+            gamestart = true;
+            arra.map[chara.gety()][chara.getx() - 1] = 'P';
+            arra.map[chara.gety()][chara.getx()] = '-';
+            guardchase();
+            //Beep(1440, 30);
+            chara.xdec();
+        }
+        else if (arra.map[chara.gety()][chara.getx() - 1] == 'G')
+        {
+            arra.map[chara.gety()][chara.getx()] = '-';
+            Beep(1440, 30);
+            g_eGameState = S_LOSE;
+        }
+        else
+        {
+            guardchase();
+        }
+    }
+    if (g_skKeyEvent[K_DOWN].keyDown && chara.gety() < g_Console.getConsoleSize().Y - 1)
+    {
+        if (arra.map[chara.gety() + 1][chara.getx()] == '-' || arra.map[chara.gety() + 1][chara.getx()] == 'T')
+        {
+            arra.map[chara.gety() + 1][chara.getx()] = 'P';
+            arra.map[chara.gety()][chara.getx()] = '-';
+            guardchase();
+            //Beep(1440, 30);
+            chara.yinc();
+        }
+        else if (arra.map[chara.gety() + 1][chara.getx()] == 'G')
+        {
+            arra.map[chara.gety()][chara.getx()] = '-';
+            Beep(1440, 30);
+            g_eGameState = S_LOSE;
+        }
+        else
+        {
+            guardchase();
+        }
+    }
+    if (g_skKeyEvent[K_RIGHT].keyDown && chara.getx() < g_Console.getConsoleSize().X - 1)
+    {
+        if (arra.map[chara.gety()][chara.getx() + 1] == '-' || arra.map[chara.gety()][chara.getx() + 1] == 'T')
+        {
+            arra.map[chara.gety()][chara.getx() + 1] = 'P';
+            arra.map[chara.gety()][chara.getx()] = '-';
+            guardchase();
+            //Beep(1440, 30);
+            chara.xinc();
+        }
+        else if (arra.map[chara.gety()][chara.getx() + 1] == 'G')
+        {
+            arra.map[chara.gety()][chara.getx()] = '-';
+            Beep(1440, 30);
+            g_eGameState = S_LOSE;
+        }
+        else
+        {
+            guardchase();
+        }
+    }
+    if (arra.map[2][58] == 'P')
+    {
+        arra.map[2][58] = '-';
+    }
+    if (arra.map[15][21] == 'P')
+    {
+        arra.map[15][21] = '-';
+    }
+}
+
+
 void processUserInput()
 {
     // quits the game if player hits the escape key
@@ -1000,7 +1109,7 @@ void renderTPRoom()
     if (chara.getx() == 40 && chara.gety() == 16 && collected == true)
     {
         g_eGameState = S_PATHROOM;
-        arra.EndRoomArray(g_Console);
+        arra.PRArray(g_Console);
         //character position for last room
         chara.setx(2); 
         chara.sety(2);
@@ -1014,16 +1123,23 @@ void renderTPRoom()
 void renderPathRoom()
 {
     clearScreen();
-    room.drawPR(g_Console);
     ui.drawUI(g_Console);
     ui.drawTP(g_Console);
+    room.drawPR(g_Console);
     chara.draw(g_Console);
+    arra.guardschasing(g_Console);
 
+    if (arra.map[chara.gety()][chara.getx()] == 'G')
+    {
+        arra.map[chara.gety()][chara.getx()] = '-';
+        Beep(1440, 30);
+        g_eGameState = S_LOSE;
+    }
     /* Go to next room */
     if (chara.getx() == 52 && chara.gety() == 12)
     {
         g_eGameState = S_ENDROOM;
-
+        arra.EndRoomArray(g_Console);
         //character position for the next room
         chara.setx(25);
         chara.sety(1);
@@ -1359,6 +1475,47 @@ void renderInputEvents()
             break;
         }
     }
+}
+
+
+void guardchase()
+{
+
+    arra.map[arra.gy1][arra.gx1] = '-';
+    arra.map[arra.gy2][arra.gx2] = '-';
+    if (chara.getx() > arra.gx1 && arra.map[arra.gy1][arra.gx1 + 1] != '+')
+    {
+        arra.gx1++;
+    }
+    else if (chara.getx() < arra.gx1 && arra.map[arra.gy1][arra.gx1 - 1] != '+')
+    {
+        arra.gx1--;
+    }
+    else if (chara.gety() > arra.gy1 && arra.map[arra.gy1 + 1][arra.gx1] != '+')
+    {
+        arra.gy1++;
+    }
+    else if (chara.gety() < arra.gy1 && arra.map[arra.gy1 - 1][arra.gx1] != '+')
+    {
+        arra.gy1--;
+    }
+    if (chara.getx() > arra.gx2 && arra.map[arra.gy2][arra.gx2 + 1] != '+')
+    {
+        arra.gx2++;
+    }
+    else if (chara.getx() < arra.gx2 && arra.map[arra.gy2][arra.gx2 - 1] != '+')
+    {
+        arra.gx2--;
+    }
+    else if (chara.gety() > arra.gy2 && arra.map[arra.gy2 + 1][arra.gx2] != '+')
+    {
+        arra.gy2++;
+    }
+    else if (chara.gety() < arra.gy2 && arra.map[arra.gy2 - 1][arra.gx2] != '+')
+    {
+        arra.gy2--;
+    }
+    
 }
 
 

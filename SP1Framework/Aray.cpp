@@ -1,5 +1,4 @@
 #include "Aray.h"
-#include "Player.h"
 
 void Aray::FirstRoomArray(Console& g_console)
 {
@@ -396,6 +395,10 @@ void Aray::TPRoomArray(Console& g_console)
 }
 void Aray::PRArray(Console& g_console) 
 {
+    gx1 = 2;
+    gy1 = 15;
+    gx2 = 77;
+    gy2 = 2;
     //array to detect things
     for (int x = 0; x < 80; ++x)
     {
@@ -403,6 +406,17 @@ void Aray::PRArray(Console& g_console)
         {
             map[y][x] = '-';
         }
+    }
+    //walls in 4 sides
+    for (int i = 0; i < 78; i++)
+    {
+        map[1][i + 1] = '+';
+        map[16][i + 1] = '+';
+    }
+    for (int j = 0; j < 16; j++)
+    {
+        map[j + 1][1] = '+';
+        map[j + 1][78] = '+';
     }
 }
 void Aray::EndRoomArray(Console& g_console)
@@ -787,4 +801,12 @@ void Aray::guardslast(Console& g_console)
 {
     map[gym][gxm] = 'G';
     g_console.writeToBuffer(gxm, gym, (char)1, 0x0c);
+}
+
+void Aray::guardschasing(Console& g_console)
+{
+    map[gy1][gx1] = 'G';
+    g_console.writeToBuffer(gx1, gy1, (char)1, 0x0c);
+    map[gy2][gx2] = 'G';
+    g_console.writeToBuffer(gx2, gy2, (char)1, 0x0c);
 }
