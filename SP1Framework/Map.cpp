@@ -378,21 +378,39 @@ void Map::drawR4(Console& g_console)
     g_console.writeToBuffer(30, 7, "+", 0xB20);
     g_console.writeToBuffer(26, 8, "+", 0xB20);
     g_console.writeToBuffer(29, 8, "+", 0xB20);
+    g_console.writeToBuffer(32, 8, "+", 0xB20);
     g_console.writeToBuffer(28, 9, "+", 0xB20);
     g_console.writeToBuffer(30, 9, "+", 0xB20);
-    g_console.writeToBuffer(32, 9, "+", 0xB20);
+    g_console.writeToBuffer(33, 9, "+", 0xB20);
     g_console.writeToBuffer(27, 10, "+", 0xB20);
     g_console.writeToBuffer(31, 10, "+", 0xB20);
     g_console.writeToBuffer(25, 11, "+", 0xB20);
     g_console.writeToBuffer(30, 11, "+", 0xB20);
+    g_console.writeToBuffer(33, 11, "+", 0xB20);
     g_console.writeToBuffer(26, 12, "+", 0xB20);
     g_console.writeToBuffer(29, 12, "+", 0xB20);
-    g_console.writeToBuffer(33, 12, "+", 0xB20);
+    g_console.writeToBuffer(32, 12, "+", 0xB20);
 
     // 'dots' wall on the right
-    g_console.writeToBuffer(47, 9, "+", 0xB20);
+    g_console.writeToBuffer(49, 7, "+", 0xB20);
     g_console.writeToBuffer(54, 7, "+", 0xB20);
-
+    g_console.writeToBuffer(48, 8, "+", 0xB20);
+    g_console.writeToBuffer(52, 8, "+", 0xB20);
+    g_console.writeToBuffer(47, 9, "+", 0xB20);
+    g_console.writeToBuffer(50, 9, "+", 0xB20);
+    g_console.writeToBuffer(53, 9, "+", 0xB20);
+    g_console.writeToBuffer(49, 10, "+", 0xB20);
+    g_console.writeToBuffer(51, 10, "+", 0xB20);
+    g_console.writeToBuffer(53, 11, "+", 0xB20);
+    g_console.writeToBuffer(47, 11, "+", 0xB20);
+    g_console.writeToBuffer(48, 12, "+", 0xB20);
+    g_console.writeToBuffer(51, 12, "+", 0xB20);
+    g_console.writeToBuffer(54, 12, "+", 0xB20);
+    g_console.writeToBuffer(50, 13, "+", 0xB20);
+    g_console.writeToBuffer(52, 13, "+", 0xB20);
+    g_console.writeToBuffer(47, 14, "+", 0xB20);
+    g_console.writeToBuffer(51, 14, "+", 0xB20);
+    g_console.writeToBuffer(53, 15, "+", 0xB20);
     g_console.writeToBuffer(49, 15, "+", 0xB20);
 }
 
