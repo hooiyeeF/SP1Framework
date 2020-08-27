@@ -1368,17 +1368,14 @@ void renderWinScreen()
 
     c.X = g_Console.getConsoleSize().X / 2 - 7;
     c.Y = 10;
-    g_Console.writeToBuffer(c, " LEADERBOARD ", 0x0F);
+    g_Console.writeToBuffer(c, " TOP SCORE: ", 0x0F);
 
+    c.X = g_Console.getConsoleSize().X / 2 - 4;
     c.Y = 11;
     lb.saverer(ss.str());
     lb.sorterer();
 
-    for (string i : lb.ldb)
-    {
-        g_Console.writeToBuffer(c, i, 0x0F);
-        c.Y++;
-    }
+    g_Console.writeToBuffer(c, lb.ldb.at(0), 0x0F);
 
     c.Y += 5;
     c.X = g_Console.getConsoleSize().X / 2 - 14;

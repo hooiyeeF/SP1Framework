@@ -9,7 +9,7 @@ void Leaderboard::saverer(string scor)
 void Leaderboard::sorterer()
 {
 	sort(ldb.begin(), ldb.end());
-	if (ldb.size() > 5)
+	if (ldb.size() > 1)
 	{
 		ldb.pop_back();
 	}
