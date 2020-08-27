@@ -1507,22 +1507,22 @@ void renderInputEvents()
 void guardchase()
 {
     
-    if (chara.getx() > arra.gx1 && arra.map[arra.gy1][arra.gx1 + 2] == '-' && arra.map[arra.gy1][arra.gx1 + 1] == '-' && arra.map[arra.gy1 + 1][arra.gx1 + 1] == '-' && arra.map[arra.gy1 - 1][arra.gx1 + 1] == '-')
+    if (chara.getx() > arra.gx1 && arra.map[arra.gy1][arra.gx1 + 2] == '-' && arra.map[arra.gy1][arra.gx1 + 1] != 'P' && arra.map[arra.gy1 + 1][arra.gx1 + 1] != 'P' && arra.map[arra.gy1 - 1][arra.gx1 + 1] != 'P')
     {
         arra.map[arra.gy1][arra.gx1] = '-';
         arra.gx1++;
     }
-    else if (chara.getx() < arra.gx1 && arra.map[arra.gy1][arra.gx1 - 2] == '-' && arra.map[arra.gy1][arra.gx1 - 1] == '-' && arra.map[arra.gy1 + 1][arra.gx1 - 1] == '-' && arra.map[arra.gy1 - 1][arra.gx1 - 1] == '-')
+    else if (chara.getx() < arra.gx1 && arra.map[arra.gy1][arra.gx1 - 2] == '-' && arra.map[arra.gy1][arra.gx1 - 1] != 'P' && arra.map[arra.gy1 + 1][arra.gx1 - 1] == != 'P' && arra.map[arra.gy1 - 1][arra.gx1 - 1] != 'P')
     {
         arra.map[arra.gy1][arra.gx1] = '-';
         arra.gx1--;
     }
-    else if (chara.gety() > arra.gy1 && arra.map[arra.gy1 + 2][arra.gx1] == '-' && arra.map[arra.gy1 + 1][arra.gx1] == '-' && arra.map[arra.gy1 + 1][arra.gx1 - 1] == '-' && arra.map[arra.gy1 + 1][arra.gx1 + 1] == '-')
+    else if (chara.gety() > arra.gy1 && arra.map[arra.gy1 + 2][arra.gx1] == '-' && arra.map[arra.gy1 + 1][arra.gx1] != 'P' && arra.map[arra.gy1 + 1][arra.gx1 - 1] != 'P' && arra.map[arra.gy1 + 1][arra.gx1 + 1] != 'P')
     {
         arra.map[arra.gy1][arra.gx1] = '-';
         arra.gy1++;
     }
-    else if (chara.gety() < arra.gy1 && arra.map[arra.gy1 - 2][arra.gx1] == '-' && arra.map[arra.gy1 - 1][arra.gx1] == '-' && arra.map[arra.gy1 - 1][arra.gx1 - 1] == '-' && arra.map[arra.gy1 - 1][arra.gx1 + 1] == '-')
+    else if (chara.gety() < arra.gy1 && arra.map[arra.gy1 - 2][arra.gx1] == '-' && arra.map[arra.gy1 - 1][arra.gx1] != 'P' && arra.map[arra.gy1 - 1][arra.gx1 - 1] != 'P' && arra.map[arra.gy1 - 1][arra.gx1 + 1] != 'P')
     {
         arra.map[arra.gy1][arra.gx1] = '-';
         arra.gy1--;
