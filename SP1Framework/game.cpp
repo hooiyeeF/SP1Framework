@@ -1522,7 +1522,7 @@ void guardchase()
         arra.map[arra.gy1][arra.gx1] = '-';
         arra.gx1++;
     }
-    else if (chara.getx() < arra.gx1 && arra.map[arra.gy1][arra.gx1 - 2] == '-' && arra.map[arra.gy1][arra.gx1 - 1] != 'P' && arra.map[arra.gy1 + 1][arra.gx1 - 1] == != 'P' && arra.map[arra.gy1 - 1][arra.gx1 - 1] != 'P')
+    else if (chara.getx() < arra.gx1 && arra.map[arra.gy1][arra.gx1 - 2] == '-' && arra.map[arra.gy1][arra.gx1 - 1] != 'P' && arra.map[arra.gy1 + 1][arra.gx1 - 1] != 'P' && arra.map[arra.gy1 - 1][arra.gx1 - 1] != 'P')
     {
         arra.map[arra.gy1][arra.gx1] = '-';
         arra.gx1--;
