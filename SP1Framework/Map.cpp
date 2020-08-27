@@ -373,7 +373,6 @@ void Map::drawR4(Console& g_console)
     // 'dots' wall on the left
     g_console.writeToBuffer(25, 6, "+", 0xB20);
     g_console.writeToBuffer(29, 6, "+", 0xB20);
-    g_console.writeToBuffer(32, 6, "+", 0xB20);
     g_console.writeToBuffer(28, 7, "+", 0xB20);
     g_console.writeToBuffer(30, 7, "+", 0xB20);
     g_console.writeToBuffer(26, 8, "+", 0xB20);
@@ -392,7 +391,6 @@ void Map::drawR4(Console& g_console)
     g_console.writeToBuffer(32, 12, "+", 0xB20);
 
     // 'dots' wall on the right
-    g_console.writeToBuffer(49, 7, "+", 0xB20);
     g_console.writeToBuffer(54, 7, "+", 0xB20);
     g_console.writeToBuffer(48, 8, "+", 0xB20);
     g_console.writeToBuffer(52, 8, "+", 0xB20);
