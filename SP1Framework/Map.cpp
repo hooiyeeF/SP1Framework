@@ -369,6 +369,31 @@ void Map::drawR4(Console& g_console)
             g_console.writeToBuffer(i, j, "+", 0xB20);
         }
     }
+
+    // 'dots' wall on the left
+    g_console.writeToBuffer(25, 6, "+", 0xB20);
+    g_console.writeToBuffer(29, 6, "+", 0xB20);
+    g_console.writeToBuffer(32, 6, "+", 0xB20);
+    g_console.writeToBuffer(28, 7, "+", 0xB20);
+    g_console.writeToBuffer(30, 7, "+", 0xB20);
+    g_console.writeToBuffer(26, 8, "+", 0xB20);
+    g_console.writeToBuffer(29, 8, "+", 0xB20);
+    g_console.writeToBuffer(28, 9, "+", 0xB20);
+    g_console.writeToBuffer(30, 9, "+", 0xB20);
+    g_console.writeToBuffer(32, 9, "+", 0xB20);
+    g_console.writeToBuffer(27, 10, "+", 0xB20);
+    g_console.writeToBuffer(31, 10, "+", 0xB20);
+    g_console.writeToBuffer(25, 11, "+", 0xB20);
+    g_console.writeToBuffer(30, 11, "+", 0xB20);
+    g_console.writeToBuffer(26, 12, "+", 0xB20);
+    g_console.writeToBuffer(29, 12, "+", 0xB20);
+    g_console.writeToBuffer(33, 12, "+", 0xB20);
+
+    // 'dots' wall on the right
+    g_console.writeToBuffer(47, 9, "+", 0xB20);
+    g_console.writeToBuffer(54, 7, "+", 0xB20);
+
+    g_console.writeToBuffer(49, 15, "+", 0xB20);
 }
 
 void Map::drawRTP(Console& g_console)
@@ -440,6 +465,31 @@ void Map::drawRTP(Console& g_console)
     {
         g_console.writeToBuffer(i, 3, "+", 0xB20);
     }
+}
+
+void Map::drawPR(Console& g_console)
+{
+    int wallX = 1;
+    int wallY = 1;
+
+    //walls in 4 sides
+    for (int i = 0; i < 78; i++)
+    {
+        g_console.writeToBuffer(wallX + i, 1, "+", 0xB20);
+        g_console.writeToBuffer(wallX + i, 16, "+", 0xB20);
+    }
+    for (int j = 0; j < 16; j++)
+    {
+        g_console.writeToBuffer(1, wallY + j, "+", 0xB20);
+        g_console.writeToBuffer(78, wallY + j, "+", 0xB20);
+    }
+    /* Starting pt */
+    g_console.writeToBuffer(2, 2, "S", 0x5E);
+    /* Ending pt */
+    g_console.writeToBuffer(52, 12, "E", 0x5E);
+
+
+
 }
 
 void Map::drawREnd(Console& g_console)

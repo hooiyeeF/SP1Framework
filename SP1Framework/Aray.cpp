@@ -287,6 +287,39 @@ void Aray::FourthRoomArray(Console& g_console)
             map[y][x] = '-';
         }
     }
+
+    //walls in 4 sides
+    for (int i = 0; i < 33; i++)
+    {
+        map[3][23 + i] = '+';
+        map[16][23 + i] = '+';
+    }
+    for (int j = 0; j < 14; j++)
+    {
+        map[j + 3][23] = '+';
+        map[j + 3][55] = '+';
+    }
+
+    //horz wall below starting pt
+    for (int i = 48; i < 56; i++)
+    {
+        map[5][i] = '+';
+    }
+
+    //horz wall above exit pt
+    for (int i = 24; i < 32; i++)
+    {
+        map[14][i] = '+';
+    }
+
+    // box wall in the middle of map
+    for (int i = 34; i < 47; i++)
+    {
+        for (int j = 8; j < 12; j++)
+        {
+            map[j][i] = '+';
+        }
+    }
 }
 void Aray::TPRoomArray(Console& g_console)
 {
@@ -359,6 +392,32 @@ void Aray::TPRoomArray(Console& g_console)
         map[3][i] = '+';
     }
 
+}
+void Aray::PRArray(Console& g_console) 
+{
+    gx1 = 2;
+    gy1 = 15;
+    gx2 = 77;
+    gy2 = 2;
+    //array to detect things
+    for (int x = 0; x < 80; ++x)
+    {
+        for (int y = 0; y < 18; ++y)
+        {
+            map[y][x] = '-';
+        }
+    }
+    //walls in 4 sides
+    for (int i = 0; i < 78; i++)
+    {
+        map[1][i + 1] = '+';
+        map[16][i + 1] = '+';
+    }
+    for (int j = 0; j < 16; j++)
+    {
+        map[j + 1][1] = '+';
+        map[j + 1][78] = '+';
+    }
 }
 void Aray::EndRoomArray(Console& g_console)
 {
@@ -742,4 +801,12 @@ void Aray::guardslast(Console& g_console)
 {
     map[gym][gxm] = 'G';
     g_console.writeToBuffer(gxm, gym, (char)1, 0x0c);
+}
+
+void Aray::guardschasing(Console& g_console)
+{
+    map[gy1][gx1] = 'G';
+    g_console.writeToBuffer(gx1, gy1, (char)1, 0x0c);
+    map[gy2][gx2] = 'G';
+    g_console.writeToBuffer(gx2, gy2, (char)1, 0x0c);
 }
