@@ -563,7 +563,7 @@ void Map::drawLR(Console& g_console)
     {
         g_console.writeToBuffer(i, 12, "+", 0xC30);
     }
-    for (int i = 6; i < 76; i++)  // down horz wall
+    for (int i = 5; i < 76; i++)  // down horz wall
     {
         g_console.writeToBuffer(i, 14, "+", 0xC30);
     }
@@ -579,13 +579,13 @@ void Map::drawLR(Console& g_console)
     {
         g_console.writeToBuffer(75, j, "+", 0xC30);
     }
-    for (int i = 4; i < 60; i++)  // downer horz wall
+    for (int i = 4; i < 30; i++)  // downer horz wall
     {
         g_console.writeToBuffer(i, 16, "+", 0xC30);
     }
     for (int j = 15; j < 17; j++) // right short vert wall
     {
-        g_console.writeToBuffer(60, j, "+", 0xC30);
+        g_console.writeToBuffer(30, j, "+", 0xC30);
     }
 
     /* Starting pt */
