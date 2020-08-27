@@ -722,7 +722,7 @@ void renderMenuScreen()
     /* Playtest counter*/
     c.Y -= 10;
     c.X = g_Console.getConsoleSize().X / 2 - 5;
-    g_Console.writeToBuffer(c, " Test : ", 0xB0);
+    g_Console.writeToBuffer(c, " Tries : ", 0xB0);
 
     std::ostringstream ss;
     ss.str("");
