@@ -87,6 +87,7 @@
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="Aray.cpp" />
+	<ClCompile Include="Leaderboard.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\console.h" />
@@ -97,6 +98,7 @@
     <CInclude Include="UI.h" />
     <CInclude Include="Aray.h" />
     <ClInclude Include="Sound.h" />
+	<ClInclude Include="Leaderboard.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
