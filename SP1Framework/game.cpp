@@ -62,7 +62,10 @@ void init( void )
 
     arra.FirstRoomArray(g_Console);
     Gtimer = 5;
-    S.BGM();
+    S.BGMS();
+    
+    
+   
   
 }
 
@@ -129,11 +132,13 @@ void keyboardHandler(const KEY_EVENT_RECORD& keyboardEvent)
         break;
     case S_ROOM4: gameplayKBHandler(keyboardEvent);
         break;
-    case S_CROOM: gameplayKBHandler(keyboardEvent);
-        break;
     case S_TPROOM: gameplayKBHandler(keyboardEvent);
         break;
+    case S_PATHROOM: gameplayKBHandler(keyboardEvent);
+        break;
     case S_ENDROOM: gameplayKBHandler(keyboardEvent); 
+        break;
+    case S_CROOM: gameplayKBHandler(keyboardEvent);
         break;
     case S_WIN: gameplayKBHandler(keyboardEvent);  
         break;
@@ -172,11 +177,13 @@ void mouseHandler(const MOUSE_EVENT_RECORD& mouseEvent)
         break;
     case S_ROOM4: gameplayMouseHandler(mouseEvent);
         break;
-    case S_CROOM: gameplayMouseHandler(mouseEvent);
+    case S_TPROOM: gameplayMouseHandler(mouseEvent);
         break;
-    case S_TPROOM: gameplayMouseHandler(mouseEvent); 
+    case S_PATHROOM: gameplayMouseHandler(mouseEvent);
         break;
     case S_ENDROOM: gameplayMouseHandler(mouseEvent);
+        break;
+    case S_CROOM: gameplayMouseHandler(mouseEvent);
         break;
     case S_LOSE: gameplayMouseHandler(mouseEvent);
         break;
@@ -284,11 +291,15 @@ void update(double dt)
             break;
         case S_TPROOM: updateGame();
             break;
+        case S_PATHROOM: updateGame3();
+            break;
         case S_ENDROOM: updateGame();
             break;
         case S_CROOM: updateGame2();
             break;
         case S_WIN:
+           
+            
             processUserInput();
             PlayAgain();
             break;
@@ -310,6 +321,13 @@ void updateGame2()       // gameplay logic
 {
     processUserInput(); // checks if you should change states or do something else with the game, e.g. pause, exit
     moveCharacter2();    // moves the character, collision detection, physics, etc
+                        // sound can be played here too.
+}
+
+void updateGame3()       // gameplay logic
+{
+    processUserInput(); // checks if you should change states or do something else with the game, e.g. pause, exit
+    moveCharacter3();    // moves the character, collision detection, physics, etc
                         // sound can be played here too.
 }
 void moveCharacter()
@@ -490,6 +508,108 @@ void moveCharacter2()
         arra.map[15][21] = '-';
     }
 }
+
+void moveCharacter3()
+{
+    // Updating the location of the character based on the key release
+    // providing a beep sound whenver we shift the character
+    if (g_skKeyEvent[K_UP].keyDown && chara.gety() > 0)
+    {
+        if (arra.map[chara.gety() - 1][chara.getx()] == '-' || arra.map[chara.gety() - 1][chara.getx()] == 'T')
+        {
+            arra.map[chara.gety() - 1][chara.getx()] = 'P';
+            arra.map[chara.gety()][chara.getx()] = '-';
+            //Beep(1440, 30);
+            guardchase();
+            chara.ydec();
+
+        }
+        else if (arra.map[chara.gety() - 1][chara.getx()] == 'G')
+        {
+            arra.map[chara.gety()][chara.getx()] = '-';
+            Beep(1440, 30);
+            g_eGameState = S_LOSE;
+        }
+        else
+        {
+            guardchase();
+        }
+    }
+    if (g_skKeyEvent[K_LEFT].keyDown && chara.getx() > 0)
+    {
+        if (arra.map[chara.gety()][chara.getx() - 1] == '-' || arra.map[chara.gety()][chara.getx() - 1] == 'T')
+        {
+            gamestart = true;
+            arra.map[chara.gety()][chara.getx() - 1] = 'P';
+            arra.map[chara.gety()][chara.getx()] = '-';
+            guardchase();
+            //Beep(1440, 30);
+            chara.xdec();
+        }
+        else if (arra.map[chara.gety()][chara.getx() - 1] == 'G')
+        {
+            arra.map[chara.gety()][chara.getx()] = '-';
+            Beep(1440, 30);
+            g_eGameState = S_LOSE;
+        }
+        else
+        {
+            guardchase();
+        }
+    }
+    if (g_skKeyEvent[K_DOWN].keyDown && chara.gety() < g_Console.getConsoleSize().Y - 1)
+    {
+        if (arra.map[chara.gety() + 1][chara.getx()] == '-' || arra.map[chara.gety() + 1][chara.getx()] == 'T')
+        {
+            arra.map[chara.gety() + 1][chara.getx()] = 'P';
+            arra.map[chara.gety()][chara.getx()] = '-';
+            guardchase();
+            //Beep(1440, 30);
+            chara.yinc();
+        }
+        else if (arra.map[chara.gety() + 1][chara.getx()] == 'G')
+        {
+            arra.map[chara.gety()][chara.getx()] = '-';
+            Beep(1440, 30);
+            g_eGameState = S_LOSE;
+        }
+        else
+        {
+            guardchase();
+        }
+    }
+    if (g_skKeyEvent[K_RIGHT].keyDown && chara.getx() < g_Console.getConsoleSize().X - 1)
+    {
+        if (arra.map[chara.gety()][chara.getx() + 1] == '-' || arra.map[chara.gety()][chara.getx() + 1] == 'T')
+        {
+            arra.map[chara.gety()][chara.getx() + 1] = 'P';
+            arra.map[chara.gety()][chara.getx()] = '-';
+            guardchase();
+            //Beep(1440, 30);
+            chara.xinc();
+        }
+        else if (arra.map[chara.gety()][chara.getx() + 1] == 'G')
+        {
+            arra.map[chara.gety()][chara.getx()] = '-';
+            Beep(1440, 30);
+            g_eGameState = S_LOSE;
+        }
+        else
+        {
+            guardchase();
+        }
+    }
+    if (arra.map[2][58] == 'P')
+    {
+        arra.map[2][58] = '-';
+    }
+    if (arra.map[15][21] == 'P')
+    {
+        arra.map[15][21] = '-';
+    }
+}
+
+
 void processUserInput()
 {
     // quits the game if player hits the escape key
@@ -509,8 +629,7 @@ void PlayAgain()
         g_eGameState = S_SPLASHSCREEN;
         testG++;
         reset();
-    }
-        
+    }  
 }
 void reset()
 {
@@ -547,6 +666,8 @@ void render()
         renderCountDownR4();
         break;
     case S_TPROOM: renderTPRoom();
+        break;
+    case S_PATHROOM: renderPathRoom();
         break;
     case S_ENDROOM: renderEndRoom();
         break;
@@ -708,6 +829,46 @@ void renderSecondRoom()
     if (room.getKey == true) 
     {
         room.Dtime -= ODDeltaTime2;
+    }
+    if (arra.map[chara.gety()][chara.getx()] == 'G')
+    {
+        arra.map[chara.gety()][chara.getx()] = '-';
+        Beep(1440, 30);
+        g_eGameState = S_LOSE;
+    }
+    if (Gtimer > 0 && Gtimer < 100)
+    {
+
+        arra.guarddetect(g_Console, 39, 13);
+        arra.removeguard(g_Console, 24, 4);
+        arra.guarddetect(g_Console, 52, 3);
+        Gtimer++;
+
+    }
+    else if (Gtimer >= 100 && Gtimer < 200)
+    {
+        arra.guarddetect(g_Console, 39, 13);
+        arra.guarddetect(g_Console, 24, 4);
+        arra.removeguard(g_Console, 52, 3);
+        Gtimer++;
+    }
+    else if (Gtimer >= 200 && Gtimer < 300)
+    {
+        arra.removeguard(g_Console, 39, 13);
+        arra.removeguard(g_Console, 24, 4);
+        arra.guarddetect(g_Console, 52, 3);
+        Gtimer++;
+    }
+    else if (Gtimer >= 300 && Gtimer < 400)
+    {
+        arra.removeguard(g_Console, 39, 13);
+        arra.guarddetect(g_Console, 24, 4);
+        arra.removeguard(g_Console, 52, 3);
+        Gtimer++;
+    }
+    else
+    {
+        Gtimer = 1;
     }
 
     /* Go to Third room */
@@ -952,19 +1113,44 @@ void renderTPRoom()
         ui.drawTP(g_Console);
     }
 
-    /* Go to the last room */
+    /* Go to the path room */
     if (chara.getx() == 40 && chara.gety() == 16 && collected == true)
     {
-        g_eGameState = S_ENDROOM;
-        arra.EndRoomArray(g_Console);
+        g_eGameState = S_PATHROOM;
+        arra.PRArray(g_Console);
         //character position for last room
-        chara.setx(40); 
+        chara.setx(2); 
         chara.sety(2);
     }
     // Not collected
     else if (chara.getx() == 40 && chara.gety() == 16 && collected == false)
     {
         g_Console.writeToBuffer(30, 25, "Collect the toilet paper before exit !", 0x06);
+    }
+}
+void renderPathRoom()
+{
+    clearScreen();
+    ui.drawUI(g_Console);
+    ui.drawTP(g_Console);
+    room.drawPR(g_Console);
+    chara.draw(g_Console);
+    arra.guardschasing(g_Console);
+
+    if (arra.map[chara.gety()][chara.getx()] == 'G')
+    {
+        arra.map[chara.gety()][chara.getx()] = '-';
+        Beep(1440, 30);
+        g_eGameState = S_LOSE;
+    }
+    /* Go to next room */
+    if (chara.getx() == 52 && chara.gety() == 12)
+    {
+        g_eGameState = S_ENDROOM;
+        arra.EndRoomArray(g_Console);
+        //character position for the next room
+        chara.setx(25);
+        chara.sety(1);
     }
 }
 void renderEndRoom()
@@ -1135,6 +1321,8 @@ void renderCRoom()
     if (chara.getx() == 77 && chara.gety() == 8)
     {
         g_eGameState = S_WIN;
+        S.BGM();
+        S.Win();
         gameEnd = true;
     }
 }
@@ -1311,6 +1499,54 @@ void renderInputEvents()
             break;
         }
     }
+}
+
+
+void guardchase()
+{
+    
+    if (chara.getx() > arra.gx1 && arra.map[arra.gy1][arra.gx1 + 2] == '-')
+    {
+        arra.map[arra.gy1][arra.gx1] = '-';
+        arra.gx1++;
+    }
+    else if (chara.getx() < arra.gx1 && arra.map[arra.gy1][arra.gx1 - 2] == '-')
+    {
+        arra.map[arra.gy1][arra.gx1] = '-';
+        arra.gx1--;
+    }
+    else if (chara.gety() > arra.gy1 && arra.map[arra.gy1 + 2][arra.gx1] == '-')
+    {
+        arra.map[arra.gy1][arra.gx1] = '-';
+        arra.gy1++;
+    }
+    else if (chara.gety() < arra.gy1 && arra.map[arra.gy1 - 2][arra.gx1] == '-')
+    {
+        arra.map[arra.gy1][arra.gx1] = '-';
+        arra.gy1--;
+    }
+    if (chara.gety() > arra.gy2 && arra.map[arra.gy2 + 1][arra.gx2] == '-')
+    {
+        arra.map[arra.gy2][arra.gx2] = '-';
+        arra.gy2++;
+    }
+    else if (chara.gety() < arra.gy2 && arra.map[arra.gy2 - 1][arra.gx2] == '-')
+    {
+        arra.map[arra.gy2][arra.gx2] = '-';
+        arra.gy2--;
+    }
+    else if (chara.getx() > arra.gx2 && arra.map[arra.gy2][arra.gx2 + 1] == '-')
+    {
+        arra.map[arra.gy2][arra.gx2] = '-';
+        arra.gx2++;
+    }
+    else if (chara.getx() < arra.gx2 && arra.map[arra.gy2][arra.gx2 - 1] == '-')
+    {
+        arra.map[arra.gy2][arra.gx2] = '-';
+        arra.gx2--;
+    }
+
+    
 }
 
 

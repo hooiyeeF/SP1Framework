@@ -44,6 +44,7 @@ enum EGAMESTATES
     S_ROOM3,
     S_ROOM4,
     S_TPROOM,
+    S_PATHROOM,
     S_ENDROOM,
     S_CROOM,
     S_WIN,
@@ -59,8 +60,10 @@ void shutdown    ( void );      // do clean up, free memory
 
 void updateGame();          // gameplay logic
 void updateGame2();          // gameplay logic
+void updateGame3();          // gameplay logic
 void moveCharacter();       // moves the character, collision detection, physics, etc
 void moveCharacter2();       // moves the character, collision detection, physics, etc
+void moveCharacter3();       // moves the character, collision detection, physics, etc
 void processUserInput();    // checks if you should change states or do something else with the game, e.g. pause, exit
 void GoToGamePlay();        // check if user hit space key to start game
 void PlayAgain();           // check if user hit key to restart the game
@@ -72,6 +75,7 @@ void renderSecondRoom();    // render second game room
 void renderThirdRoom();
 void renderFourthRoom();
 void renderTPRoom();
+void renderPathRoom();
 void renderEndRoom();
 void renderCRoom();
 void renderLoseScreen();
@@ -80,6 +84,8 @@ void renderCountDownR4();
 void renderFramerate();     // renders debug information, frame rate, elapsed time, etc
 void renderToScreen();      // dump the contents of the buffer to the screen, one frame worth of game
 void renderInputEvents();   // renders the status of input events
+
+void guardchase();				     // guard chase
 
 // keyboard and mouse input event managers
 void keyboardHandler(const KEY_EVENT_RECORD& keyboardEvent);  // define this function for the console to call when there are keyboard events
