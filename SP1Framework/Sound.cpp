@@ -22,6 +22,11 @@ void sound::Win()
 	bool win = PlaySound(L"../SP1Framework/Cheer2.wav", NULL, SND_FILENAME | SND_ASYNC  );
 }
 
+void sound::Chase()
+{
+	bool chase = PlaySound(L"../SP1Framework/CHASE.wav", NULL, SND_FILENAME | SND_ASYNC );
+}
+
 
 
 void sound::GetK()
