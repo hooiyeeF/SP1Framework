@@ -60,7 +60,10 @@ void init( void )
 
     arra.FirstRoomArray(g_Console);
     Gtimer = 5;
-    S.BGM();
+    S.BGMS();
+    
+    
+   
   
 }
 
@@ -287,6 +290,8 @@ void update(double dt)
         case S_CROOM: updateGame2();
             break;
         case S_WIN:
+           
+            
             processUserInput();
             PlayAgain();
             break;
@@ -1132,6 +1137,8 @@ void renderCRoom()
     if (chara.getx() == 77 && chara.gety() == 8)
     {
         g_eGameState = S_WIN;
+        S.BGM();
+        S.Win();
         gameEnd = true;
     }
 }
