@@ -531,9 +531,9 @@ void Map::drawPR(Console& g_console)
     }
     g_console.writeToBuffer(51, 12, "+", 0xB20);
 
-    //1 'dot'
-    g_console.writeToBuffer(19, 15, "+", 0xB20);
-
+    //2 'dot'
+    g_console.writeToBuffer(19, 13, "+", 0xB20);
+    g_console.writeToBuffer(19, 14, "+", 0xB20);
 }
 
 void Map::drawREnd(Console& g_console)
