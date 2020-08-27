@@ -9,6 +9,10 @@ public:
 	char map[18][80];
 	int gxm;
 	int gym;
+	int gx1;
+	int gy1;
+	int gx2;
+	int gy2;
 	void FirstRoomArray(Console& g_console);				 // First Room Array
 	void SecondRoomArray(Console& g_console);				 // Second Room Array
 	void ThirdRoomArray(Console& g_console);				 // Third Room Array
@@ -21,4 +25,5 @@ public:
 	void removeguard(Console& g_console, int gx, int gy);	 // remove guards
 	void guardmove(Console& g_console);						 // guard move
 	void guardslast(Console& g_console);				     // guard move
+	void guardschasing(Console& g_console);					 // Guard chase
 };
