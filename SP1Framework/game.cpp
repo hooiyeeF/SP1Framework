@@ -1126,6 +1126,7 @@ void renderTPRoom()
     /* Go to the path room */
     if (chara.getx() == 40 && chara.gety() == 16 && collected == true)
     {
+        S.Chase();
         S.ODoors();
         g_eGameState = S_PATHROOM;
         arra.PRArray(g_Console);
@@ -1158,6 +1159,7 @@ void renderPathRoom()
     /* Go to next room */
     if (chara.getx() == 63 && chara.gety() == 9)
     {
+        S.BGMS();
         S.ODoors();
         g_eGameState = S_ENDROOM;
         arra.EndRoomArray(g_Console);
@@ -1309,6 +1311,7 @@ void renderEndRoom()
     /* Go to ChaseRoom */
     if (chara.getx() == 58 && chara.gety() == 15 )
     {
+        S.BGMS();
         S.ODoors();
         g_eGameState = S_CROOM;
         arra.CRoomArray(g_Console);

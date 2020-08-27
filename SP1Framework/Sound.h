@@ -12,4 +12,5 @@ public:
 	void GetK(); // Key sound
 	void LDoors();
 	void ODoors();
+	void Chase(); // chasing bgm
 };
