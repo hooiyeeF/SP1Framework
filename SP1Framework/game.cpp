@@ -748,6 +748,9 @@ void renderMenuScreen()
     c.Y += 1;
     c.X = g_Console.getConsoleSize().X / 2 + 19;
     g_Console.writeToBuffer(c, " T - Toilet paper ", 0xE5);
+    c.Y += 1;
+    c.X = g_Console.getConsoleSize().X / 2 + 19;
+    g_Console.writeToBuffer(c, " B - Button ", 0xE5);
 }
 void renderFirstRoom()
 {
@@ -792,7 +795,7 @@ void renderFirstRoom()
     // key collected
     if (chara.getx() == 58 && chara.gety() == 15)
     {
-        
+        S.GetK();
         room.getKey = true;
         arra.map[2][54] = '-';
         arra.map[3][54] = '-';
@@ -805,6 +808,7 @@ void renderFirstRoom()
     /* Go to Second room */
     if (chara.getx() == 58 && chara.gety() == 2)
     {
+        S.ODoors();
         g_eGameState = S_ROOM2;
         arra.SecondRoomArray(g_Console);
         room.getKey = false;
@@ -824,6 +828,7 @@ void renderSecondRoom()
     // key collected
     if (chara.getx() == 33 && chara.gety() == 15)
     {
+        S.GetK();
         room.getKey = true;
         arra.map[2][55] = '-';
         arra.map[3][55] = '-';
@@ -876,6 +881,7 @@ void renderSecondRoom()
     /* Go to Third room */
     if (chara.getx() == 58 && chara.gety() == 10)
     {
+        S.ODoors();
         g_eGameState = S_ROOM3;
         arra.ThirdRoomArray(g_Console);
 
@@ -918,6 +924,7 @@ void renderThirdRoom()
     /* Go to Fourth room */
     if (chara.getx() == 62 && chara.gety() == 13)
     {
+        S.ODoors();
         g_eGameState = S_ROOM4;
         arra.FourthRoomArray(g_Console);
         //character position for fourth room
@@ -949,6 +956,7 @@ void renderFourthRoom()
     /* Go to toilet paper room */
     if (chara.getx() == 24 && chara.gety() == 15)
     {
+        S.ODoors();
         g_eGameState = S_TPROOM;
         arra.TPRoomArray(g_Console);
 
@@ -1118,6 +1126,8 @@ void renderTPRoom()
     /* Go to the path room */
     if (chara.getx() == 40 && chara.gety() == 16 && collected == true)
     {
+        S.Chase();
+        S.ODoors();
         g_eGameState = S_PATHROOM;
         arra.PRArray(g_Console);
         //character position for last room
@@ -1127,6 +1137,7 @@ void renderTPRoom()
     // Not collected
     else if (chara.getx() == 40 && chara.gety() == 16 && collected == false)
     {
+        S.LDoors();
         g_Console.writeToBuffer(30, 25, "Collect the toilet paper before exit !", 0x06);
     }
 }
@@ -1146,8 +1157,10 @@ void renderPathRoom()
         g_eGameState = S_LOSE;
     }
     /* Go to next room */
-    if (chara.getx() == 52 && chara.gety() == 12)
+    if (chara.getx() == 63 && chara.gety() == 9)
     {
+        S.BGMS();
+        S.ODoors();
         g_eGameState = S_ENDROOM;
         arra.EndRoomArray(g_Console);
         //character position for the next room
@@ -1298,6 +1311,8 @@ void renderEndRoom()
     /* Go to ChaseRoom */
     if (chara.getx() == 58 && chara.gety() == 15 )
     {
+        S.BGMS();
+        S.ODoors();
         g_eGameState = S_CROOM;
         arra.CRoomArray(g_Console);
         //character position for last room
@@ -1322,6 +1337,7 @@ void renderCRoom()
     /* Go to WIN */
     if (chara.getx() == 77 && chara.gety() == 8)
     {
+        S.ODoors();
         g_eGameState = S_WIN;
         S.BGM();
         S.Win();
@@ -1507,22 +1523,22 @@ void renderInputEvents()
 void guardchase()
 {
     
-    if (chara.getx() > arra.gx1 && arra.map[arra.gy1][arra.gx1 + 2] == '-' && arra.map[arra.gy1][arra.gx1 + 1] == '-' && arra.map[arra.gy1 + 1][arra.gx1 + 1] == '-' && arra.map[arra.gy1 - 1][arra.gx1 + 1] == '-')
+    if (chara.getx() > arra.gx1 && arra.map[arra.gy1][arra.gx1 + 1] == '-' && arra.map[arra.gy1][arra.gx1 + 1] != 'G' && arra.map[arra.gy1][arra.gx1 + 2] != 'G' && arra.map[arra.gy1 + 1][arra.gx1 + 1] != 'G' && arra.map[arra.gy1 - 1][arra.gx1 + 1] != 'G')
     {
         arra.map[arra.gy1][arra.gx1] = '-';
         arra.gx1++;
     }
-    else if (chara.getx() < arra.gx1 && arra.map[arra.gy1][arra.gx1 - 2] == '-' && arra.map[arra.gy1][arra.gx1 - 1] == '-' && arra.map[arra.gy1 + 1][arra.gx1 - 1] == '-' && arra.map[arra.gy1 - 1][arra.gx1 - 1] == '-')
+    else if (chara.getx() < arra.gx1 && arra.map[arra.gy1][arra.gx1 - 1] == '-' && arra.map[arra.gy1][arra.gx1 - 1] != 'G' && arra.map[arra.gy1][arra.gx1 - 2] != 'G' && arra.map[arra.gy1 + 1][arra.gx1 - 1] != 'G' && arra.map[arra.gy1 - 1][arra.gx1 - 1] != 'G')
     {
         arra.map[arra.gy1][arra.gx1] = '-';
         arra.gx1--;
     }
-    else if (chara.gety() > arra.gy1 && arra.map[arra.gy1 + 2][arra.gx1] == '-' && arra.map[arra.gy1 + 1][arra.gx1] == '-' && arra.map[arra.gy1 + 1][arra.gx1 - 1] == '-' && arra.map[arra.gy1 + 1][arra.gx1 + 1] == '-')
+    else if (chara.gety() > arra.gy1 && arra.map[arra.gy1 + 1][arra.gx1] == '-' && arra.map[arra.gy1 + 1][arra.gx1] != 'G' && arra.map[arra.gy1 + 2][arra.gx1] != 'G' && arra.map[arra.gy1 + 1][arra.gx1 - 1] != 'G' && arra.map[arra.gy1 + 1][arra.gx1 + 1] != 'G')
     {
         arra.map[arra.gy1][arra.gx1] = '-';
         arra.gy1++;
     }
-    else if (chara.gety() < arra.gy1 && arra.map[arra.gy1 - 2][arra.gx1] == '-' && arra.map[arra.gy1 - 1][arra.gx1] == '-' && arra.map[arra.gy1 - 1][arra.gx1 - 1] == '-' && arra.map[arra.gy1 - 1][arra.gx1 + 1] == '-')
+    else if (chara.gety() < arra.gy1 && arra.map[arra.gy1 - 1][arra.gx1] == '-' && arra.map[arra.gy1 - 1][arra.gx1] != 'G' && arra.map[arra.gy1 - 2][arra.gx1] != 'G' && arra.map[arra.gy1 - 1][arra.gx1 - 1] != 'G' && arra.map[arra.gy1 - 1][arra.gx1 + 1] != 'G')
     {
         arra.map[arra.gy1][arra.gx1] = '-';
         arra.gy1--;
