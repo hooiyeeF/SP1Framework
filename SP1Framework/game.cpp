@@ -642,6 +642,8 @@ void reset()
     collected = false;
     StartCDown = false;
     room.getTP = false;
+    room.hitB = false;
+    room.hitB2 = false;
     room.Dtime = 3;
     room.getKey = false;
     chara.setx(g_Console.getConsoleSize().X / 2 - 1);
@@ -669,7 +671,9 @@ void render()
         break;
     case S_TPROOM: renderTPRoom();
         break;
-    case S_PATHROOM: renderPathRoom();
+    case S_PATHROOM: 
+        renderPathRoom();
+        renderPRInstruction();
         break;
     case S_ENDROOM: renderEndRoom();
         break;
@@ -1433,6 +1437,14 @@ void renderCountDownR4()
     {
         g_Console.writeToBuffer(c, ss1.str(), 0x0C);
     }
+}
+void renderPRInstruction()
+{
+    COORD c = g_Console.getConsoleSize();
+    g_Console.writeToBuffer(35, 24, "Get the   to the 'B' ", 0x06);
+    c.X = 43;
+    c.Y = 24;
+    g_Console.writeToBuffer(c, (char)1, 0x0C);
 }
 void renderFramerate()
 {

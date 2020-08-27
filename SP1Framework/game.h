@@ -76,6 +76,7 @@ void renderThirdRoom();
 void renderFourthRoom();
 void renderTPRoom();
 void renderPathRoom();
+void renderPRInstruction();
 void renderEndRoom();
 void renderCRoom();
 void renderLoseScreen();
