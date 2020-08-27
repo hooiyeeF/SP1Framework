@@ -13,6 +13,7 @@
 #include "time.h"
 #pragma comment(lib, "winmm.lib")
 #include "Sound.h"
+#include "Leaderboard.h"
 
 double  g_dElapsedTime;
 double  g_dDeltaTime;
@@ -34,6 +35,7 @@ Map room;
 UI ui;
 Aray arra;
 sound S;
+Leaderboard lb;
 
 // Game specific variables here
 EGAMESTATES g_eGameState = S_SPLASHSCREEN; // initial state
@@ -60,7 +62,10 @@ void init( void )
 
     arra.FirstRoomArray(g_Console);
     Gtimer = 5;
-    S.BGM();
+    S.BGMS();
+    
+    
+   
   
 }
 
@@ -162,7 +167,7 @@ void mouseHandler(const MOUSE_EVENT_RECORD& mouseEvent)
 {    
     switch (g_eGameState)
     {
-    case S_SPLASHSCREEN: 
+    case S_SPLASHSCREEN:
         break;
     case S_ROOM1: gameplayMouseHandler(mouseEvent); 
         break;
@@ -293,6 +298,8 @@ void update(double dt)
         case S_CROOM: updateGame2();
             break;
         case S_WIN:
+           
+            
             processUserInput();
             PlayAgain();
             break;
@@ -646,6 +653,7 @@ void render()
     switch (g_eGameState)
     {
     case S_SPLASHSCREEN: renderMenuScreen();
+    //case S_SPLASHSCREEN: renderWinScreen();
         break;
     case S_ROOM1: renderFirstRoom();
         break;
@@ -1313,6 +1321,8 @@ void renderCRoom()
     if (chara.getx() == 77 && chara.gety() == 8)
     {
         g_eGameState = S_WIN;
+        S.BGM();
+        S.Win();
         gameEnd = true;
     }
 }
@@ -1320,29 +1330,43 @@ void renderWinScreen()
 {
     COORD c = g_Console.getConsoleSize();
     c.Y /= 2;
-    c.Y -= 10;
-    c.X = c.X / 2 - 14;
+    c.Y -= 11;
+    c.X = c.X / 2 - 15;
     g_Console.writeToBuffer(c, "C O N G R A T U L A T I O N S !", 0x0A);
     c.Y += 2;
-    c.X = g_Console.getConsoleSize().X / 2 - 6;
+    c.X = g_Console.getConsoleSize().X / 2 - 7;
     g_Console.writeToBuffer(c, "Y O U  W O N !", 0x0A);
-    c.Y += 8;
-    c.X = g_Console.getConsoleSize().X / 2 - 10;
+    c.Y = 8;
+    c.X = g_Console.getConsoleSize().X / 2 - 11;
     g_Console.writeToBuffer(c, "  Time Taken: ", 0xB0);
 
     std::ostringstream ss;
     ss << std::fixed << std::setprecision(2);
     ss.str("");
     ss << g_dElapsedTime << "s  ";
-    c.X = 44;
-    c.Y = 15;
+    c.X = 43;
+    c.Y = 8;
     g_Console.writeToBuffer(c, ss.str(), 0xB0);
 
+    c.X = g_Console.getConsoleSize().X / 2 - 7;
+    c.Y = 10;
+    g_Console.writeToBuffer(c, " LEADERBOARD ", 0x0F);
+
+    c.Y = 11;
+    lb.saverer(g_dElapsedTime);
+    lb.sorterer();
+
+    for (int i : lb.lb)
+    {
+        g_Console.writeToBuffer(c, i, 0x0F);
+        c.Y++;
+    }
+
     c.Y += 5;
-    c.X = g_Console.getConsoleSize().X / 2 - 12;
+    c.X = g_Console.getConsoleSize().X / 2 - 14;
     g_Console.writeToBuffer(c, "Press <SPACE> to play again", 0x07);
     c.Y += 2;
-    c.X = g_Console.getConsoleSize().X / 2 - 8;
+    c.X = g_Console.getConsoleSize().X / 2 - 10;
     g_Console.writeToBuffer(c, "Press <ESC> to exit", 0x07);
 
 }
