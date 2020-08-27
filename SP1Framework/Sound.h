@@ -6,9 +6,8 @@ public:
 	
 
 
-	void BGM();
-	void BGMS();
-	void Win();
-	void LDoor();
-	void GetK();
+	void BGM(); // BGM sound
+	void BGMS(); // Helps to overwrite
+	void Win(); // Win sound
+	void GetK(); // Key sound
 };
