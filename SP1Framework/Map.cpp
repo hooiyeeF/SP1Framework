@@ -462,6 +462,20 @@ void Map::drawPR(Console& g_console)
     g_console.writeToBuffer(2, 2, "S", 0x5E);
     /* Ending pt */
     g_console.writeToBuffer(52, 12, "E", 0x5E);
+
+
+    g_console.writeToBuffer(25,6, "+", 0xB20);
+    g_console.writeToBuffer(33, 7, "+", 0xB20);
+
+    g_console.writeToBuffer(26, 12, "+", 0xB20);
+
+
+    g_console.writeToBuffer(47, 9, "+", 0xB20);
+    g_console.writeToBuffer(54, 7, "+", 0xB20);
+
+    g_console.writeToBuffer(59, 15, "+", 0xB20);
+
+
 }
 
 void Map::drawREnd(Console& g_console)
