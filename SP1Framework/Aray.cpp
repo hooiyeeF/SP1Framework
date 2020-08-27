@@ -484,6 +484,10 @@ void Aray::PRArray(Console& g_console)
     }
     map[12][51] = '+';
 
+
+    //2 'dot'
+    map[13][19] = '+';
+    map[14][19] = '+';
     
 }
 void Aray::EndRoomArray(Console& g_console)
