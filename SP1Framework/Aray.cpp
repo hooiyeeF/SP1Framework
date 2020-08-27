@@ -458,7 +458,28 @@ void Aray::PRArray(Console& g_console)
     {
         map[j + 1][1] = '+';
         map[j + 1][78] = '+';
+    }    
+    //bottom horz wall
+    for (int i = 2; i < 20; i++)
+    {
+        map[12][i] = '+';
     }
+    // c shape 
+    for (int i = 40; i < 43; i++)
+    {
+        map[5][i] = '+';
+        map[7][i] = '+';
+    }
+    map[6][40] = '+';
+    //random dot
+    map[6][60] = '+';
+    // reverse c shape
+    for (int i = 49; i < 52; i++)
+    {
+        map[11][i] = '+';
+        map[13][i] = '+';
+    }
+    map[12][51] = '+';
     
 }
 void Aray::EndRoomArray(Console& g_console)
