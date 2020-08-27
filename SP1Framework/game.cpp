@@ -65,6 +65,7 @@ void init( void )
     S.BGMS();
     
     
+    
    
   
 }
@@ -791,6 +792,7 @@ void renderFirstRoom()
     // key collected
     if (chara.getx() == 58 && chara.gety() == 15)
     {
+        
         room.getKey = true;
         arra.map[2][54] = '-';
         arra.map[3][54] = '-';
