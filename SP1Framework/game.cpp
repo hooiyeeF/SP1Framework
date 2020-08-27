@@ -127,11 +127,13 @@ void keyboardHandler(const KEY_EVENT_RECORD& keyboardEvent)
         break;
     case S_ROOM4: gameplayKBHandler(keyboardEvent);
         break;
-    case S_CROOM: gameplayKBHandler(keyboardEvent);
-        break;
     case S_TPROOM: gameplayKBHandler(keyboardEvent);
         break;
+    case S_PATHROOM: gameplayKBHandler(keyboardEvent);
+        break;
     case S_ENDROOM: gameplayKBHandler(keyboardEvent); 
+        break;
+    case S_CROOM: gameplayKBHandler(keyboardEvent);
         break;
     case S_WIN: gameplayKBHandler(keyboardEvent);  
         break;
@@ -170,11 +172,13 @@ void mouseHandler(const MOUSE_EVENT_RECORD& mouseEvent)
         break;
     case S_ROOM4: gameplayMouseHandler(mouseEvent);
         break;
-    case S_CROOM: gameplayMouseHandler(mouseEvent);
+    case S_TPROOM: gameplayMouseHandler(mouseEvent);
         break;
-    case S_TPROOM: gameplayMouseHandler(mouseEvent); 
+    case S_PATHROOM: gameplayMouseHandler(mouseEvent);
         break;
     case S_ENDROOM: gameplayMouseHandler(mouseEvent);
+        break;
+    case S_CROOM: gameplayMouseHandler(mouseEvent);
         break;
     case S_LOSE: gameplayMouseHandler(mouseEvent);
         break;
@@ -281,6 +285,8 @@ void update(double dt)
         case S_ROOM4: updateGame();
             break;
         case S_TPROOM: updateGame();
+            break;
+        case S_PATHROOM: updateGame();
             break;
         case S_ENDROOM: updateGame();
             break;
@@ -544,6 +550,8 @@ void render()
         renderCountDownR4();
         break;
     case S_TPROOM: renderTPRoom();
+        break;
+    case S_PATHROOM: renderPathRoom();
         break;
     case S_ENDROOM: renderEndRoom();
         break;
@@ -984,19 +992,37 @@ void renderTPRoom()
         ui.drawTP(g_Console);
     }
 
-    /* Go to the last room */
+    /* Go to the path room */
     if (chara.getx() == 40 && chara.gety() == 16 && collected == true)
     {
-        g_eGameState = S_ENDROOM;
+        g_eGameState = S_PATHROOM;
         arra.EndRoomArray(g_Console);
         //character position for last room
-        chara.setx(40); 
+        chara.setx(2); 
         chara.sety(2);
     }
     // Not collected
     else if (chara.getx() == 40 && chara.gety() == 16 && collected == false)
     {
         g_Console.writeToBuffer(30, 25, "Collect the toilet paper before exit !", 0x06);
+    }
+}
+void renderPathRoom()
+{
+    clearScreen();
+    room.drawPR(g_Console);
+    ui.drawUI(g_Console);
+    ui.drawTP(g_Console);
+    chara.draw(g_Console);
+
+    /* Go to next room */
+    if (chara.getx() == 52 && chara.gety() == 12)
+    {
+        g_eGameState = S_ENDROOM;
+
+        //character position for the next room
+        chara.setx(25);
+        chara.sety(1);
     }
 }
 void renderEndRoom()

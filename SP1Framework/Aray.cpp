@@ -1,4 +1,5 @@
 #include "Aray.h"
+#include "Player.h"
 
 void Aray::FirstRoomArray(Console& g_console)
 {
@@ -392,6 +393,17 @@ void Aray::TPRoomArray(Console& g_console)
         map[3][i] = '+';
     }
 
+}
+void Aray::PRArray(Console& g_console) 
+{
+    //array to detect things
+    for (int x = 0; x < 80; ++x)
+    {
+        for (int y = 0; y < 18; ++y)
+        {
+            map[y][x] = '-';
+        }
+    }
 }
 void Aray::EndRoomArray(Console& g_console)
 {
