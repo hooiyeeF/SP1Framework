@@ -463,23 +463,31 @@ void Aray::PRArray(Console& g_console)
     for (int i = 2; i < 20; i++)
     {
         map[12][i] = '+';
+        
     }
-    // c shape 
-    for (int i = 40; i < 43; i++)
+    // up-c shape 
+    for (int j = 5; j < 7; j++)
     {
-        map[5][i] = '+';
-        map[7][i] = '+';
+        map[j][39] = '+';
+        map[j][41] = '+';
     }
     map[6][40] = '+';
+
     //random dot
     map[6][60] = '+';
-    // reverse c shape
-    for (int i = 49; i < 52; i++)
+
+    // down-c shape
+    for (int j = 12; j < 14; j++)
     {
-        map[11][i] = '+';
-        map[13][i] = '+';
+        map[j][50] = '+';
+        map[j][52] = '+';
     }
     map[12][51] = '+';
+
+
+    //2 'dot'
+    map[13][19] = '+';
+    map[14][19] = '+';
     
 }
 void Aray::EndRoomArray(Console& g_console)

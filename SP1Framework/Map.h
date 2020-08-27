@@ -9,6 +9,8 @@ public:
 	double Dtime = 3;
 	bool getTP = false;
 	bool getKey = false;
+	bool hitB = false;
+	bool hitB2 = false;
 	void drawR1(Console& g_console);
 	void drawR2(Console& g_console);
 	void drawR3(Console& g_console);

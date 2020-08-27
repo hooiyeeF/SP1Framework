@@ -749,6 +749,9 @@ void renderMenuScreen()
     c.Y += 1;
     c.X = g_Console.getConsoleSize().X / 2 + 19;
     g_Console.writeToBuffer(c, " T - Toilet paper ", 0xE5);
+    c.Y += 1;
+    c.X = g_Console.getConsoleSize().X / 2 + 19;
+    g_Console.writeToBuffer(c, " B - Button ", 0xE5);
 }
 void renderFirstRoom()
 {
@@ -1154,8 +1157,18 @@ void renderPathRoom()
         Beep(1440, 30);
         g_eGameState = S_LOSE;
     }
+    if (chara.getx() == 40 && chara.gety() == 5)
+    {
+        room.hitB = true;
+    }
+    if (chara.getx() == 51 && chara.gety() == 13)
+    {
+        room.hitB2 = true;
+    }
+
+
     /* Go to next room */
-    if (chara.getx() == 63 && chara.gety() == 9)
+    if (chara.getx() == 5 && chara.gety() == 10 && room.hitB == true && room.hitB2 == true)
     {
         S.BGMS();
         S.ODoors();
@@ -1369,10 +1382,10 @@ void renderWinScreen()
     g_Console.writeToBuffer(c, " LEADERBOARD ", 0x0F);
 
     c.Y = 11;
-    lb.saverer(g_dElapsedTime);
+    lb.saverer(ss.str());
     lb.sorterer();
 
-    for (int i : lb.ldb)
+    for (string i : lb.ldb)
     {
         g_Console.writeToBuffer(c, i, 0x0F);
         c.Y++;
