@@ -10,7 +10,7 @@ using namespace std;
 class Leaderboard
 {
 public:
-	vector <int> lb;
+	vector <double> ldb;
 	void saverer(double);
 	void sorterer();
 };

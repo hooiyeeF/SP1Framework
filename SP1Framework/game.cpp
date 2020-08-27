@@ -1368,7 +1368,7 @@ void renderWinScreen()
     lb.saverer(g_dElapsedTime);
     lb.sorterer();
 
-    for (int i : lb.lb)
+    for (int i : lb.ldb)
     {
         g_Console.writeToBuffer(c, i, 0x0F);
         c.Y++;
@@ -1517,22 +1517,22 @@ void renderInputEvents()
 void guardchase()
 {
     
-    if (chara.getx() > arra.gx1 && arra.map[arra.gy1][arra.gx1 + 2] == '-' && arra.map[arra.gy1][arra.gx1 + 1] == '-')
+    if (chara.getx() > arra.gx1 && arra.map[arra.gy1][arra.gx1 + 2] == '-' && arra.map[arra.gy1][arra.gx1 + 1] == '-' && arra.map[arra.gy1 + 1][arra.gx1 + 1] == '-' && arra.map[arra.gy1 - 1][arra.gx1 + 1] == '-')
     {
         arra.map[arra.gy1][arra.gx1] = '-';
         arra.gx1++;
     }
-    else if (chara.getx() < arra.gx1 && arra.map[arra.gy1][arra.gx1 - 2] == '-' && arra.map[arra.gy1][arra.gx1 - 1] == '-')
+    else if (chara.getx() < arra.gx1 && arra.map[arra.gy1][arra.gx1 - 2] == '-' && arra.map[arra.gy1][arra.gx1 - 1] == '-' && arra.map[arra.gy1 + 1][arra.gx1 - 1] == '-' && arra.map[arra.gy1 - 1][arra.gx1 - 1] == '-')
     {
         arra.map[arra.gy1][arra.gx1] = '-';
         arra.gx1--;
     }
-    else if (chara.gety() > arra.gy1 && arra.map[arra.gy1 + 2][arra.gx1] == '-' && arra.map[arra.gy1 + 1][arra.gx1] == '-')
+    else if (chara.gety() > arra.gy1 && arra.map[arra.gy1 + 2][arra.gx1] == '-' && arra.map[arra.gy1 + 1][arra.gx1] == '-' && arra.map[arra.gy1 + 1][arra.gx1 - 1] == '-' && arra.map[arra.gy1 + 1][arra.gx1 + 1] == '-')
     {
         arra.map[arra.gy1][arra.gx1] = '-';
         arra.gy1++;
     }
-    else if (chara.gety() < arra.gy1 && arra.map[arra.gy1 - 2][arra.gx1] == '-' && arra.map[arra.gy1 - 1][arra.gx1] == '-')
+    else if (chara.gety() < arra.gy1 && arra.map[arra.gy1 - 2][arra.gx1] == '-' && arra.map[arra.gy1 - 1][arra.gx1] == '-' && arra.map[arra.gy1 - 1][arra.gx1 - 1] == '-' && arra.map[arra.gy1 - 1][arra.gx1 + 1] == '-')
     {
         arra.map[arra.gy1][arra.gx1] = '-';
         arra.gy1--;
