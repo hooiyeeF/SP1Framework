@@ -1480,41 +1480,48 @@ void renderInputEvents()
 
 void guardchase()
 {
-
-    arra.map[arra.gy1][arra.gx1] = '-';
-    arra.map[arra.gy2][arra.gx2] = '-';
-    if (chara.getx() > arra.gx1 && arra.map[arra.gy1][arra.gx1 + 1] != '+')
+    
+    if (chara.getx() > arra.gx1 && arra.map[arra.gy1][arra.gx1 + 2] == '-')
     {
+        arra.map[arra.gy1][arra.gx1] = '-';
         arra.gx1++;
     }
-    else if (chara.getx() < arra.gx1 && arra.map[arra.gy1][arra.gx1 - 1] != '+')
+    else if (chara.getx() < arra.gx1 && arra.map[arra.gy1][arra.gx1 - 2] == '-')
     {
+        arra.map[arra.gy1][arra.gx1] = '-';
         arra.gx1--;
     }
-    else if (chara.gety() > arra.gy1 && arra.map[arra.gy1 + 1][arra.gx1] != '+')
+    else if (chara.gety() > arra.gy1 && arra.map[arra.gy1 + 2][arra.gx1] == '-')
     {
+        arra.map[arra.gy1][arra.gx1] = '-';
         arra.gy1++;
     }
-    else if (chara.gety() < arra.gy1 && arra.map[arra.gy1 - 1][arra.gx1] != '+')
+    else if (chara.gety() < arra.gy1 && arra.map[arra.gy1 - 2][arra.gx1] == '-')
     {
+        arra.map[arra.gy1][arra.gx1] = '-';
         arra.gy1--;
     }
-    if (chara.getx() > arra.gx2 && arra.map[arra.gy2][arra.gx2 + 1] != '+')
+    if (chara.gety() > arra.gy2 && arra.map[arra.gy2 + 1][arra.gx2] == '-')
     {
-        arra.gx2++;
-    }
-    else if (chara.getx() < arra.gx2 && arra.map[arra.gy2][arra.gx2 - 1] != '+')
-    {
-        arra.gx2--;
-    }
-    else if (chara.gety() > arra.gy2 && arra.map[arra.gy2 + 1][arra.gx2] != '+')
-    {
+        arra.map[arra.gy2][arra.gx2] = '-';
         arra.gy2++;
     }
-    else if (chara.gety() < arra.gy2 && arra.map[arra.gy2 - 1][arra.gx2] != '+')
+    else if (chara.gety() < arra.gy2 && arra.map[arra.gy2 - 1][arra.gx2] == '-')
     {
+        arra.map[arra.gy2][arra.gx2] = '-';
         arra.gy2--;
     }
+    else if (chara.getx() > arra.gx2 && arra.map[arra.gy2][arra.gx2 + 1] == '-')
+    {
+        arra.map[arra.gy2][arra.gx2] = '-';
+        arra.gx2++;
+    }
+    else if (chara.getx() < arra.gx2 && arra.map[arra.gy2][arra.gx2 - 1] == '-')
+    {
+        arra.map[arra.gy2][arra.gx2] = '-';
+        arra.gx2--;
+    }
+
     
 }
 
