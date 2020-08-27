@@ -1154,7 +1154,7 @@ void renderPathRoom()
         g_eGameState = S_LOSE;
     }
     /* Go to next room */
-    if (chara.getx() == 52 && chara.gety() == 12)
+    if (chara.getx() == 63 && chara.gety() == 9)
     {
         S.BGMS();
         S.ODoors();
@@ -1520,22 +1520,22 @@ void renderInputEvents()
 void guardchase()
 {
     
-    if (chara.getx() > arra.gx1 && arra.map[arra.gy1][arra.gx1 + 2] == '-' && arra.map[arra.gy1][arra.gx1 + 1] != 'P' && arra.map[arra.gy1 + 1][arra.gx1 + 1] != 'P' && arra.map[arra.gy1 - 1][arra.gx1 + 1] != 'P')
+    if (chara.getx() > arra.gx1 && arra.map[arra.gy1][arra.gx1 + 1] == '-' && arra.map[arra.gy1][arra.gx1 + 1] != 'G' && arra.map[arra.gy1][arra.gx1 + 2] != 'G' && arra.map[arra.gy1 + 1][arra.gx1 + 1] != 'G' && arra.map[arra.gy1 - 1][arra.gx1 + 1] != 'G')
     {
         arra.map[arra.gy1][arra.gx1] = '-';
         arra.gx1++;
     }
-    else if (chara.getx() < arra.gx1 && arra.map[arra.gy1][arra.gx1 - 2] == '-' && arra.map[arra.gy1][arra.gx1 - 1] != 'P' && arra.map[arra.gy1 + 1][arra.gx1 - 1] != 'P' && arra.map[arra.gy1 - 1][arra.gx1 - 1] != 'P')
+    else if (chara.getx() < arra.gx1 && arra.map[arra.gy1][arra.gx1 - 1] == '-' && arra.map[arra.gy1][arra.gx1 - 1] != 'G' && arra.map[arra.gy1][arra.gx1 - 2] != 'G' && arra.map[arra.gy1 + 1][arra.gx1 - 1] != 'G' && arra.map[arra.gy1 - 1][arra.gx1 - 1] != 'G')
     {
         arra.map[arra.gy1][arra.gx1] = '-';
         arra.gx1--;
     }
-    else if (chara.gety() > arra.gy1 && arra.map[arra.gy1 + 2][arra.gx1] == '-' && arra.map[arra.gy1 + 1][arra.gx1] != 'P' && arra.map[arra.gy1 + 1][arra.gx1 - 1] != 'P' && arra.map[arra.gy1 + 1][arra.gx1 + 1] != 'P')
+    else if (chara.gety() > arra.gy1 && arra.map[arra.gy1 + 1][arra.gx1] == '-' && arra.map[arra.gy1 + 1][arra.gx1] != 'G' && arra.map[arra.gy1 + 2][arra.gx1] != 'G' && arra.map[arra.gy1 + 1][arra.gx1 - 1] != 'G' && arra.map[arra.gy1 + 1][arra.gx1 + 1] != 'G')
     {
         arra.map[arra.gy1][arra.gx1] = '-';
         arra.gy1++;
     }
-    else if (chara.gety() < arra.gy1 && arra.map[arra.gy1 - 2][arra.gx1] == '-' && arra.map[arra.gy1 - 1][arra.gx1] != 'P' && arra.map[arra.gy1 - 1][arra.gx1 - 1] != 'P' && arra.map[arra.gy1 - 1][arra.gx1 + 1] != 'P')
+    else if (chara.gety() < arra.gy1 && arra.map[arra.gy1 - 1][arra.gx1] == '-' && arra.map[arra.gy1 - 1][arra.gx1] != 'G' && arra.map[arra.gy1 - 2][arra.gx1] != 'G' && arra.map[arra.gy1 - 1][arra.gx1 - 1] != 'G' && arra.map[arra.gy1 - 1][arra.gx1 + 1] != 'G')
     {
         arra.map[arra.gy1][arra.gx1] = '-';
         arra.gy1--;
