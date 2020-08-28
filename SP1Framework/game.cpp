@@ -1084,24 +1084,34 @@ void renderPathRoom()
         Beep(1440, 30);
         g_eGameState = S_LOSE;
     }
-    if (arra.map[5][40] == 'G')
+    if (arra.map[5][40] == 'G' || (chara.getx() == 40 && chara.gety() == 5))
     {
-        S.BP();
+        buttonHit = true;
         room.hitB = true;
     }
-    if (arra.map[13][51] == 'G')
+    else
+    {
+        room.hitB = false;
+    }
+
+    if (arra.map[13][51] == 'G' || (chara.getx() == 51 && chara.gety() == 13))
     {   
-        S.BP();
+        button2Hit = true;
         room.hitB2 = true;
     }
-    for (int o = 0; o < 2; o++)
+    else
+    {
+        room.hitB2 = false;
+    }
+
+   /* for (int o = 0; o < 2; o++)
     {  
         if (arra.map[5][40] == 'G' && arra.map[13][51] == 'G')
         {
             S.appear();
         }
            
-    }
+    }*/
   
     
     /* Go to next room */
