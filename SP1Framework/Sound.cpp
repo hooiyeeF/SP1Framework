@@ -29,9 +29,9 @@ void sound::Chase()
 
 void sound::TP()
 {
-	Beep(10, 50);
+	Beep(10, 25);
 	Beep(5, 20);
-	Beep(10, 50);
+	Beep(10, 10);
 }
 
 
