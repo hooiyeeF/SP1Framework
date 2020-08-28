@@ -1347,35 +1347,48 @@ void renderWinScreen()
     COORD c = g_Console.getConsoleSize();
     c.Y /= 2;
     c.Y -= 11;
-    c.X = c.X / 2 - 15;
+    c.X = c.X / 2 - 16;
     g_Console.writeToBuffer(c, "C O N G R A T U L A T I O N S !", 0x0A);
     c.Y += 2;
-    c.X = g_Console.getConsoleSize().X / 2 - 7;
+    c.X = g_Console.getConsoleSize().X / 2 - 8;
     g_Console.writeToBuffer(c, "Y O U  W O N !", 0x0A);
-    c.Y = 8;
-    c.X = g_Console.getConsoleSize().X / 2 - 11;
-    g_Console.writeToBuffer(c, "  Time Taken: ", 0xB0);
+
+    c.Y += 3;
+    c.X = g_Console.getConsoleSize().X / 2 - 18;
+    g_Console.writeToBuffer(c, "You helped Bob get his toilet paper,", 0x0F);
+    c.Y += 1;
+    c.X = g_Console.getConsoleSize().X / 2 - 16;
+    g_Console.writeToBuffer(c, "and now he can do his business!", 0x0F);
+
+    c.Y = 13;
+    c.X = g_Console.getConsoleSize().X / 2 - 12;
+    g_Console.writeToBuffer(c, "  Time Taken:", 0xB0);
 
     std::ostringstream ss;
     ss << std::fixed << std::setprecision(2);
     ss.str("");
-    ss << g_dElapsedTime << "s  ";
-    c.X = 43;
-    c.Y = 8;
+    ss << " " << g_dElapsedTime << "s  ";
+    c.X = 41;
+    c.Y = 13;
     g_Console.writeToBuffer(c, ss.str(), 0xB0);
 
     c.X = g_Console.getConsoleSize().X / 2 - 7;
-    c.Y = 10;
-    g_Console.writeToBuffer(c, " TOP SCORE: ", 0x0F);
+    c.Y = 16;
+    g_Console.writeToBuffer(c, " TOP SCORE: ", 0x1F);
 
-    c.X = g_Console.getConsoleSize().X / 2 - 4;
-    c.Y = 11;
+    c.Y = 17;
+    g_Console.writeToBuffer(c, "  ", 0x1F);
+
+    c.X = g_Console.getConsoleSize().X / 2 - 5;
     lb.saverer(ss.str());
     lb.sorterer();
 
-    g_Console.writeToBuffer(c, lb.ldb.at(0), 0x0F);
+    g_Console.writeToBuffer(c, lb.ldb.at(0), 0x1F);
 
-    c.Y += 5;
+    c.X = g_Console.getConsoleSize().X / 2 + 3;
+    g_Console.writeToBuffer(c, "  ", 0x1F);
+
+    c.Y += 4;
     c.X = g_Console.getConsoleSize().X / 2 - 14;
     g_Console.writeToBuffer(c, "Press <SPACE> to play again", 0x07);
     c.Y += 2;
@@ -1387,10 +1400,15 @@ void renderLoseScreen()
 {
     COORD c = g_Console.getConsoleSize();
     c.Y /= 2;
-    c.Y -= 5;
-    c.X = c.X / 2 - 4;
+    c.Y -= 6;
+    c.X = c.X / 2 - 5;
     g_Console.writeToBuffer(c, "L O S E !", 0x0A);
-    c.Y += 8;
+
+    c.Y += 5;
+    c.X = g_Console.getConsoleSize().X / 2 - 15;
+    g_Console.writeToBuffer(c, "You got caught by the guards!", 0x04);
+
+    c.Y += 5;
     c.X = g_Console.getConsoleSize().X / 2 - 13;
     g_Console.writeToBuffer(c, "Press <SPACE> to play again", 0x07);
     c.Y += 2;
