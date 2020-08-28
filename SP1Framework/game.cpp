@@ -1119,6 +1119,7 @@ void renderTPRoom()
 
     if (chara.getx() == 49 && chara.gety() == 8)
     {
+        S.TP();
         collected = true;
         room.getTP = true;
     }
@@ -1326,7 +1327,7 @@ void renderEndRoom()
     /* Go to ChaseRoom */
     if (chara.getx() == 58 && chara.gety() == 15 )
     {
-        S.BGMS();
+        
         S.ODoors();
         g_eGameState = S_CROOM;
         arra.CRoomArray(g_Console);
