@@ -14,4 +14,6 @@ public:
 	void ODoors();// next room sound
 	void Chase(); // chasing bgm
 	void TP(); // toliet paper collector
+	void appear(); // Door appearing
+	void BP();
 };
