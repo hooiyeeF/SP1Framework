@@ -1,6 +1,5 @@
 // This is the main file for the game logic and function
-//
-//
+
 #include "game.h"
 #include "Framework\console.h"
 #include "Player.h"
@@ -15,11 +14,9 @@
 #include "Sound.h"
 #include "Leaderboard.h"
 
-
 double  g_dElapsedTime;
 double  g_dDeltaTime;
 SKeyEvent g_skKeyEvent[K_COUNT];
-SMouseEvent g_mouseEvent;
 int Gtimer = 0;
 bool gamestart = false;
 bool gameEnd = false;
@@ -59,16 +56,10 @@ void init( void )
 
     // remember to set your keyboard handler, so that your functions can be notified of input events
     g_Console.setKeyboardHandler(keyboardHandler);
-    g_Console.setMouseHandler(mouseHandler);
 
     arra.FirstRoomArray(g_Console);
     Gtimer = 5;
     S.BGMS();
-    
-    
-    
-   
-  
 }
 
 //--------------------------------------------------------------
@@ -148,50 +139,6 @@ void keyboardHandler(const KEY_EVENT_RECORD& keyboardEvent)
         break;
     }
 }
-
-//--------------------------------------------------------------
-// Purpose  : This is the handler for the mouse input. Whenever there is a mouse event, this function will be called.
-//            Ideally, you should pass the key event to a specific function to handle the event.
-//            This is because in some states, some keys would be disabled. Hence, to reduce your code complexity, 
-//            it would be wise to split your keyboard input handlers separately.
-//            
-//            For the mouse event, if the mouse is not moved, no event will be sent, hence you should not reset the mouse status.
-//            However, if the mouse goes out of the window, you would not be able to know either. 
-//
-//            The MOUSE_EVENT_RECORD struct has more attributes that you can use, if you are adventurous enough.
-//
-//            In this case, we are not handling any mouse event in the Splashscreen state
-//            
-// Input    : const MOUSE_EVENT_RECORD& mouseEvent - reference to a mouse event struct
-// Output   : void
-//--------------------------------------------------------------
-void mouseHandler(const MOUSE_EVENT_RECORD& mouseEvent)
-{    
-    switch (g_eGameState)
-    {
-    case S_SPLASHSCREEN:
-        break;
-    case S_ROOM1: gameplayMouseHandler(mouseEvent); 
-        break;
-    case S_ROOM2: gameplayMouseHandler(mouseEvent);
-        break;
-    case S_ROOM3: gameplayMouseHandler(mouseEvent);
-        break;
-    case S_ROOM4: gameplayMouseHandler(mouseEvent);
-        break;
-    case S_TPROOM: gameplayMouseHandler(mouseEvent);
-        break;
-    case S_PATHROOM: gameplayMouseHandler(mouseEvent);
-        break;
-    case S_ENDROOM: gameplayMouseHandler(mouseEvent);
-        break;
-    case S_CROOM: gameplayMouseHandler(mouseEvent);
-        break;
-    case S_LOSE: gameplayMouseHandler(mouseEvent);
-        break;
-    }
-}
-
 //--------------------------------------------------------------
 // Purpose  : This is the keyboard handler in the game state. Whenever there is a keyboard event in the game state, this function will be called.
 //            
@@ -224,26 +171,6 @@ void gameplayKBHandler(const KEY_EVENT_RECORD& keyboardEvent)
         g_skKeyEvent[key].keyReleased = !keyboardEvent.bKeyDown;
     }    
 }
-
-//--------------------------------------------------------------
-// Purpose  : This is the mouse handler in the game state. Whenever there is a mouse event in the game state, this function will be called.
-//            
-//            If mouse clicks are detected, the corresponding bit for that mouse button will be set.
-//            mouse wheel, 
-//            
-// Input    : const KEY_EVENT_RECORD& keyboardEvent
-// Output   : void
-//--------------------------------------------------------------
-void gameplayMouseHandler(const MOUSE_EVENT_RECORD& mouseEvent)
-{
-    if (mouseEvent.dwEventFlags & MOUSE_MOVED) // update the mouse position if there are no events
-    {
-        g_mouseEvent.mousePosition = mouseEvent.dwMousePosition;
-    }
-    g_mouseEvent.buttonState = mouseEvent.dwButtonState;
-    g_mouseEvent.eventFlags = mouseEvent.dwEventFlags;
-}
-
 //--------------------------------------------------------------
 // Purpose  : Update function
 //            This is the update function
@@ -318,20 +245,19 @@ void updateGame()       // gameplay logic
     moveCharacter();    // moves the character, collision detection, physics, etc
                         // sound can be played here too.
 }
-
 void updateGame2()       // gameplay logic
 {
     processUserInput(); // checks if you should change states or do something else with the game, e.g. pause, exit
     moveCharacter2();    // moves the character, collision detection, physics, etc
                         // sound can be played here too.
 }
-
 void updateGame3()       // gameplay logic
 {
     processUserInput(); // checks if you should change states or do something else with the game, e.g. pause, exit
     moveCharacter3();    // moves the character, collision detection, physics, etc
                         // sound can be played here too.
 }
+
 void moveCharacter()
 {
     // Updating the location of the character based on the key release
@@ -410,7 +336,6 @@ void moveCharacter()
         arra.map[15][21] = '-';
     }
 }
-
 void moveCharacter2()
 {
     // Updating the location of the character based on the key release
@@ -510,7 +435,6 @@ void moveCharacter2()
         arra.map[15][21] = '-';
     }
 }
-
 void moveCharacter3()
 {
     // Updating the location of the character based on the key release
@@ -611,7 +535,6 @@ void moveCharacter3()
     }
 }
 
-
 void processUserInput()
 {
     // quits the game if player hits the escape key
@@ -642,6 +565,8 @@ void reset()
     collected = false;
     StartCDown = false;
     room.getTP = false;
+    room.hitB = false;
+    room.hitB2 = false;
     room.Dtime = 3;
     room.getKey = false;
     chara.setx(g_Console.getConsoleSize().X / 2 - 1);
@@ -655,7 +580,6 @@ void render()
     switch (g_eGameState)
     {
     case S_SPLASHSCREEN: renderMenuScreen();
-    //case S_SPLASHSCREEN: renderWinScreen();
         break;
     case S_ROOM1: renderFirstRoom();
         break;
@@ -669,7 +593,9 @@ void render()
         break;
     case S_TPROOM: renderTPRoom();
         break;
-    case S_PATHROOM: renderPathRoom();
+    case S_PATHROOM: 
+        renderPathRoom();
+        renderPRInstruction();
         break;
     case S_ENDROOM: renderEndRoom();
         break;
@@ -722,7 +648,7 @@ void renderMenuScreen()
     /* Playtest counter*/
     c.Y -= 10;
     c.X = g_Console.getConsoleSize().X / 2 - 5;
-    g_Console.writeToBuffer(c, " Test : ", 0xB0);
+    g_Console.writeToBuffer(c, " Tries : ", 0xB0);
 
     std::ostringstream ss;
     ss.str("");
@@ -1115,6 +1041,7 @@ void renderTPRoom()
 
     if (chara.getx() == 49 && chara.gety() == 8)
     {
+        S.TP();
         collected = true;
         room.getTP = true;
     }
@@ -1322,7 +1249,7 @@ void renderEndRoom()
     /* Go to ChaseRoom */
     if (chara.getx() == 58 && chara.gety() == 15 )
     {
-        S.BGMS();
+        
         S.ODoors();
         g_eGameState = S_CROOM;
         arra.CRoomArray(g_Console);
@@ -1434,19 +1361,21 @@ void renderCountDownR4()
         g_Console.writeToBuffer(c, ss1.str(), 0x0C);
     }
 }
+void renderPRInstruction()
+{
+    COORD c = g_Console.getConsoleSize();
+    g_Console.writeToBuffer(35, 24, "Get the   to the 'B' ", 0x06);
+    c.X = 43;
+    c.Y = 24;
+    g_Console.writeToBuffer(c, (char)1, 0x0C);
+}
 void renderFramerate()
 {
     if ((g_eGameState != S_SPLASHSCREEN) && (g_eGameState != S_ROOM4) && (g_eGameState != S_WIN) && (g_eGameState != S_LOSE))
     {
         COORD c;
-        // displays the framerate
         std::ostringstream ss;
         ss << std::fixed << std::setprecision(3);
-      /*  ss << 1.0 / g_dDeltaTime << "fps";
-        c.X = g_Console.getConsoleSize().X - 9;
-        c.Y = 0;
-        g_Console.writeToBuffer(c, ss.str());*/
-
         // displays the elapsed time
         ss.str("");
         ss << g_dElapsedTime << "secs";
@@ -1454,7 +1383,6 @@ void renderFramerate()
         c.Y = 20;
         g_Console.writeToBuffer(c, ss.str(), 0x0F);
     }
-    
 }
 void renderInputEvents()
 {
@@ -1483,50 +1411,7 @@ void renderInputEvents()
         COORD c = { startPos.X, startPos.Y + i };
         g_Console.writeToBuffer(c, ss.str(), 0x17);
     }
-    // mouse events
-    if ((g_eGameState != S_SPLASHSCREEN) && (g_eGameState != S_WIN) && (g_eGameState != S_LOSE))
-    {
-        ss.str("");
-        ss << "Mouse position (" << g_mouseEvent.mousePosition.X << ", " << g_mouseEvent.mousePosition.Y << ")";
-        g_Console.writeToBuffer(g_mouseEvent.mousePosition, ss.str(), 0x59);
-        ss.str("");
-
-        switch (g_mouseEvent.eventFlags)
-        {
-        case 0:
-            if (g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
-            {
-                ss.str("Left Button Pressed");
-                g_Console.writeToBuffer(g_mouseEvent.mousePosition.X, g_mouseEvent.mousePosition.Y + 1, ss.str(), 0x59);
-            }
-            else if (g_mouseEvent.buttonState == RIGHTMOST_BUTTON_PRESSED)
-            {
-                ss.str("Right Button Pressed");
-                g_Console.writeToBuffer(g_mouseEvent.mousePosition.X, g_mouseEvent.mousePosition.Y + 2, ss.str(), 0x59);
-            }
-            else
-            {
-                ss.str("Some Button Pressed");
-                g_Console.writeToBuffer(g_mouseEvent.mousePosition.X, g_mouseEvent.mousePosition.Y + 3, ss.str(), 0x59);
-            }
-            break;
-        case DOUBLE_CLICK:
-            ss.str("Double Clicked");
-            g_Console.writeToBuffer(g_mouseEvent.mousePosition.X, g_mouseEvent.mousePosition.Y + 4, ss.str(), 0x59);
-            break;
-        case MOUSE_WHEELED:
-            if (g_mouseEvent.buttonState & 0xFF000000)
-                ss.str("Mouse wheeled down");
-            else
-                ss.str("Mouse wheeled up");
-            g_Console.writeToBuffer(g_mouseEvent.mousePosition.X, g_mouseEvent.mousePosition.Y + 5, ss.str(), 0x59);
-            break;
-        default:
-            break;
-        }
-    }
 }
-
 
 void guardchase()
 {
@@ -1574,6 +1459,3 @@ void guardchase()
 
     
 }
-
-
-

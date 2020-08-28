@@ -27,6 +27,13 @@ void sound::Chase()
 	bool chase = PlaySound(L"../SP1Framework/CHASE.wav", NULL, SND_FILENAME | SND_ASYNC );
 }
 
+void sound::TP()
+{
+	Beep(10, 25);
+	Beep(5, 20);
+	Beep(10, 10);
+}
+
 
 
 void sound::GetK()
