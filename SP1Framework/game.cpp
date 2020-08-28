@@ -18,6 +18,12 @@ double  g_dElapsedTime;
 double  g_dDeltaTime;
 SKeyEvent g_skKeyEvent[K_COUNT];
 int Gtimer = 0;
+int doorsound = 0;
+int keysound = 0;
+int keysound2 = 0;
+int toilerpapersound = 0;
+int buttonsound = 0;
+int buttonsound2 = 0;
 bool gamestart = false;
 bool gameEnd = false;
 bool collected = false;
@@ -27,6 +33,7 @@ double ODDeltaTime2 = 0;
 double CountDowndt = 0;
 double CDownTime = 10;
 int testG = 1;
+
 
 Player chara;
 Map room;
@@ -58,6 +65,12 @@ void init( void )
     g_Console.setKeyboardHandler(keyboardHandler);
 
     arra.FirstRoomArray(g_Console);
+    doorsound = 0;
+    keysound = 0;
+    keysound2 = 0;
+    buttonsound = 0;
+    buttonsound2 = 0;
+    toilerpapersound = 0;
     Gtimer = 5;
     S.BGMS();
 }
@@ -722,10 +735,14 @@ void renderFirstRoom()
     // key collected
     if (chara.getx() == 58 && chara.gety() == 15)
     {
-        S.GetK();
         room.getKey = true;
         arra.map[2][54] = '-';
         arra.map[3][54] = '-';
+    }
+    if (room.getKey == true && keysound == 0)
+    {
+        S.GetK();
+        keysound++;
     }
     if (room.getKey == true)
     {
@@ -755,10 +772,14 @@ void renderSecondRoom()
     // key collected
     if (chara.getx() == 33 && chara.gety() == 15)
     {
-        S.GetK();
         room.getKey = true;
         arra.map[2][55] = '-';
         arra.map[3][55] = '-';
+    }
+    if (room.getKey == true && keysound2 == 0)
+    {
+        S.GetK();
+        keysound2++;
     }
     if (room.getKey == true) 
     {
@@ -1041,9 +1062,14 @@ void renderTPRoom()
 
     if (chara.getx() == 49 && chara.gety() == 8)
     {
-        S.TP();
+        
         collected = true;
         room.getTP = true;
+    }
+    if (collected == true && toilerpapersound == 0)
+    {
+        S.TP();
+        toilerpapersound++;
     }
     // draw toilet paper
     if (collected == true)
@@ -1086,32 +1112,27 @@ void renderPathRoom()
     }
     if (arra.map[5][40] == 'G' || (chara.getx() == 40 && chara.gety() == 5))
     {
-        buttonHit = true;
         room.hitB = true;
     }
-    else
-    {
-        room.hitB = false;
-    }
-
-    if (arra.map[13][51] == 'G' || (chara.getx() == 51 && chara.gety() == 13))
+    if (arra.map[13][51] == 'G')
     {   
-        button2Hit = true;
         room.hitB2 = true;
     }
-    else
+    if (arra.map[5][40] == 'G' && buttonsound == 0)
     {
-        room.hitB2 = false;
+        S.BP();
+        buttonsound++;
     }
-
-   /* for (int o = 0; o < 2; o++)
-    {  
-        if (arra.map[5][40] == 'G' && arra.map[13][51] == 'G')
-        {
-            S.appear();
-        }
-           
-    }*/
+    if (arra.map[13][51] == 'G' && buttonsound2 == 0)
+    {
+        S.BP();
+        buttonsound2++;
+    }
+    if (arra.map[5][40] == 'G' && arra.map[13][51] == 'G' && doorsound == 0)
+    {
+        S.appear();
+        doorsound++;
+    }
   
     
     /* Go to next room */
