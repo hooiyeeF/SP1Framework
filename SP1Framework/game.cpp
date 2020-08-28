@@ -572,6 +572,12 @@ void PlayAgain()
 void reset()
 {
     g_dElapsedTime = 0.0;
+    doorsound = 0;
+    keysound = 0;
+    keysound2 = 0;
+    toilerpapersound = 0;
+    buttonsound = 0;
+    buttonsound2 = 0;
     CDownTime = 10;
     gamestart = false;
     gameEnd = false;
@@ -1110,31 +1116,44 @@ void renderPathRoom()
         Beep(1440, 30);
         g_eGameState = S_LOSE;
     }
+
+    // first button hit & soundPlay
     if (arra.map[5][40] == 'G' || (chara.getx() == 40 && chara.gety() == 5))
     {
         room.hitB = true;
     }
-    if (arra.map[13][51] == 'G')
-    {   
-        room.hitB2 = true;
+    else
+    {
+        room.hitB = false;
     }
     if (arra.map[5][40] == 'G' && buttonsound == 0)
     {
         S.BP();
         buttonsound++;
     }
+
+    //second button hit & soundPlay
+    if (arra.map[13][51] == 'G' || (chara.getx() == 51 && chara.gety() == 13))
+    {   
+        room.hitB2 = true;
+    }
+    else
+    {
+        room.hitB2 = false;
+    }
     if (arra.map[13][51] == 'G' && buttonsound2 == 0)
     {
         S.BP();
         buttonsound2++;
     }
+
+    // soundPLay when door appear
     if (arra.map[5][40] == 'G' && arra.map[13][51] == 'G' && doorsound == 0)
     {
         S.appear();
         doorsound++;
     }
   
-    
     /* Go to next room */
     if (chara.getx() == 5 && chara.gety() == 10 && room.hitB == true && room.hitB2 == true)
     {
