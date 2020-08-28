@@ -1086,14 +1086,24 @@ void renderPathRoom()
     }
     if (arra.map[5][40] == 'G')
     {
+        S.BP();
         room.hitB = true;
     }
     if (arra.map[13][51] == 'G')
-    {
+    {   
+        S.BP();
         room.hitB2 = true;
     }
-
-
+    for (int o = 0; o < 2; o++)
+    {  
+        if (arra.map[5][40] == 'G' && arra.map[13][51] == 'G')
+        {
+            S.appear();
+        }
+           
+    }
+  
+    
     /* Go to next room */
     if (chara.getx() == 5 && chara.gety() == 10 && room.hitB == true && room.hitB2 == true)
     {
